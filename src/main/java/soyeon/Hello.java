@@ -7,7 +7,6 @@ public class Hello {
         System.out.println("테스트2");
         System.out.println("안윤빈2");
         System.out.println("강연규2");
-        
-        
+        System.out.println("윤빈테스트");
     }
 }
