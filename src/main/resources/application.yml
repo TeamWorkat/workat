@@ -1,6 +1,8 @@
 spring:
   application.name: workat_project
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+
+  datasource:
+    url: "jdbc:mariadb://175.45.194.221:3306/workat_db"
+    username: "bituser"
+    password: "0000"
+    driver-class-name: org.mariadb.jdbc.Driver
