@@ -10,8 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	@RequestMapping(value = "/")
-	public String home() {
-		return "home";
+	public String showVuePage() {
+		return "/index.html";
 	}
-	
 }
