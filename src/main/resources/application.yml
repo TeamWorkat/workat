@@ -1,0 +1,6 @@
+spring:
+  application.name: workat_project
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
