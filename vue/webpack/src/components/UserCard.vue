@@ -1,8 +1,8 @@
 <template>
     <div class="card shadow-sm">
-      <span class="img" :style="{backgroundImage: `url(${item.img_path})`}"/>
+      <span class="img" :style="{backgroundImage: `url(${item.picture_source})`}"/>
             <div class="card-body">
-              <p class="card-text">{{ item.name }}</p>
+              <p class="card-text">{{ item.place_nm }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <!-- <div class="btn-group">
                   <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
@@ -10,7 +10,7 @@
                 </div> -->
             
                 <small class="text-muted">
-                  {{ item.price }}원
+                  설명
                 </small>  
             </div>
         </div>
