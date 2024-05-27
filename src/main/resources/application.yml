@@ -6,3 +6,7 @@ spring:
     username: "bituser"
     password: "0000"
     driver-class-name: org.mariadb.jdbc.Driver
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
