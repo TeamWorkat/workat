@@ -31,7 +31,7 @@ export default {
       items: [],
     })
 
-    axios.get('/api/items').then((res) => {
+    axios.get('/api/place/items').then((res) => {
       state.items = res.data
       console.log(res)
     })
