@@ -3,6 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-                <typeAlias type="org.workat.workat_project.user.domain.UserDTO" alias="user"></typeAlias>
+                <typeAlias type="org.workat.workat_project.user.entity.UserVO" alias="user"></typeAlias>
     </typeAliases>
 </configuration>
