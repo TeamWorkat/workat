@@ -28,4 +28,7 @@ public class PlaceController {
 //    	List<PlaceVO> items = itemRepository.findAll();
 //        return items;
     }
+    
+//    @GetMapping("/placeDetail")
+    
 }
