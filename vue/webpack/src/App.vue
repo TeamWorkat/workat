@@ -1,19 +1,17 @@
 <template>
   <UserHeader/>
-  <UserHome/>
+  <RouterView/>
   <UserFooter/>
 </template>
 
 <script>
 import UserHeader from './components/UserHeader.vue';
-import UserHome from './pages/UserHome.vue';
 import UserFooter from './components/UserFooter.vue';
 
 export default {
   name: 'App',
   components: {
     UserHeader,
-    UserHome,
     UserFooter
   }
 }

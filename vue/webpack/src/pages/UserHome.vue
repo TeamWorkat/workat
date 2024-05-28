@@ -1,5 +1,7 @@
 <template>
   <MainSearch/>
+  <br/>
+  
   <div class="user_home">
     <div class="album py-5 bg-body-tertiary">
       <div class="container">
@@ -12,7 +14,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
