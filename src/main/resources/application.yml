@@ -10,3 +10,7 @@ spring:
 mybatis:
 # config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml
+
+naver:
+  client-id: bgjjxkqpe7
+  client-secret: faVhvVHYrdLgpCpf0u68vXMGuzKjqVVaPDK3bwt2
