@@ -1,19 +1,23 @@
 <template>
   <UserHeader/>
-  <UserHome/>
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/admin/list">Admin List</router-link>
+    </nav>
+    <router-view/>
+  </div>
   <UserFooter/>
 </template>
 
 <script>
 import UserHeader from './components/UserHeader.vue';
-import UserHome from './pages/UserHome.vue';
 import UserFooter from './components/UserFooter.vue';
 
 export default {
   name: 'App',
   components: {
     UserHeader,
-    UserHome,
     UserFooter
   }
 }
