@@ -13,8 +13,8 @@ public class ReviewVO {
 
     private int review_id;
     private String content;
-    private LocalDateTime createddate;
-    private LocalDateTime modifieddate;
+    private LocalDateTime created_date;
+    private LocalDateTime modified_date;
     private String status;
     private int rating;
     private int res_id;
