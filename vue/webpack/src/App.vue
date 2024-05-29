@@ -1,12 +1,6 @@
 <template>
   <UserHeader/>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/admin/list">Admin List</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <RouterView/>
   <UserFooter/>
 </template>
 
