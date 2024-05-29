@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import UserHome from '@/views/UserHome.vue';
 import UserList from '@/views/UserList.vue';
 import PlaceDetail from '@/views/PlaceDetail.vue';
+import UserDetail from "@/views/UserDetail.vue";
 const routes = [
     {
         path: '/',
@@ -9,14 +10,20 @@ const routes = [
         component: UserHome
     },
     {
-        path: '/admin/list',
+        path: '/placeDetail',
+        name: 'PlaceDetail',
+        component: PlaceDetail
+    },
+    {
+        path: '/admin/',
         name: 'UserList',
         component: UserList
     },
     {
-        path: '/placeDetail',
-        name: 'PlaceDetail',
-        component: PlaceDetail
+        path: '/user/detail',
+        name: 'UserDetail',
+        component: UserDetail,
+        props: route => ({ user_id: route.query.user_id })
     }
 ];
 
