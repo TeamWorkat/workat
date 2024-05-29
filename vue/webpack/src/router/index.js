@@ -10,7 +10,7 @@ const routes = [
         component: UserHome
     },
     {
-        path: '/placeDetail',
+        path: '/placeDetail/:placeId',
         name: 'PlaceDetail',
         component: PlaceDetail
     },
@@ -19,8 +19,7 @@ const routes = [
         name: 'UserList',
         component: UserList
     },
-    {
-        path: '/user/detail',
+    {        path: '/user/detail',
         name: 'UserDetail',
         component: UserDetail,
         props: route => ({ user_id: route.query.user_id })
