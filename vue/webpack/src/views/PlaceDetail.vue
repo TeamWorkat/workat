@@ -1,16 +1,16 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="items">
     <div class="top-section">
-      <PlaceInfo :placeInfo="state.items.placeVO" :placePictureSources="state.items.place_picture_source" />
-      <NaverMap :roadAddr="state.items.roadAddr" :jibunAddr="state.items.jibunAddr" :lat="state.items.latitude" :lon="state.items.longitude" />
+      <PlaceInfo :placeInfo="items.placeVO" :placePictureSources="items.place_picture_source" />
+      <NaverMap :roadAddr="items.roadAddr" :jibunAddr="items.jibunAddr" :lat="items.latitude" :lon="items.longitude" />
     </div>
     <h3>객실 정보</h3>
     <div class="bottom-section">
-      <RoomDetail :roomList="state.items.roomList" />
+      <RoomDetail :roomList="items.roomList" />
     </div>
     <h3>이용 후기</h3>
     <div class="review-section">
-      <ReviewDetail :reviewList="state.items.reviewList" :rating="state.items.rating" />
+      <ReviewDetail :reviewList="items.reviewList" :rating="items.rating" />
     </div>
   </div>
 </template>
@@ -21,7 +21,6 @@
   import ReviewDetail from "@/components/placeDetail/ReviewDetail.vue"; 
   import RoomDetail from "@/components/placeDetail/RoomDetail.vue"; 
   import axios from 'axios';
-  import { reactive } from 'vue'
 
   export default {
     components: {
@@ -30,19 +29,37 @@
       ReviewDetail,
       RoomDetail
     },
-    setup() {
-    const state = reactive({
-      items: [],
-    })
 
-    axios.get('/api/place/placeDetail?place_id=1').then((res) => {
-      state.items = res.data
-      console.log(res)
-    })
+    data() {
+    return {
+      items: null, 
+    };
+  },
 
-    return { state }
-  }
-  };
+  computed: {
+    placeId() {
+      return this.$route.params.placeId;
+    },
+  },
+  
+  created() {
+    console.log( this.$route.params.placeId)
+    this.fetchPlaceDetails(this.placeId);
+  },
+
+  methods: {
+    fetchPlaceDetails(placeId) {
+      axios.get(`/api/place/placeDetail?place_id=${placeId}`)
+        .then(res => {
+          this.items = res.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the place details:", error);
+        });
+    },
+  },
+
+};
   </script>
   
   <style scoped>
