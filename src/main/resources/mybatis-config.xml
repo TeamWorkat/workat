@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="org.workat.workat_project.picture.entity.PlacePictureVO" alias="PlacePictureVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.review.entity.ReplyVO" alias="ReplyVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.review.entity.ReviewVO" alias="ReviewVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.place.entity.PlaceVO" alias="PlaceVO"></typeAlias>
+    </typeAliases>
+</configuration>

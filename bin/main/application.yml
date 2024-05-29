@@ -1,0 +1,12 @@
+spring:
+  application.name: workat_project
+
+  datasource:
+    url: "jdbc:mariadb://175.45.194.221:3306/workat_db"
+    username: "bituser"
+    password: "0000"
+    driver-class-name: org.mariadb.jdbc.Driver
+
+mybatis:
+# config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
