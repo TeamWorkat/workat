@@ -25,10 +25,12 @@ public class PlaceController {
     @GetMapping("/api/items")
     public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList() {
         return ResponseEntity.ok(placeService.getMainViewPlaceList());
-//    	List<PlaceVO> items = itemRepository.findAll();
-//        return items;
     }
-    
-//    @GetMapping("/placeDetail")
-    
+
+    @GetMapping("/placeDetail")
+    public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name="place_id") int placeId){
+        System.err.println("들어옴");
+        return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
+    }
+
 }

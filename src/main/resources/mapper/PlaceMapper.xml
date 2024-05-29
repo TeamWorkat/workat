@@ -7,7 +7,7 @@
     	SELECT p.place_id, p.place_nm, pp.picture_source  FROM place p, place_picture pp where p.place_id = pp.place_id ;
     </select>
 
-    <select id="getPlaceInfo" resultType="org.workat.workat_project.place.entity.PlaceVO">
+    <select id="getPlaceInfo" resultType="PlaceVO">
         select
             *
         from
