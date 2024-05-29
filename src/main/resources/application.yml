@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
 
 mybatis:
-# config-location: classpath:mybatis-config.xml
+  config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml
 
 naver:

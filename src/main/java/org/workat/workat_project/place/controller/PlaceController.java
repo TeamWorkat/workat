@@ -28,7 +28,8 @@ public class PlaceController {
     }
 
     @GetMapping("/placeDetail")
-    public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam int placeId){
+    public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name="place_id") int placeId){
+        System.err.println("들어옴");
         return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
     }
 

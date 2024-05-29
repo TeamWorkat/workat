@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import UserHome from '@/views/UserHome.vue';
 import UserList from '@/views/UserList.vue';
-
+import PlaceDetail from '@/views/PlaceDetail.vue';
 const routes = [
     {
         path: '/',
@@ -12,6 +12,11 @@ const routes = [
         path: '/admin/list',
         name: 'UserList',
         component: UserList
+    },
+    {
+        path: '/placeDetail',
+        name: 'PlaceDetail',
+        component: PlaceDetail
     }
 ];
 
