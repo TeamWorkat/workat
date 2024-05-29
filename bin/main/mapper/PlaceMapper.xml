@@ -1,9 +1,9 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///Users/duck/git/workat/mybatis-3-mapper.dtd"> -->
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "file:///Users/duck/git/workat/mybatis-3-mapper.dtd">
+<!-- <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  "https://mybatis.org/dtd/mybatis-3-config.dtd"> -->
 <mapper namespace="org.workat.workat_project.place.repository.PlaceMapper">
 	<!-- Place 테이블 가져오기 -->
     <select id="getMainViewPlaceList" resultType="org.workat.workat_project.place.entity.PlaceListDTO">
