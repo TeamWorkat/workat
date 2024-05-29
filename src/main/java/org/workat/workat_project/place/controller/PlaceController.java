@@ -30,7 +30,7 @@ public class PlaceController {
 
     @GetMapping("/placeDetail")
     public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name="place_id") int placeId){
-        System.err.println("들어옴");
+        System.err.println("온다아");
         return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
     }
 
