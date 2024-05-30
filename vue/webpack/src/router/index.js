@@ -3,6 +3,7 @@ import UserHome from '@/views/UserHome.vue';
 import UserList from '@/views/UserList.vue';
 import PlaceDetail from '@/views/PlaceDetail.vue';
 import UserDetail from "@/views/UserDetail.vue";
+import UserDelete from "@/views/UserDelete.vue";
 const routes = [
     {
         path: '/',
@@ -23,6 +24,11 @@ const routes = [
         name: 'UserDetail',
         component: UserDetail,
         props: route => ({ user_id: route.query.user_id })
+    },
+    {
+        path: '/user/delete',
+        name: 'UserDelete',
+        component: UserDelete
     }
 ];
 

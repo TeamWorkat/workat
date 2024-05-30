@@ -26,6 +26,11 @@
       </tr>
       </tbody>
     </table>
+    <div class="button-container">
+      <button type="button" class="btn btn-resetpw" @click="clickResetPasswordButton()">비밀번호 초기화</button>
+      <button type="button" class="btn btn-delete" @click="clickDeleteButton()">삭제</button>
+      <button type="button" class="btn btn-unlock" @click="clickUnlockButton()">잠금 해제</button>
+    </div>
   </div>
 </template>
 
@@ -58,6 +63,15 @@ export default {
       } else {
         this.selectedUsers = [];
       }
+    },
+    clickResetPasswordButton() {
+      // 비밀번호 초기화 이벤트 처리
+    },
+    clickDeleteButton() {
+      // 회원 삭제 처리
+    },
+    clickUnlockButton(){
+      // 계정 잠금 해제 버튼
     }
   }
 }
@@ -67,7 +81,6 @@ export default {
 .user-list-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   width: 80%;
   margin: 0 auto;
 }
@@ -102,5 +115,34 @@ export default {
 
 .user-table tr:hover {
   background-color: #ddd;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.button-container .btn {
+  margin-left: 10px;
+}
+
+.btn-resetpw {
+  background-color: #FFBF5E;
+  border: 1px solid #FFBF5E;
+  color: black;
+}
+
+.btn-delete {
+  background-color: #FF8D8D;
+  border: 1px solid #FF8D8D;
+  color: black;
+}
+
+.btn-unlock {
+  background-color: #8DC1FF;
+  border: 1px solid #8DC1FF;
+  color: black;
 }
 </style>
