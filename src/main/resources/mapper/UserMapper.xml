@@ -25,5 +25,20 @@
                WHERE user_id = #{user_id};
     </delete>
 
+    <update id="updateUser" parameterType="UserDetailDTO">
+        UPDATE user
+        SET user_email = #{user_email},
+            user_pwd = #{user_pwd},
+            user_nm = #{user_nm},
+            user_tel = #{user_tel}
+        WHERE user_id = #{user_id}
+    </update>
+
+    <update id="updatePassword" parameterType="UserVO">
+        UPDATE user
+        SET user_pwd = #{user_pwd}
+        WHERE user_id = #{user_id}
+    </update>
+
 
 </mapper>
