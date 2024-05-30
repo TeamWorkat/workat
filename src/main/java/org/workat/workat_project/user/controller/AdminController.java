@@ -24,5 +24,6 @@ public class AdminController {
     @GetMapping("/users")
     public ResponseEntity<List<UserListDTO>> getUserList() {
         return ResponseEntity.ok(userServiceImpl.getList());
+
     }
 }
