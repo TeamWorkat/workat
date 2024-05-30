@@ -5,6 +5,7 @@ import PlaceDetail from '@/views/PlaceDetail.vue';
 import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
+import SignupForm from "@/views/SignupForm.vue";
 const routes = [
     {
         path: '/',
@@ -35,6 +36,11 @@ const routes = [
         path: '/user/update',
         name: 'UserUpdate',
         component: UserUpdate
+    },
+    {
+        path: '/user/signup',
+        name: 'SignupForm',
+        component: SignupForm
     }
 ];
 

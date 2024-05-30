@@ -49,4 +49,18 @@
         WHERE user_id = #{user_id}
     </update>
 
+    <insert id="createUser" parameterType="UserDetailDTO">
+        INSERT INTO user (
+            user_email,
+            user_pwd,
+            user_nm,
+            user_tel
+            ) VALUES (
+                  #{user_email},
+                  #{user_pwd},
+                  #{user_nm},
+                  #{user_tel}
+            )
+    </insert>
+
 </mapper>

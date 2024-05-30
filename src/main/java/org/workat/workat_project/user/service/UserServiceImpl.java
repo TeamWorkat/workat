@@ -62,4 +62,11 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserDetailDTO userDetailDTO) {
         userMapper.updateUser(userDetailDTO);
     }
+
+    @Override
+    public void createUser(UserDetailDTO userDetailDTO) {
+        String encodedPassword = passwordEncoder.encode(userDetailDTO.getUser_pwd());
+        userDetailDTO.setUser_pwd(encodedPassword);
+        userMapper.createUser(userDetailDTO);
+    }
 }

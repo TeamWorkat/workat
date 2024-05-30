@@ -48,4 +48,10 @@ public class UserController {
         userServiceImpl.updateUser(userDetailDTO);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Void> createUser(@RequestBody UserDetailDTO userDetailDTO) {
+        userServiceImpl.createUser(userDetailDTO);
+        return ResponseEntity.noContent().build();
+    }
 }
