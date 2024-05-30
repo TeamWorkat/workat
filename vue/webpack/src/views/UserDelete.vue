@@ -8,10 +8,16 @@
     <input type="password" v-model="rawPassword" placeholder="비밀번호를 입력하세요">
     <button @click="checkPassword">확인</button>
 
-    <div v-if="showPopup" class="popup">
-      <p>정말로 탈퇴하시겠습니까?</p>
-      <button @click="confirmDelete">확인</button>
-      <button @click="closePopup">취소</button>
+    <div v-if="showPopup">
+      <div class="popup-container">
+          <div class="popup">
+            <h2>경고</h2>
+            <p>탈퇴 후에는 철회 및 계정 복구가 불가합니다.</p>
+            <p>정말로 탈퇴하시겠습니까?</p>
+            <button @click="confirmDelete">확인</button>
+            <button @click="closePopup">취소</button>
+          </div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,7 +45,7 @@ export default {
           user_pwd: this.rawPassword
         });
 
-        if (response.data.valid) {
+        if (response.data) {
           this.showPopup = true;
         } else {
           alert('비밀번호가 일치하지 않습니다.');
@@ -94,14 +100,29 @@ button:nth-of-type(2) {
   background-color: #dc3545;
 }
 
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .popup {
   position: fixed;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   background-color: white;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
 }
 
 .popup button {
