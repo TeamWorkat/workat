@@ -67,8 +67,27 @@ export default {
     clickResetPasswordButton() {
       // 비밀번호 초기화 이벤트 처리
     },
-    clickDeleteButton() {
-      // 회원 삭제 처리
+    async clickDeleteButton() {
+      if (this.selectedUsers.length === 0) {
+        alert('삭제할 회원을 선택해주세요.');
+        return;
+      }
+
+      if (confirm('선택된 회원 정보를 삭제하시겠습니까?')) {
+        try {
+          for (const user_id of this.selectedUsers) {
+            const url = `/api/user/${user_id}`;
+            console.log('DELETE 요청 URL:', url);
+            await axios.delete(url);
+          }
+
+          this.fetchUsers();
+          this.selectedUsers = [];
+        } catch (error) {
+          console.error('Error deleting users:', error);
+          alert('회원 정보 삭제 중 오류가 발생했습니다.');
+        }
+      }
     },
     clickUnlockButton(){
       // 계정 잠금 해제 버튼

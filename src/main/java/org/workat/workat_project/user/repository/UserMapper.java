@@ -16,4 +16,5 @@ public interface UserMapper {
     void deleteById(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);
     void updatePassword(UserVO user);
+    void createUser(UserDetailDTO userDetailDTO);
 }

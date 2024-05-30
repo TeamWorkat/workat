@@ -11,4 +11,5 @@ public interface UserService {
     boolean checkPassword(int user_id, String user_pwd);
     void deleteUser(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);
+    void createUser(UserDetailDTO userDetailDTO);
 }

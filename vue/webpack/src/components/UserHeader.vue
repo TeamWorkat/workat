@@ -17,7 +17,7 @@
 
     <div class="col-md-3 text-end">
       <button type="button" class="btn btn-outline-primary me-2">Sign In</button>
-      <button type="button" class="btn btn-primary">Sign Up</button>
+      <router-link to="/user/signup" class="btn btn-primary">Sign Up</router-link>
     </div>
   </header>
 </div>
