@@ -25,7 +25,7 @@ import org.workat.workat_project.room.entity.RoomVO;
 import org.workat.workat_project.room.repository.RoomMapper;
 import org.workat.workat_project.room.service.RoomService;
 
-@Service("placeService")
+@Service
 @RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
