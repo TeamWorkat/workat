@@ -5,13 +5,25 @@
 <mapper namespace="org.workat.workat_project.user.repository.UserMapper">
 
     <select id="getUserList" resultType="UserVO">
-        select * from user
+        SELECT * FROM user
     </select>
 
-    <select id="getUserDetail" resultType="org.workat.workat_project.user.entity.UserDetailDTO">
-        select *
-        from user
-        where user_id = #{user_id}
+    <select id="getUserDetail" resultType="UserDetailDTO">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
     </select>
+
+    <select id="findById" resultType="UserVO">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id};
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM user
+               WHERE user_id = #{user_id};
+    </delete>
+
 
 </mapper>
