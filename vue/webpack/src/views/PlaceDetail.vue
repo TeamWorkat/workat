@@ -6,7 +6,7 @@
     </div>
     <h3>객실 정보</h3>
     <div class="bottom-section">
-      <RoomDetail :roomList="items.roomList" />
+        <RoomDetail :roomList="items.roomList" />
     </div>
     <h3>이용 후기</h3>
     <div class="review-section">
@@ -27,7 +27,7 @@
       NaverMap,
       PlaceInfo,
       ReviewDetail,
-      RoomDetail
+      RoomDetail,
     },
 
     data() {
@@ -71,20 +71,36 @@
     margin: 20px auto;
     padding: 20px;
   }
-  
+    
   .top-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     grid-column: span 2;
   }
-  
+    
   .bottom-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     grid-column: span 2;
   }
   
   .review-section {
     grid-column: span 2;
+  }
+  
+  .room-calendar-section {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .room-section {
+    flex: 1;
+  }
+  
+  .calendar-section {
+    flex: 1;
   }
   
   h1 {
