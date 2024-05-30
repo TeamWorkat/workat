@@ -33,9 +33,21 @@ public class UserServiceImpl implements UserService {
     public boolean checkPassword(int user_id, String rawPassword) {
         UserVO user = userMapper.findById(user_id);
         if (user != null) {
-            System.out.println("user" + user);
-            System.out.println(passwordEncoder.encode(rawPassword));
-            return passwordEncoder.matches(rawPassword, user.getUser_pwd());
+            String storedPassword = user.getUser_pwd();
+            if (!storedPassword.startsWith("$2a$") && !storedPassword.startsWith("$2b$") && !storedPassword.startsWith("$2y$")) {
+                if (storedPassword.equals(rawPassword)) {
+                    String encodedPassword = passwordEncoder.encode(rawPassword);
+                    user.setUser_pwd(encodedPassword);
+                    userMapper.updatePassword(user);
+                    System.out.println(user.getUser_pwd());
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                System.out.println(user.getUser_pwd());
+                return passwordEncoder.matches(rawPassword, storedPassword);
+            }
         } else {
             throw new RuntimeException("User not found");
         }
@@ -44,5 +56,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(int user_id) {
         userMapper.deleteById(user_id);
+    }
+
+    @Override
+    public void updateUser(UserDetailDTO userDetailDTO) {
+        userMapper.updateUser(userDetailDTO);
     }
 }

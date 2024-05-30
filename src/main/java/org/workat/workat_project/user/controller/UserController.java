@@ -1,6 +1,7 @@
 package org.workat.workat_project.user.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,15 +30,22 @@ public class UserController {
     }
 
     @PostMapping("/check-password")
-    public ResponseEntity<Boolean> checkPassword(@RequestParam(name="user_id") int user_id,@RequestBody PasswordCheckDTO passwordCheckDTO) {
+    public ResponseEntity<Boolean> checkPassword(@RequestBody PasswordCheckDTO passwordCheckDTO) {
         boolean isValid = userServiceImpl.checkPassword(passwordCheckDTO.getUser_id(), passwordCheckDTO.getUser_pwd());
         System.out.println(passwordCheckDTO);
+        System.out.println(ResponseEntity.ok(isValid));
         return ResponseEntity.ok(isValid);
     }
 
     @DeleteMapping("/{user_id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int user_id) {
         userServiceImpl.deleteUser(user_id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Void> updateUser(@RequestBody UserDetailDTO userDetailDTO) {
+        userServiceImpl.updateUser(userDetailDTO);
         return ResponseEntity.noContent().build();
     }
 }
