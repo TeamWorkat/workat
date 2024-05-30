@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     List<UserListDTO> getUserList();
+    UserVO findUserByEmail(String email);
     UserDetailDTO getUserDetail(int user_id);
     UserVO findById(int user_id);
     void deleteById(int user_id);

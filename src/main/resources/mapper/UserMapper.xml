@@ -8,6 +8,15 @@
         SELECT * FROM user
     </select>
 
+    <select id="findUserByEmail" resultType="UserVO">
+        SELECT
+            *
+        FROM
+            user
+        WHERE
+            user_email = #{email}
+    </select>        
+
     <select id="getUserDetail" resultType="UserDetailDTO">
         SELECT *
         FROM user
@@ -39,6 +48,5 @@
         SET user_pwd = #{user_pwd}
         WHERE user_id = #{user_id}
     </update>
-
 
 </mapper>
