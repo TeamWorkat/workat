@@ -4,15 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.workat.workat_project.user.entity.PasswordCheckDTO;
 import org.workat.workat_project.user.entity.UserDetailDTO;
 import org.workat.workat_project.user.entity.UserListDTO;
 import org.workat.workat_project.user.service.UserServiceImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -26,5 +26,18 @@ public class UserController {
     @GetMapping("/detail")
     public ResponseEntity<UserDetailDTO> getUserDetail(@RequestParam(name= "user_id") int user_id) {
         return ResponseEntity.ok(userServiceImpl.getUserDetail(user_id));
+    }
+
+    @PostMapping("/check-password")
+    public ResponseEntity<Boolean> checkPassword(@RequestParam(name="user_id") int user_id,@RequestBody PasswordCheckDTO passwordCheckDTO) {
+        boolean isValid = userServiceImpl.checkPassword(passwordCheckDTO.getUser_id(), passwordCheckDTO.getUser_pwd());
+        System.out.println(passwordCheckDTO);
+        return ResponseEntity.ok(isValid);
+    }
+
+    @DeleteMapping("/{user_id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable int user_id) {
+        userServiceImpl.deleteUser(user_id);
+        return ResponseEntity.noContent().build();
     }
 }
