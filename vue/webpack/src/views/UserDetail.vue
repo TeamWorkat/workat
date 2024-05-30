@@ -11,6 +11,10 @@
       <p>사용자 정보를 불러오는 중입니다...</p>
     </div>
   </div>
+  <div class="button-container">
+    <button type="button" class="btn btn-primary" @click="clickEditButton()">수정</button>
+    <button type="button" class="btn btn-danger" @click="clickDeleteButton()">탈퇴</button>
+  </div>
 </template>
 
 <script>
@@ -20,7 +24,8 @@ export default {
   name: 'UserDetail',
   data() {
     return {
-      user: null
+      user: null,
+      user_id: null
     };
   },
   mounted() {
@@ -29,12 +34,18 @@ export default {
   methods: {
     async fetchUserDetail() {
       try {
-        const user_id = this.$route.query.user_id;
-        const response = await axios.get(`/api/user/detail?user_id=${user_id}`);
+        this.user_id = this.$route.query.user_id;
+        const response = await axios.get(`/api/user/detail?user_id=${this.user_id}`);
         this.user = response.data;
       } catch (error) {
         console.error('Error fetching user detail:', error);
       }
+    },
+    clickEditButton() {
+      this.$router.push({name: 'UserUpdate', query: {user_id: this.user_id}});
+    },
+    clickDeleteButton() {
+      this.$router.push({name: 'UserDelete', query: {user_id: this.user_id}});
     }
   }
 };
@@ -44,7 +55,7 @@ export default {
 .user-detail-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* 중앙 정렬 */
+  align-items: center;
   padding: 20px;
 }
 
@@ -54,5 +65,16 @@ export default {
 
 .user-detail-container p {
   margin: 5px 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.button-container .btn {
+  margin-left: 10px;
 }
 </style>
