@@ -20,7 +20,7 @@
 
 <script>
 import axios from 'axios';
-import { useRouter } from 'vue-router' // 이 부분을 추가하세요.
+import { useRouter } from 'vue-router' 
 
 export default {
   name: "UserCard",

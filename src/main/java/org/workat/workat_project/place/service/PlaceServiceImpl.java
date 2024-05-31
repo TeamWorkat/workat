@@ -1,28 +1,31 @@
 package org.workat.workat_project.place.service;
 
-import java.net.URLEncoder;
+
 import java.text.DecimalFormat;
+
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.workat.workat_project.picture.repository.PictureMapper;
 import org.workat.workat_project.place.entity.PlaceDetailDTO;
 import org.workat.workat_project.place.entity.PlaceListDTO;
 
 import org.workat.workat_project.place.entity.PlaceVO;
+import org.workat.workat_project.place.entity.SearchVO;
 import org.workat.workat_project.place.repository.PlaceMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.workat.workat_project.review.entity.ReviewResDTO;
 import org.workat.workat_project.review.service.ReviewService;
-import org.workat.workat_project.room.entity.RoomResDTO;
-import org.workat.workat_project.room.entity.RoomVO;
-import org.workat.workat_project.room.repository.RoomMapper;
 import org.workat.workat_project.room.service.RoomService;
 
 @Service("placeService")
@@ -39,6 +42,14 @@ public class PlaceServiceImpl implements PlaceService {
     private final RoomService roomService;
     private final ReviewService reviewService;
 
+
+    @Override
+    
+    public List<PlaceListDTO> getSearchPlaceList(SearchVO request) {
+       
+    	return placeMapper.getSearchPlaceList(request);
+    }
+    
     @Override
     public List<PlaceListDTO> getMainViewPlaceList() {
         return placeMapper.getMainViewPlaceList();
