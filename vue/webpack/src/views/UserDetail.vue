@@ -35,6 +35,7 @@ export default {
     async fetchUserDetail() {
       try {
         this.user_id = this.$route.query.user_id;
+        console.log("Fetching detail for user_id:", this.user_id);
         const response = await axios.get(`/api/user/detail?user_id=${this.user_id}`);
         this.user = response.data;
       } catch (error) {

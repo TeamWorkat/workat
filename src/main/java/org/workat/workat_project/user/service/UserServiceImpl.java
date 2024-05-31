@@ -1,5 +1,6 @@
 package org.workat.workat_project.user.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,11 @@ import org.workat.workat_project.user.repository.UserMapper;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserListDTO> getList() {
@@ -26,7 +25,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailDTO getUserDetail(int user_id) {
-        return userMapper.getUserDetail(user_id);
+        System.out.println("Service Layer - user_id: " + user_id);
+        UserVO userVO = userMapper.getUserDetail(user_id);
+        return convertToUserDetailDTO(userVO);
+    }
+
+    private UserDetailDTO convertToUserDetailDTO(UserVO userVO) {
+        UserDetailDTO userDetailDTO = new UserDetailDTO();
+        userDetailDTO.setUser_id(userVO.getUser_id());
+        userDetailDTO.setUser_email(userVO.getUser_email());
+        userDetailDTO.setUser_pwd(userVO.getUser_pwd());
+        userDetailDTO.setUser_nm(userVO.getUser_nm());
+        userDetailDTO.setUser_tel(userVO.getUser_tel());
+        userDetailDTO.setRole(userVO.getRole());
+        userDetailDTO.setCreated_date(userVO.getCreated_date());
+        userDetailDTO.setModified_date(userVO.getModified_date());
+        userDetailDTO.setStatus(userVO.getStatus());
+        userDetailDTO.setLogin_count(userVO.getLogin_count());
+        userDetailDTO.setAccount_locked(userVO.getAccount_locked());
+        userDetailDTO.setOauth(userVO.getOauth());
+        return userDetailDTO;
     }
 
     @Override
@@ -34,7 +52,7 @@ public class UserServiceImpl implements UserService {
         UserVO user = userMapper.findById(user_id);
         if (user != null) {
             String storedPassword = user.getUser_pwd();
-            if (!storedPassword.startsWith("$2a$") && !storedPassword.startsWith("$2b$") && !storedPassword.startsWith("$2y$")) {
+            if (!isPasswordEncoded(storedPassword)) {
                 if (storedPassword.equals(rawPassword)) {
                     String encodedPassword = passwordEncoder.encode(rawPassword);
                     user.setUser_pwd(encodedPassword);
@@ -60,13 +78,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserDetailDTO userDetailDTO) {
+        if (!isPasswordEncoded(userDetailDTO.getUser_pwd())) {
+            String encodedPassword = passwordEncoder.encode(userDetailDTO.getUser_pwd());
+            userDetailDTO.setUser_pwd(encodedPassword);
+        }
         userMapper.updateUser(userDetailDTO);
     }
 
     @Override
     public void createUser(UserDetailDTO userDetailDTO) {
-        String encodedPassword = passwordEncoder.encode(userDetailDTO.getUser_pwd());
-        userDetailDTO.setUser_pwd(encodedPassword);
+        if (!isPasswordEncoded(userDetailDTO.getUser_pwd())) {
+            String encodedPassword = passwordEncoder.encode(userDetailDTO.getUser_pwd());
+            userDetailDTO.setUser_pwd(encodedPassword);
+        }
         userMapper.createUser(userDetailDTO);
+    }
+
+    private boolean isPasswordEncoded(String password) {
+        return password.startsWith("$2a$") || password.startsWith("$2b$") || password.startsWith("$2y$");
     }
 }

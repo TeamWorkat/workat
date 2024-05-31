@@ -22,7 +22,8 @@ const routes = [
         name: 'UserList',
         component: UserList
     },
-    {        path: '/user/detail',
+    {
+        path: '/user/detail',
         name: 'UserDetail',
         component: UserDetail,
         props: route => ({ user_id: route.query.user_id })
