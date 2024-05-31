@@ -28,27 +28,27 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
-
-const date = ref()
-
-onMounted(() => {
-  const startDate = new Date()
-  const endDate = new Date(new Date().setDate(startDate.getDate() + 7))
-  date.value = [startDate, endDate]
-})
-export default {
-  components: { VueDatePicker },
-  name: 'ReservationCalendar',
-  setup() {
-    return {
-      date,
-      // disabledDates: [new Date()]
-    }
-  },
-}
+// import { ref, onMounted } from 'vue'
+// import VueDatePicker from '@vuepic/vue-datepicker'
+// import '@vuepic/vue-datepicker/dist/main.css'
+//
+// const date = ref()
+//
+// onMounted(() => {
+//   const startDate = new Date()
+//   const endDate = new Date(new Date().setDate(startDate.getDate() + 7))
+//   date.value = [startDate, endDate]
+// })
+// export default {
+//   components: { VueDatePicker },
+//   name: 'ReservationCalendar',
+//   setup() {
+//     return {
+//       date,
+//       // disabledDates: [new Date()]
+//     }
+//   },
+// }
 </script>
 
 <style scoped>
