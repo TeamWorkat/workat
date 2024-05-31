@@ -2,6 +2,7 @@ package org.workat.workat_project.user.service;
 
 import org.workat.workat_project.user.entity.UserDetailDTO;
 import org.workat.workat_project.user.entity.UserListDTO;
+import org.workat.workat_project.user.entity.UserVO;
 
 import java.util.List;
 

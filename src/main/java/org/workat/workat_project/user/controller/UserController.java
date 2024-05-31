@@ -21,11 +21,13 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userServiceImpl;
 
     @GetMapping("/detail")
     public ResponseEntity<UserDetailDTO> getUserDetail(@RequestParam(name= "user_id") int user_id) {
+        System.out.println("Received user_id: " + user_id);
+        UserDetailDTO userDetail = userServiceImpl.getUserDetail(user_id);
+        System.out.println("Retrieved user detail: " + userDetail);
         return ResponseEntity.ok(userServiceImpl.getUserDetail(user_id));
     }
 

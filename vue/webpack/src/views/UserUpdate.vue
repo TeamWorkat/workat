@@ -3,7 +3,7 @@
     <h4>프로필 수정</h4>
     <div v-if="user">
       <label>이메일:</label>
-      <input v-model="user.user_email" type="email">
+      <input v-model="user.user_email" type="email" disabled>
 
       <label>비밀번호:</label>
       <input v-model="user_pwd" type="password" required>
@@ -44,7 +44,16 @@ export default {
     async fetchUserDetail() {
       try {
         const user_id = this.$route.query.user_id;
-        const response = await axios.get(`/api/user/detail?user_id=${user_id}`);
+        console.log('Loaded user_id from URL:', user_id);
+        if (!user_id) {
+          console.error('user_id is missing from query parameters');
+          return;
+        }
+        const url = `/api/user/detail?user_id=${user_id}`;
+        console.log('Fetching user detail from URL:', url);
+
+        const response = await axios.get(url);
+        console.log('User detail response:', response);
         this.user = response.data;
       } catch (error) {
         console.error('Error fetching user detail:', error);
@@ -61,9 +70,11 @@ export default {
           ...this.user,
           user_pwd: this.user_pwd
         };
+        console.log("Updating user:", userToUpdate);
         await axios.post('/api/user/update', userToUpdate);
         alert('회원 정보 수정이 완료되었습니다.');
-        this.$router.push({ name: 'UserDetail', query: { user_id: this.user.user_id } });
+        console.log("Redirecting to user detail with user_id:", this.user.user_id);
+        this.$router.push({name: 'UserDetail', query: {user_id: this.user.user_id}});
       } catch (error) {
         console.error('Error updating user:', error);
       }
