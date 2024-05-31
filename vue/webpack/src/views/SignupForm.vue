@@ -2,19 +2,19 @@
   <div class="signup-container">
     <h4>회원 가입</h4>
     <label>이메일:</label>
-    <input v-model="user.user_email" type="email" required>
+    <input v-model="user.user_email" type="email" required="required">
 
     <label>비밀번호:</label>
-    <input v-model="user_pwd" type="password" required>
+    <input v-model="user_pwd" type="password" required="required">
 
     <label>비밀번호 확인:</label>
-    <input v-model="confirmPassword" type="password" required>
+    <input v-model="confirmPassword" type="password" required="required">
 
     <label>이름:</label>
-    <input v-model="user.user_nm" type="text" required>
+    <input v-model="user.user_nm" type="text" required="required">
 
     <label>전화번호:</label>
-    <input v-model="user.user_tel" type="text" required>
+    <input v-model="user.user_tel" type="text" required="required">
 
     <button @click="signup">회원 가입</button>
   </div>
