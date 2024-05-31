@@ -35,7 +35,7 @@
       items: [],
     })
 
-    axios.get('/api/place/placeDetail?place_id=1').then((res) => {
+    axios.get('/api/place/placeDetail?place_id=1 ').then((res) => {
       state.items = res.data
       console.log(res)
     })
