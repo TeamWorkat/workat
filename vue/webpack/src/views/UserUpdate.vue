@@ -6,10 +6,10 @@
       <input v-model="user.user_email" type="email" disabled>
 
       <label>비밀번호:</label>
-      <input v-model="user_pwd" type="password" required>
+      <input v-model="user_pwd" type="password" required="required">
 
       <label>비밀번호 확인:</label>
-      <input v-model="confirmPassword" type="password" required>
+      <input v-model="confirmPassword" type="password" required="required">
 
       <label>이름:</label>
       <input v-model="user.user_nm" type="text">
