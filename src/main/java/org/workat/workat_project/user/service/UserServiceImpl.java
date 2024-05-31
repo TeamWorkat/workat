@@ -1,7 +1,6 @@
 package org.workat.workat_project.user.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.workat.workat_project.user.entity.UserDetailDTO;
@@ -93,6 +92,15 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.createUser(userDetailDTO);
     }
+
+    @Override
+    public boolean checkLoginInfo(String user_email, String user_pwd) {
+        System.out.println(user_email);
+        UserVO user = userMapper.findUserByEmail(user_email);
+        String storedPassword = user.getUser_pwd();
+        return passwordEncoder.matches(user_pwd, storedPassword);
+    }
+
 
     private boolean isPasswordEncoded(String password) {
         return password.startsWith("$2a$") || password.startsWith("$2b$") || password.startsWith("$2y$");

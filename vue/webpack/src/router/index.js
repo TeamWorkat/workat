@@ -6,6 +6,7 @@ import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
+import LoginForm from "@/views/LoginForm.vue";
 const routes = [
     {
         path: '/',
@@ -42,6 +43,11 @@ const routes = [
         path: '/user/signup',
         name: 'SignupForm',
         component: SignupForm
+    },
+    {
+        path: '/user/login',
+        name: 'LoginForm',
+        component: LoginForm
     }
 ];
 
