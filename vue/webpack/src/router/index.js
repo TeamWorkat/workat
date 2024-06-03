@@ -33,10 +33,17 @@ const routes = [
     },
     {
         path: '/camping',
-        name: 'UserCamping', // 이 이름이 중복되지 않도록 주의하세요.
+        name: 'UserCamping',
         component: UserHome,
         meta: { type: 'camping' }
-    }
+    },
+    {
+        path: '/search',
+        name: 'UserSearch',
+        component: UserHome,
+        meta: { type: 'search' }
+    },
+    
 ];
 
 const router = createRouter({

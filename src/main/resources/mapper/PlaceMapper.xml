@@ -27,7 +27,8 @@
     FROM place p
     JOIN place_picture pp ON p.place_id = pp.place_id
     JOIN room r ON p.place_id = r.place_id
-    WHERE p.loc_id = #{location}
+    WHERE (#{location} = 0 OR p.loc_id = #{location})
+    AND (#{category} = 'All' OR p.category = #{category})
     AND #{guests} BETWEEN r.min_people AND r.max_people
      AND NOT EXISTS (
         SELECT 1
