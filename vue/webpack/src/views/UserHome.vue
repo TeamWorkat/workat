@@ -20,6 +20,7 @@ import { useRoute } from 'vue-router'
 
 import axios from 'axios'
 import { reactive } from 'vue'
+import { watch } from 'vue'
 
 export default {
   components: {
@@ -33,7 +34,7 @@ export default {
     })
     const route = useRoute()
 
-    function getCategoryPlace(category){
+    function getCategoryPlace(category) {
       axios
         .get('/api/place/category', {
           params: {
@@ -49,21 +50,39 @@ export default {
         })
     }
 
-    if (route.meta.type === 'home') {
-      axios.get('/api/place/items').then((res) => {
-        state.items = res.data
-        console.log(res)
-      })
-    } else if (route.meta.type === 'hotel') {
-      getCategoryPlace('hotel')
-    } else if (route.meta.type === 'stay') {
-      getCategoryPlace('stay')
-    } else if (route.meta.type === 'camping') {
-      getCategoryPlace('camping')
+    function updateItemsBasedOnRoute() {
+      if (route.meta.type === 'home') {
+        axios.get('/api/place/items').then((res) => {
+          state.items = res.data
+          console.log(res)
+        })
+      } else if (route.meta.type === 'hotel') {
+        getCategoryPlace('hotel')
+      } else if (route.meta.type === 'stay') {
+        getCategoryPlace('stay')
+      } else if (route.meta.type === 'camping') {
+        getCategoryPlace('camping')
+      } else if (route.meta.type === 'search') {
+        try {
+          state.items = JSON.parse(decodeURIComponent(route.query.data))
+        } catch (e) {
+          console.error('Failed to parse query data:', e)
+        }
+      }
     }
+
+    // 초기 로드 시 아이템 업데이트
+    updateItemsBasedOnRoute()
+
+    // route가 변경될 때마다 업데이트
+    watch(route, () => {
+      updateItemsBasedOnRoute()
+    })
+
     return { state }
   }
 }
 </script>
+
 
 <style scoped></style>

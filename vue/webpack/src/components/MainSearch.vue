@@ -76,12 +76,13 @@
     ></GuestModal>
   </div>
 </template>
-
 <script>
 import { ref, onMounted, nextTick } from 'vue'
 import UserCalendar from '@/components/UserCalendar.vue'
 import axios from 'axios'
 import GuestModal from '@/components/GuestModal.vue'
+import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'MainSearch',
@@ -90,8 +91,8 @@ export default {
     GuestModal,
   },
   setup() {
-    const guestCount = ref(0)
-    const datepick = ref(['', ''])
+    const guestCount = ref(1)
+    const datepick = ref(['',''])
     const popState = ref(false)
     const localName = ref('지역')
     const localValue = ref(0)
@@ -118,31 +119,59 @@ export default {
       dropdownStyle.value.left = `${rectbar.left}px`
     }
 
+
+    function defaultDate () {
+      
+      const startDate = new Date()
+      const endDate = new Date(new Date().setDate(startDate.getDate() + 1))
+      
+      const startYear = startDate.getFullYear()
+      const startMonth = (startDate.getMonth() + 1).toString().padStart(2,'0');
+      const startDay = startDate.getDate().toString().padStart(2,'0');
+
+      datepick.value[0] = `${startYear}-${startMonth}-${startDay}`
+
+      const endYear = endDate.getFullYear()
+      const endMonth = (endDate.getMonth() + 1).toString().padStart(2,'0');
+      const endDay = endDate.getDate().toString().padStart(2,'0');
+
+      datepick.value[1] = `${endYear}-${endMonth}-${endDay}`
+       
+    }
+    defaultDate()
+
+
+
+
     const selectLocation = (location) => {
       localName.value = location
-      switch (location){
-        case('서울'):
-        localValue.value = 1
-        break;
-        case('경기도'):
-        localValue.value = 2
-        break;
-        case('강원도'):
-        localValue.value = 3
-        break;
-        case('경상도'):
-        localValue.value = 4
-        break;
-        case('전라도'):
-        localValue.value = 5
-        break;
-        case('충청도'):
-        localValue.value = 6
-        break;
-        case('제주도'):
-        localValue.value = 7
-        break;
-        default: break;
+      switch (location) {
+        case '지역':
+          localValue.value = 0
+          break
+        case '서울':
+          localValue.value = 1
+          break
+        case '경기도':
+          localValue.value = 2
+          break
+        case '강원도':
+          localValue.value = 3
+          break
+        case '경상도':
+          localValue.value = 4
+          break
+        case '전라도':
+          localValue.value = 5
+          break
+        case '충청도':
+          localValue.value = 6
+          break
+        case '제주도':
+          localValue.value = 7
+          break
+        default:
+          break
       }
       isDropdownOpen.value = false
     }
@@ -156,23 +185,52 @@ export default {
       guestCount.value = newCount
     }
 
+    const router = useRouter()
+    const route = useRoute()
+
+    
+    // 라우트 메타 타입에 따라 category 변경
+    switch (route.meta.type) {
+      case 'home':
+        category.value = 'All'
+        console.log(category.value)
+        break
+      case 'hotel':
+        category.value = 'hotel'
+        console.log(category.value)
+        break
+      case 'stay':
+        category.value = 'stay'
+        console.log(category.value)
+        break
+      case 'camping':
+        category.value = 'camping'
+        console.log(category.value)
+        break
+    }
+
     const search = () => {
       //만약 데이터가 하나라도 없을 경우 어떻게 처리할지 고민해야할듯
-  axios.post('/api/place/search', {
-    category: category.value,
-    location: localValue.value,
-    startDate: datepick.value[0],
-    endDate: datepick.value[1],
-    guests: guestCount.value
-  })
-  .then(res => {
-    console.log(res)
-  })
-  .catch(err => {
-    console.log(err)
-  })
-}
-
+      axios
+        .post('/api/place/search', {
+          category: category.value,
+          location: localValue.value,
+          startDate: datepick.value[0],
+          endDate: datepick.value[1],
+          guests: guestCount.value,
+        })
+        .then((res) => {
+          console.log(res)
+          
+          router.push({
+            name: 'UserSearch',
+            query: { data: JSON.stringify(res.data) },
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
 
     onMounted(() => {
       if (bar.value) {
@@ -198,7 +256,6 @@ export default {
   },
 }
 </script>
-
 
 <style scoped>
 * {

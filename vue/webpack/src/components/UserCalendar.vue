@@ -5,6 +5,8 @@
     multi-calendars
     locale="ko"
     :enable-time-picker="false"
+    :min-date="new Date()"
+    :max-date="maxDate"
     @update:modelValue="updateDate"
   >
     <template #dp-input>
@@ -18,6 +20,7 @@ import { ref, onMounted, computed } from 'vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
+
 export default {
   components: { VueDatePicker },
   name: 'UserCalendar',
@@ -25,7 +28,7 @@ export default {
     const date = ref([])
     onMounted(() => {
       const startDate = new Date()
-      const endDate = new Date(new Date().setDate(startDate.getDate() + 7))
+      const endDate = new Date(new Date().setDate(startDate.getDate() + 1))
       date.value = [startDate, endDate]
     })
 
@@ -50,12 +53,20 @@ export default {
 
     const formattedDate = computed(() => {
       if (date.value && date.value.length === 2) {
-        return `${date.value[0].toLocaleDateString()} + ${date.value[1].toLocaleDateString()}`
+        return `${date.value[0].toLocaleDateString()}  ${date.value[1].toLocaleDateString()}`
       }
       return ''
     })
 
+    const maxDate = computed(() => {
+      const today = new Date();
+      const nextYear = new Date(today.setFullYear(today.getFullYear() + 1));
+      return nextYear;
+    });
+
+    
     return {
+      maxDate,
       date,
       updateDate,
       formattedDate
