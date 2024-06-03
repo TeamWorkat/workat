@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="reservation-calendar">
-      <ReservationCalendar :selectedRoom="selectedRoom" />
+      <ReservationCalendar :selectedRoom="selectedRoom" :placeInfo="placeInfo" />
     </div>
   </div>
 </template>
@@ -37,6 +37,10 @@ export default {
       type: Array,
       required: true,
     },
+    placeInfo:{
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
@@ -44,10 +48,19 @@ export default {
     };
   },
   computed: {
-    selectedRoom() {
-      return this.roomList.find(room => room.roomVO.room_id === this.selectedRoomId)?.roomVO || null;
+  selectedRoom() {
+    const room = this.roomList.find(room => room.roomVO.room_id === this.selectedRoomId);
+
+    if (room) {
+      const reservedDates = room.reserved_date.map(dateStr => new Date(dateStr));
+      return {
+        roomVO: room.roomVO,
+        reserved_date: reservedDates  || []
+      };
     }
-  },
+    return null;
+  }
+},
   methods: {
     selectRoom(roomId) {
       this.selectedRoomId = roomId;

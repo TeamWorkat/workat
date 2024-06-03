@@ -15,4 +15,5 @@
         where
             place_id = #{placeId}
     </select>
+
 </mapper>
