@@ -17,4 +17,6 @@ public interface PlaceMapper {
     PlaceVO getPlaceInfo(int placeId);
     
     List<PlaceListDTO> getSearchPlaceList(SearchVO request);
+    
+    List<PlaceListDTO> getCategoryViewPlaceList(String category);
 }

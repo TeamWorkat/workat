@@ -16,8 +16,7 @@
 <script>
 import MainSearch from '@/components/MainSearch.vue'
 import UserCard from '@/components/UserCard.vue'
-
-
+import { useRoute } from 'vue-router'
 
 import axios from 'axios'
 import { reactive } from 'vue'
@@ -25,24 +24,46 @@ import { reactive } from 'vue'
 export default {
   components: {
     MainSearch,
-    UserCard
+    UserCard,
   },
+
   setup() {
     const state = reactive({
       items: [],
     })
+    const route = useRoute()
 
-    axios.get('/api/place/items').then((res) => {
-      state.items = res.data
-      console.log(res)
-    })
-    return { state,
-     }
-  },
+    function getCategoryPlace(category){
+      axios
+        .get('/api/place/category', {
+          params: {
+            category: category,
+          },
+        })
+        .then((res) => {
+          state.items = res.data
+          console.log(res.data)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
+
+    if (route.meta.type === 'home') {
+      axios.get('/api/place/items').then((res) => {
+        state.items = res.data
+        console.log(res)
+      })
+    } else if (route.meta.type === 'hotel') {
+      getCategoryPlace('hotel')
+    } else if (route.meta.type === 'stay') {
+      getCategoryPlace('stay')
+    } else if (route.meta.type === 'camping') {
+      getCategoryPlace('camping')
+    }
+    return { state }
+  }
 }
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

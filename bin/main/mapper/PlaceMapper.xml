@@ -34,11 +34,16 @@
         FROM unavailable_date ud
         WHERE ud.room_id = r.room_id
         AND DATE_FORMAT(ud.reserved_date, '%Y-%m-%d') BETWEEN #{startDate} AND #{endDate}
-    );
-    
-    
-  
+    )
+    GROUP BY p.place_id;
 </select>
+
+<select id="getCategoryViewPlaceList"
+		resultType="org.workat.workat_project.place.entity.PlaceListDTO">
+		SELECT p.place_id, p.place_nm, pp.picture_source FROM place
+		p, place_picture
+		pp where p.place_id = pp.place_id AND p.category = #{category};
+	</select>
 
 
  
