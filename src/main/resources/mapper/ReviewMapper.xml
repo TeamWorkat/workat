@@ -4,19 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.workat.workat_project.review.repository.ReviewMapper">
     <select id="getReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
-        select
-            *
-        from
-            review
-        where
-            place_id = #{placeId}
+        select *
+        from review
+        where place_id = #{placeId}
     </select>
+
     <select id="getReply" resultType="org.workat.workat_project.review.entity.ReplyVO">
-            select
-                *
-            from
-                reply
-            where
-                review_id = #{reviewId}
-        </select>
+        select *
+        from reply
+        where review_id = #{reviewId}
+    </select>
+
+    <select id="getStarPointEach" resultType="StarPointDTO">
+        SELECT rating, COUNT(*) AS count
+        FROM review
+        WHERE place_id = #{placeId}
+        GROUP BY rating;
+    </select>
+
 </mapper>
