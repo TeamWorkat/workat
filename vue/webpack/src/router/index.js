@@ -13,7 +13,8 @@ const routes = [
     {
         path: '/',
         name: 'UserHome',
-        component: UserHome
+        component: UserHome,
+        meta: { type: 'home' }
     },
     {
         path: '/placeDetail/:placeId',
@@ -25,6 +26,36 @@ const routes = [
         name: 'UserList',
         component: UserList
     },
+    {
+        path: '/placeDetail',
+        name: 'PlaceDetail',
+        component: PlaceDetail
+    },
+    {
+        path: '/hotel',
+        name: 'UserHotel',
+        component: UserHome,
+        meta: { type: 'hotel' }
+    },
+    {
+        path: '/stay',
+        name: 'UserStay',
+        component: UserHome,
+        meta: { type: 'stay' }
+    },
+    {
+        path: '/camping',
+        name: 'UserCamping',
+        component: UserHome,
+        meta: { type: 'camping' }
+    },
+    {
+        path: '/search',
+        name: 'UserSearch',
+        component: UserHome,
+        meta: { type: 'search' }
+    },
+    
     {
         path: '/user/detail',
         name: 'UserDetail',
