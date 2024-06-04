@@ -43,6 +43,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation group: 'org.json', name: 'json', version: '20160810'
+
 }
 
 tasks.named('test') {

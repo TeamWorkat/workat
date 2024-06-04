@@ -6,6 +6,8 @@ import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
+import ReservationCheck from "@/views/ReservationCheck.vue";
+
 const routes = [
     {
         path: '/',
@@ -41,7 +43,12 @@ const routes = [
         path: '/user/signup',
         name: 'SignupForm',
         component: SignupForm
-    }
+    },
+    {
+        path: '/reservation/check',
+        name: 'ReservationCheck',
+        component: ReservationCheck,
+    },
 ];
 
 const router = createRouter({

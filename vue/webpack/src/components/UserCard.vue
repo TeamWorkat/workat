@@ -28,7 +28,6 @@ export default {
    methods: {
     goDetailPage(placeId) {
       this.$router.push({ name: 'PlaceDetail', params: { placeId } });
-      console.log(placeId);
     },
   },
 
