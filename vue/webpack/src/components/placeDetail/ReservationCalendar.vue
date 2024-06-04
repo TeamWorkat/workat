@@ -8,7 +8,7 @@
         :enable-time-picker="false"
         :month-change-on-scroll="true" 
         :min-date="new Date()"
-        :range="true" 
+        :range="{ noDisabledRange: true }"
         multi-calendars 
         locale="ko" 
         :disabled-dates="disabledDates"
@@ -38,6 +38,7 @@
 import { ref, computed, watch, onMounted, defineProps } from 'vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import {useRouter} from 'vue-router'
 
 const props = defineProps({
   selectedRoom: {
@@ -57,6 +58,10 @@ const disabledDates = computed(() => {return props.selectedRoom ? props.selected
 const maxPeople = computed(() => {return props.selectedRoom ? props.selectedRoom.roomVO.max_people : 0;});
 const minPeople = computed(() => {return props.selectedRoom ? props.selectedRoom.roomVO.min_people : 0;});
 const addPrice = computed(() => {return props.selectedRoom ? props.selectedRoom.roomVO.add_price : 0;});
+const placeId = computed(() => {return props.placeInfo ? props.placeInfo.place_id : 0;});
+const roomVO = computed(() => {return props.selectedRoom ? props.selectedRoom.roomVO : 0;});
+const roomPictureList = computed(() => {return props.selectedRoom ? props.selectedRoom.room_picture_source : []});
+const router = useRouter();
 
 const bak = computed(() => {
   if (date.value && date.value.length === 2) {
@@ -96,12 +101,29 @@ watch(() => props.selectedRoom, (newSelectedRoom) => {
 
 onMounted(() => {
   const startDate = new Date();
-  const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+  const endDate = new Date(new Date().setDate(startDate.getDate() + 1));
   date.value = [startDate, endDate];
 })
 
 function reserve() {
-  alert(`예약 완료! 총 요금: ${totalFee.value}원`)
+  const startDate = date.value[0];
+  const endDate = date.value[1];
+  console.log(roomPictureList.value);
+  console.log(disabledDates)
+  router.push({
+  name: 'ReservationCheck',
+  state: {
+    roomVO: JSON.stringify(roomVO.value),
+    bak: bak.value,
+    placeId: placeId.value,
+    guests: guests.value,
+    totalFee: totalFee.value,
+    startDate: startDate,
+    endDate: endDate,
+    roomPictureList: JSON.stringify(roomPictureList.value),
+    disabledDates: JSON.stringify(disabledDates.value)
+  }
+})
 }
 
 </script>

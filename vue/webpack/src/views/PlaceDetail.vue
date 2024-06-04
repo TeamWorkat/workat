@@ -6,7 +6,7 @@
     </div>
     <h3>객실 정보</h3>
     <div class="bottom-section">
-        <RoomDetail :roomList="items.roomList" :placeInfo="items.placeVO"/>
+        <RoomDetail :roomList="items.roomList" :placeInfo="items.placeVO" />
     </div>
     <div class="star-rating">
       <StarPoint :rating="items.rating" :starPoints="items.star_points"/>

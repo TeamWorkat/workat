@@ -8,7 +8,7 @@
     <h3>{{starAvg}}</h3>
   </div>
 <div>
-    <div>
+    <div class="star-point-bar-wrapper">
       <StarPointBar :starPoints="props.starPoints"/>
     </div>
 </div>
@@ -48,4 +48,7 @@ const starAvg = ref(props.rating ? props.rating : 0)
   margin-right: 400px; /* 별점과 바 그래프 사이의 간격 조절 */
 }
 
+.star-point-bar-wrapper {
+  margin-top: 100px; /* StarPointBar 위 여백 추가 */
+}
 </style>

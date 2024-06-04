@@ -17,11 +17,10 @@ public class ReservationVO {
     private String res_name;
     private LocalDateTime check_in;
     private LocalDateTime check_out;
-    private boolean res_yn;
+    private String res_yn;
     private int res_people_num;
     private String res_message;
     private int place_id;
     private int user_id;
     private int room_id;
-
 }
