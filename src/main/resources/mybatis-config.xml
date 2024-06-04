@@ -7,5 +7,8 @@
         <typeAlias type="org.workat.workat_project.review.entity.ReplyVO" alias="ReplyVO"></typeAlias>
         <typeAlias type="org.workat.workat_project.review.entity.ReviewVO" alias="ReviewVO"></typeAlias>
         <typeAlias type="org.workat.workat_project.place.entity.PlaceVO" alias="PlaceVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.reservation.entity.ReservationVO" alias="ReservationVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.user.entity.UserVO" alias="UserVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.user.entity.UserDetailDTO" alias="UserDetailDTO"></typeAlias>
     </typeAliases>
 </configuration>

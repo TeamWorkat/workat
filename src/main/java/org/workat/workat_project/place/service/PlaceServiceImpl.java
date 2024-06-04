@@ -28,7 +28,7 @@ import org.workat.workat_project.review.entity.ReviewResDTO;
 import org.workat.workat_project.review.service.ReviewService;
 import org.workat.workat_project.room.service.RoomService;
 
-@Service("placeService")
+@Service
 @RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
