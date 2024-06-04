@@ -25,13 +25,15 @@ import org.workat.workat_project.place.repository.PlaceMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.workat.workat_project.review.entity.ReviewResDTO;
+import org.workat.workat_project.review.repository.ReviewMapper;
 import org.workat.workat_project.review.service.ReviewService;
 import org.workat.workat_project.room.service.RoomService;
 
-@Service("placeService")
+@Service
 @RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
+    private final ReviewMapper reviewMapper;
     @Value("${naver.client-id}")
     private String clientId;
     @Value("${naver.client-secret}")
@@ -76,8 +78,9 @@ public class PlaceServiceImpl implements PlaceService {
         List<ReviewResDTO> reviewList = reviewService.getReviewInfoList(placeId);
         placeDetailDTO.setReviewList(reviewList);
 
-        //별점 평균값 계산
+        //별점 및 평균값 입력
         placeDetailDTO.setRating(calculateRating(reviewList));
+        placeDetailDTO.setStar_points(reviewMapper.getStarPointEach(placeId));
 
         return placeDetailDTO;
     }

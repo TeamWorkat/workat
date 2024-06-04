@@ -18,4 +18,6 @@ public class RoomVO {
     private String room_content;
     private int sold_num;
     private int max_people;
+    private int min_people;
+    private int add_price;
 }
