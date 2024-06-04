@@ -11,14 +11,14 @@
 		pp where p.place_id = pp.place_id ;
 	</select>
 
-	<select id="getPlaceInfo" resultType="PlaceVO">
-		select
-		*
-		from
-		place
-		where
-		place_id = #{placeId}
-	</select>
+    <select id="getPlaceInfo" resultType="PlaceVO">
+        select
+            *
+        from
+            place
+        where
+            place_id = #{placeId}
+    </select>
 
 <select id="getSearchPlaceList"
     resultType="org.workat.workat_project.place.entity.PlaceListDTO"
@@ -40,6 +40,4 @@
   
 </select>
 
-
- 
 </mapper>

@@ -10,5 +10,6 @@
         <typeAlias type="org.workat.workat_project.reservation.entity.ReservationVO" alias="ReservationVO"></typeAlias>
         <typeAlias type="org.workat.workat_project.user.entity.UserVO" alias="UserVO"></typeAlias>
         <typeAlias type="org.workat.workat_project.user.entity.UserDetailDTO" alias="UserDetailDTO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.review.entity.StarPointDTO" alias="StarPointDTO"></typeAlias>
     </typeAliases>
 </configuration>
