@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.workat.workat_project.reservation.repository.ReservationMapper">
+
+    <insert id="insertTempReservation" parameterType="ReservationVO" useGeneratedKeys="true" keyProperty="res_id">
+        INSERT INTO reservation (
+               res_price,
+               res_name,
+               check_in,
+               check_out,
+               res_people_num,
+               place_id,
+               user_id,
+               room_id
+           ) VALUES (
+               #{res_price},
+               #{res_name},
+               #{check_in},
+               #{check_out},
+               #{res_people_num},
+               #{place_id},
+               #{user_id},
+               #{room_id}
+           )
+    </insert>
+
+    <delete id="deleteReservationNotPaid">
+        delete
+        from reservation
+        where id
+                  not in
+              (select res_id
+               from payment)
+    </delete>
+
+    <select id="selectReservationById" resultType="ReservationVO">
+        select *
+        from reservation
+        where res_id = #{reservationId}
+    </select>
+
+</mapper>
