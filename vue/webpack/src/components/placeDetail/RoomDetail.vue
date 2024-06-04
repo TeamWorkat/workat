@@ -55,7 +55,8 @@ export default {
       const reservedDates = room.reserved_date.map(dateStr => new Date(dateStr));
       return {
         roomVO: room.roomVO,
-        reserved_date: reservedDates  || []
+        reserved_date: reservedDates,
+        room_picture_source: room.room_picture_source || []
       };
     }
     return null;

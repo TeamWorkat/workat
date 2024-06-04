@@ -13,7 +13,8 @@
                res_people_num,
                place_id,
                user_id,
-               room_id
+               room_id,
+               res_message
            ) VALUES (
                #{res_price},
                #{res_name},
@@ -22,7 +23,8 @@
                #{res_people_num},
                #{place_id},
                #{user_id},
-               #{room_id}
+               #{room_id},
+               #{res_message}
            )
     </insert>
 

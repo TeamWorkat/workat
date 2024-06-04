@@ -11,5 +11,7 @@
         <typeAlias type="org.workat.workat_project.user.entity.UserVO" alias="UserVO"></typeAlias>
         <typeAlias type="org.workat.workat_project.user.entity.UserDetailDTO" alias="UserDetailDTO"></typeAlias>
         <typeAlias type="org.workat.workat_project.review.entity.StarPointDTO" alias="StarPointDTO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.payment.entity.PaymentDTO" alias="PaymentDTO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.payment.entity.PaymentVO" alias="PaymentVO"></typeAlias>
     </typeAliases>
 </configuration>
