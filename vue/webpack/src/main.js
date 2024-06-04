@@ -4,6 +4,8 @@ import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';
 import BootstrapVueNext from 'bootstrap-vue-next';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 import { createNaverMap } from "vue3-naver-maps";
 
 createApp(App)
@@ -14,4 +16,5 @@ createApp(App)
         category: "ncp", // Optional
         subModules: [], // Optional
         })
-    .mount('#app');
+        .component('VueDatePicker', VueDatePicker)
+        .mount('#app');
