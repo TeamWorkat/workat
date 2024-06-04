@@ -48,13 +48,16 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     
     public List<PlaceListDTO> getSearchPlaceList(SearchVO request) {
-       
     	return placeMapper.getSearchPlaceList(request);
     }
     
     @Override
     public List<PlaceListDTO> getMainViewPlaceList() {
         return placeMapper.getMainViewPlaceList();
+    }
+    @Override
+    public List<PlaceListDTO> getCategoryViewPlaceList(String category) {
+        return placeMapper.getCategoryViewPlaceList(category);
     }
 
     @Override
