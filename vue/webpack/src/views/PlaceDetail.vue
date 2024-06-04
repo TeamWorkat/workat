@@ -1,16 +1,19 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="items">
     <div class="top-section">
-      <PlaceInfo :placeInfo="state.items.placeVO" :placePictureSources="state.items.place_picture_source" />
-      <NaverMap :roadAddr="state.items.roadAddr" :jibunAddr="state.items.jibunAddr" :lat="state.items.latitude" :lon="state.items.longitude" />
+      <PlaceInfo :placeInfo="items.placeVO" :placePictureSources="items.place_picture_source" />
+      <NaverMap :roadAddr="items.roadAddr" :jibunAddr="items.jibunAddr" :lat="items.latitude" :lon="items.longitude" />
     </div>
     <h3>객실 정보</h3>
     <div class="bottom-section">
-      <RoomDetail :roomList="state.items.roomList" />
+        <RoomDetail :roomList="items.roomList" :placeInfo="items.placeVO" />
     </div>
-    <h3>이용 후기</h3>
+    <div class="star-rating">
+      <StarPoint :rating="items.rating" :starPoints="items.star_points"/>
+    </div>
     <div class="review-section">
-      <ReviewDetail :reviewList="state.items.reviewList" :rating="state.items.rating" />
+      <h3>이용 후기</h3>
+      <ReviewDetail :reviewList="items.reviewList" :rating="items.rating" />
     </div>
   </div>
 </template>
@@ -20,29 +23,48 @@
   import PlaceInfo from "@/components/placeDetail/PlaceInfo.vue"; 
   import ReviewDetail from "@/components/placeDetail/ReviewDetail.vue"; 
   import RoomDetail from "@/components/placeDetail/RoomDetail.vue"; 
+  import StarPoint from "@/components/placeDetail/StarPoint.vue"; 
   import axios from 'axios';
-  import { reactive } from 'vue'
 
   export default {
     components: {
       NaverMap,
       PlaceInfo,
       ReviewDetail,
-      RoomDetail
+      RoomDetail,
+      StarPoint
     },
-    setup() {
-    const state = reactive({
-      items: [],
-    })
 
-    axios.get('/api/place/placeDetail?place_id=1 ').then((res) => {
-      state.items = res.data
-      console.log(res)
-    })
+    data() {
+    return {
+      items: null,
+    };
+  },
 
-    return { state }
-  }
-  };
+  computed: {
+    placeId() {
+      return this.$route.params.placeId;
+    },
+  },
+
+  created() {
+    console.log(this.$route.params.placeId)
+    this.fetchPlaceDetails(this.placeId);
+  },
+
+  methods: {
+    fetchPlaceDetails(placeId) {
+      axios.get(`/api/place/placeDetail?place_id=${placeId}`)
+        .then(res => {
+          this.items = res.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the place details:", error);
+        });
+    },
+  },
+
+};
   </script>
   
   <style scoped>
@@ -63,6 +85,9 @@
   }
   
   .bottom-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     grid-column: span 2;
   }
   
@@ -70,8 +95,20 @@
     grid-column: span 2;
   }
   
-  h1 {
-    text-align: center;
-    grid-column: span 2;
+  .room-calendar-section {
+    display: flex;
+    flex-direction: row;
   }
+
+  .room-section {
+    flex: 1;
+  }
+
+  .calendar-section {
+    flex: 1;
+  }
+
+  .star-rating {
+  display: flex;
+}
   </style>

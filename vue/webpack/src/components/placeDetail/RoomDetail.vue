@@ -1,6 +1,12 @@
 <template>
+  <div class="top-section">
     <div class="room-list">
-      <div v-for="room in roomList" :key="room.roomVO.room_id" class="room-item">
+      <div 
+        v-for="room in roomList" 
+        :key="room.roomVO.room_id" 
+        :class="['room-item', { 'selected': selectedRoomId === room.roomVO.room_id }]"
+        @click="selectRoom(room.roomVO.room_id)"
+      >
         <h3>{{ room.roomVO.room_name }}</h3>
         <p><strong>가격:</strong> {{ room.roomVO.room_price }}원</p>
         <p><strong>수용인원:</strong> {{ room.roomVO.max_people }}명</p>
@@ -13,43 +19,90 @@
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      roomList: {
-        type: Array,
-        required: true
-      }
+    <div class="reservation-calendar">
+      <ReservationCalendar :selectedRoom="selectedRoom" :placeInfo="placeInfo" />
+    </div>
+  </div>
+</template>
+
+<script>
+import ReservationCalendar from './ReservationCalendar.vue';
+
+export default {
+  components: {
+    ReservationCalendar,
+  },
+  props: {
+    roomList: {
+      type: Array,
+      required: true,
+    },
+    placeInfo:{
+      type: Object,
+      required: true
     }
-  };
-  </script>
-  
-  <style>
-  .room-list {
-    margin-top: 20px;
+  },
+  data() {
+    return {
+      selectedRoomId: null,
+    };
+  },
+  computed: {
+  selectedRoom() {
+    const room = this.roomList.find(room => room.roomVO.room_id === this.selectedRoomId);
+
+    if (room) {
+      const reservedDates = room.reserved_date.map(dateStr => new Date(dateStr));
+      return {
+        roomVO: room.roomVO,
+        reserved_date: reservedDates,
+        room_picture_source: room.room_picture_source || []
+      };
+    }
+    return null;
   }
-  
-  .room-item {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+},
+  methods: {
+    selectRoom(roomId) {
+      this.selectedRoomId = roomId;
+    },
+  },
+};
+</script>
+
+<style scoped>
+.room-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.top-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    grid-column: span 2;
   }
-  
-  .room-item h3 {
-    margin-top: 0;
-  }
-  
-  .room-item p {
-    margin: 5px 0;
-  }
-  
-  .room-images img {
-    max-width: 100px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-  </style>
-  
+
+.room-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: calc(33.333% - 20px);
+  cursor: pointer;
+}
+
+.room-item.selected {
+  border: 2px solid #007bff;
+}
+
+.room-images img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.reservation-calendar {
+  margin-top: 20px;
+}
+</style>
