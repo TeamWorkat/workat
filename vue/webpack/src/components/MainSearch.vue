@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+    <div class="wrap" @click="closeModalOutside">
     <div class="bar" ref="bar" @click.stop.prevent>
       <div ref="dropdownButton" @click="toggleDropdown" class="localBtn">
         <p>여행지</p>
@@ -11,50 +11,36 @@
           class="dropdown-menu position-absolute d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px"
           data-bs-theme="light"
         >
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('서울')"
-              >서울</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('경기도')"
-              >경기도</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('강원도')"
-              >강원도</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('경상도')"
-              >경상도</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('전라도')"
-              >전라도</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('충청도')"
-              >충청도</a
-            >
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('제주도')"
-              >제주도</a
+          <li v-for="location in locations" :key="location">
+            <a
+              class="dropdown-item rounded-2"
+              @click="selectLocation(location)"
+              >{{ location }}</a
             >
           </li>
         </ul>
       </div>
+
       <div class="check-in">
         <p>일정</p>
+        
       </div>
 
-      <div class="guests" @click="changePopState">
+      <div class="guests" @click="pushModal">
         <p>게스트</p>
         {{ guestCount }} 명
+        
+        <div v-if="popState" >
+          <div class="modal-content">
+            <GuestModal
+            v-model:guestcount="guestCount"
+              
+              @updateCount="handleUpdateCount"
+              class="dropdown-menu position-absolute d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px"
+            >
+            </GuestModal>
+          </div>
+        </div>
       </div>
 
       <link
@@ -65,17 +51,12 @@
         <i class="bi bi-search"></i>
       </button>
     </div>
+    
   </div>
-  <div class="guestModal">
-    <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
-
-    <GuestModal
-      v-if="popState"
-      @close="changePopState"
-      @updateCount="handleUpdateCount"
-    ></GuestModal>
-  </div>
+  <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
+  
 </template>
+
 <script>
 import { ref, onMounted, nextTick } from 'vue'
 import UserCalendar from '@/components/UserCalendar.vue'
@@ -84,26 +65,49 @@ import GuestModal from '@/components/GuestModal.vue'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 
+
+
 export default {
   name: 'MainSearch',
   components: {
     UserCalendar,
     GuestModal,
   },
+
   setup() {
     const guestCount = ref(1)
-    const datepick = ref(['',''])
+    const datepick = ref(['', ''])
     const popState = ref(false)
     const localName = ref('지역')
     const localValue = ref(0)
     const isDropdownOpen = ref(false)
     const dropdownStyle = ref({ top: '0px', left: '0px' })
+    
     const bar = ref(null)
+    const dropdownButton = ref(null)
     const category = ref('All')
+    const locations = [
+      '서울',
+      '경기도',
+      '강원도',
+      '경상도',
+      '전라도',
+      '충청도',
+      '제주도',
+    ]
 
-    const changePopState = () => {
-      popState.value = !popState.value
+    const pushModal = () => {
+      console.log('여기')
+      popState.value = true;
     }
+
+    // const changePopState =  async () => {
+    //   popState.value = !popState.value
+    //   if (popState.value) {
+    //     await nextTick()
+    //     setModalPosition()
+    //   }
+    // }
 
     const toggleDropdown = async () => {
       isDropdownOpen.value = !isDropdownOpen.value
@@ -113,34 +117,30 @@ export default {
       }
     }
 
+
     const setPosition = () => {
       const rectbar = bar.value.getBoundingClientRect()
-      dropdownStyle.value.top = `${rectbar.bottom}px`
-      dropdownStyle.value.left = `${rectbar.left}px`
+      dropdownStyle.value.top = `${rectbar.top}`
+      dropdownStyle.value.left = `0px`
     }
 
-
-    function defaultDate () {
-      
+    function defaultDate() {
       const startDate = new Date()
       const endDate = new Date(new Date().setDate(startDate.getDate() + 1))
-      
+
       const startYear = startDate.getFullYear()
-      const startMonth = (startDate.getMonth() + 1).toString().padStart(2,'0');
-      const startDay = startDate.getDate().toString().padStart(2,'0');
+      const startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0')
+      const startDay = startDate.getDate().toString().padStart(2, '0')
 
       datepick.value[0] = `${startYear}-${startMonth}-${startDay}`
 
       const endYear = endDate.getFullYear()
-      const endMonth = (endDate.getMonth() + 1).toString().padStart(2,'0');
-      const endDay = endDate.getDate().toString().padStart(2,'0');
+      const endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0')
+      const endDay = endDate.getDate().toString().padStart(2, '0')
 
       datepick.value[1] = `${endYear}-${endMonth}-${endDay}`
-       
     }
     defaultDate()
-
-
 
 
     const selectLocation = (location) => {
@@ -173,7 +173,7 @@ export default {
         default:
           break
       }
-      isDropdownOpen.value = false
+      !isDropdownOpen.value
     }
 
     const handleDateUpdate = (newDate) => {
@@ -188,7 +188,6 @@ export default {
     const router = useRouter()
     const route = useRoute()
 
-    
     // 라우트 메타 타입에 따라 category 변경
     switch (route.meta.type) {
       case 'home':
@@ -210,7 +209,6 @@ export default {
     }
 
     const search = () => {
-      //만약 데이터가 하나라도 없을 경우 어떻게 처리할지 고민해야할듯
       axios
         .post('/api/place/search', {
           category: category.value,
@@ -221,7 +219,6 @@ export default {
         })
         .then((res) => {
           console.log(res)
-          
           router.push({
             name: 'UserSearch',
             query: { data: JSON.stringify(res.data) },
@@ -238,7 +235,16 @@ export default {
       }
     })
 
+    const closeModalOutside = (event) => {
+      if (!event.target.closest('.modal-sheet') && !event.target.closest('.dropdown-menu')) {
+        popState.value = false;
+        isDropdownOpen.value = false;
+      }
+    };
     return {
+      
+      closeModalOutside,
+      pushModal,
       guestCount,
       datepick,
       popState,
@@ -246,12 +252,14 @@ export default {
       isDropdownOpen,
       dropdownStyle,
       bar,
-      changePopState,
+      dropdownButton,
+
       toggleDropdown,
       selectLocation,
       handleDateUpdate,
       handleUpdateCount,
       search,
+      locations,
     }
   },
 }
@@ -315,14 +323,9 @@ body {
   color: white;
 }
 
-.check-in UserCalendar {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
+
+
 
 .guests {
   position: relative;
@@ -377,9 +380,8 @@ body {
 
 .modal-content {
   background: white;
-  padding: 20px;
   border-radius: 8px;
   width: 300px;
-  max-width: 80%;
+  /* max-width: 80%; */
 }
 </style>
