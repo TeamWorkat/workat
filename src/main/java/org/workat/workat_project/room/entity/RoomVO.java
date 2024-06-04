@@ -20,4 +20,5 @@ public class RoomVO {
     private int max_people;
     private int min_people;
     private int add_price;
+    private int place_id;
 }

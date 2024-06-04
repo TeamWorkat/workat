@@ -12,4 +12,6 @@ public interface RoomMapper {
     List<RoomVO> getRoomInfo(int placeId);
 
     List<LocalDate> getReservedDate(int roomId);
+
+    void updateSoldNum(RoomVO roomVO);
 }
