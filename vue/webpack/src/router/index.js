@@ -6,6 +6,7 @@ import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
+import LoginForm from "@/views/LoginForm.vue";
 const routes = [
     {
         path: '/',
@@ -22,7 +23,8 @@ const routes = [
         name: 'UserList',
         component: UserList
     },
-    {        path: '/user/detail',
+    {
+        path: '/user/detail',
         name: 'UserDetail',
         component: UserDetail,
         props: route => ({ user_id: route.query.user_id })
@@ -41,6 +43,11 @@ const routes = [
         path: '/user/signup',
         name: 'SignupForm',
         component: SignupForm
+    },
+    {
+        path: '/user/login',
+        name: 'LoginForm',
+        component: LoginForm
     }
 ];
 
