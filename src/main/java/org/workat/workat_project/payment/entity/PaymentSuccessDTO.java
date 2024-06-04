@@ -12,6 +12,7 @@ public class PaymentSuccessDTO {
   	 private String version;
   	 private String paymentKey;
   	 private String orderId;
+	 private String payType;
   	 private String orderName;
   	 private String currency;
   	 private String method;

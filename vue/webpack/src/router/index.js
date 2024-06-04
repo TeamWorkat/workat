@@ -50,7 +50,7 @@ const routes = [
         path: '/reservation/check',
         name: 'ReservationCheck',
         component: ReservationCheck,
-    },
+    },{
         path: '/user/login',
         name: 'LoginForm',
         component: LoginForm
