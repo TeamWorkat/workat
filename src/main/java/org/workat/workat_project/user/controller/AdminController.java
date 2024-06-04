@@ -18,8 +18,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userServiceImpl;
 
     @GetMapping("/users")
     public ResponseEntity<List<UserListDTO>> getUserList() {

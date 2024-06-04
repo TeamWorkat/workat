@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.workat.workat_project.place.repository.PlaceMapper">
-    <select id="getMainViewPlaceList" resultType="org.workat.workat_project.place.entity.PlaceListDTO">
-    	SELECT p.place_id, p.place_nm, pp.picture_source  FROM place p, place_picture pp where p.place_id = pp.place_id ;
-    </select>
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">        
+<mapper
+	namespace="org.workat.workat_project.place.repository.PlaceMapper">
+	<select id="getMainViewPlaceList"
+		resultType="org.workat.workat_project.place.entity.PlaceListDTO">
+		SELECT p.place_id, p.place_nm, pp.picture_source FROM place
+		p, place_picture
+		pp where p.place_id = pp.place_id ;
+	</select>
 
     <select id="getPlaceInfo" resultType="PlaceVO">
         select
@@ -15,5 +19,25 @@
         where
             place_id = #{placeId}
     </select>
+
+<select id="getSearchPlaceList"
+    resultType="org.workat.workat_project.place.entity.PlaceListDTO"
+    parameterType="org.workat.workat_project.place.entity.SearchVO">
+    SELECT p.place_id, p.place_nm, pp.picture_source
+    FROM place p
+    JOIN place_picture pp ON p.place_id = pp.place_id
+    JOIN room r ON p.place_id = r.place_id
+    WHERE p.loc_id = #{location}
+    AND #{guests} BETWEEN r.min_people AND r.max_people
+     AND NOT EXISTS (
+        SELECT 1
+        FROM unavailable_date ud
+        WHERE ud.room_id = r.room_id
+        AND DATE_FORMAT(ud.reserved_date, '%Y-%m-%d') BETWEEN #{startDate} AND #{endDate}
+    );
+    
+    
+  
+</select>
 
 </mapper>
