@@ -112,7 +112,6 @@
   onMounted(() => {
     date.value = [startDate.value, endDate.value];
   })
-  console.log(placeId)
 
  const payment = async () => {
 

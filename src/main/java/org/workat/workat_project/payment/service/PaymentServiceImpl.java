@@ -11,10 +11,13 @@ import org.workat.workat_project.payment.entity.PaymentDTO;
 import org.workat.workat_project.payment.entity.PaymentSuccessDTO;
 import org.workat.workat_project.payment.entity.PaymentVO;
 import org.workat.workat_project.payment.repository.PaymentMapper;
+import org.workat.workat_project.place.entity.PlaceVO;
+import org.workat.workat_project.place.repository.PlaceMapper;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
 import org.workat.workat_project.room.entity.RoomVO;
 import org.workat.workat_project.room.repository.RoomMapper;
+import org.workat.workat_project.scheduler.Scheduler;
 
 import java.nio.charset.StandardCharsets;
 import java.time.temporal.ChronoUnit;
@@ -29,6 +32,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final TossPaymentConfig tossPaymentConfig;
     private final PaymentMapper paymentMapper;
     private final ReservationMapper reservationMapper;
+    private final PlaceMapper  placeMapper;
+    private final Scheduler scheduler;
 
     @Override
     public PaymentDTO preparePayment(ReservationVO reservationVO) {
@@ -60,6 +65,16 @@ public class PaymentServiceImpl implements PaymentService {
         ReservationVO reservationVO = reservationMapper.selectReservationById(paymentVO.getRes_id());
         if (reservationVO.getRes_price() != amount) {
             throw new RuntimeException("결제 금액이 요청했을때와 다릅니다");
+        }
+
+        RoomVO roomVO = roomMapper.getRoomInfo(reservationVO.getRoom_id()).get(0);
+        if(roomVO.getRoom_qnt() <= roomVO.getSold_num()){
+            throw new RuntimeException("품절된 상품입니다.");
+        }else {
+            PlaceVO placeVO = placeMapper.getPlaceInfo(roomVO.getPlace_id());
+            int soldNum = roomVO.getSold_num();
+            roomVO.setSold_num(soldNum + 1);
+            scheduler.soldNumManage(placeVO.getPlace_in(),placeVO.getPlace_out(),reservationVO.getCheck_in(),reservationVO.getCheck_out(), roomVO);
         }
         paymentVO.setPaymentKey(paymentKey);
         paymentVO.setPaySuccessYN("Y");
