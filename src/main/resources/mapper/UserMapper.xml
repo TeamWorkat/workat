@@ -17,7 +17,7 @@
             user_email = #{email}
     </select>        
 
-    <select id="getUserDetail" resultType="UserDetailDTO">
+    <select id="getUserDetail" resultType="UserVO">
         SELECT *
         FROM user
         WHERE user_id = #{user_id}

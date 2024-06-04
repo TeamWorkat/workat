@@ -7,6 +7,7 @@ import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
 import ReservationCheck from "@/views/ReservationCheck.vue";
+import LoginForm from "@/views/LoginForm.vue";
 
 const routes = [
     {
@@ -24,7 +25,8 @@ const routes = [
         name: 'UserList',
         component: UserList
     },
-    {        path: '/user/detail',
+    {
+        path: '/user/detail',
         name: 'UserDetail',
         component: UserDetail,
         props: route => ({ user_id: route.query.user_id })
@@ -49,6 +51,10 @@ const routes = [
         name: 'ReservationCheck',
         component: ReservationCheck,
     },
+        path: '/user/login',
+        name: 'LoginForm',
+        component: LoginForm
+    }
 ];
 
 const router = createRouter({

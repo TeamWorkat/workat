@@ -37,7 +37,7 @@
 
     data() {
     return {
-      items: null, 
+      items: null,
     };
   },
 
@@ -46,7 +46,7 @@
       return this.$route.params.placeId;
     },
   },
-  
+
   created() {
     console.log(this.$route.params.placeId)
     this.fetchPlaceDetails(this.placeId);
@@ -76,14 +76,14 @@
     margin: 20px auto;
     padding: 20px;
   }
-    
+  
   .top-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     grid-column: span 2;
   }
-    
+  
   .bottom-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -99,11 +99,11 @@
     display: flex;
     flex-direction: row;
   }
-  
+
   .room-section {
     flex: 1;
   }
-  
+
   .calendar-section {
     flex: 1;
   }
