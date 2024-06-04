@@ -4,30 +4,36 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
+import org.workat.workat_project.room.entity.RoomVO;
+import org.workat.workat_project.room.repository.RoomMapper;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
 @Component
 public class Scheduler {
     private final ReservationMapper reservationMapper;
-    /*
-     * [Scheduler 설정 참고사항]
-     * 초 : 0~59
-     * 분 : 0~59
-     * 시 : 0~23
-     * 일 : 1~31
-     * 월 : 1~12 혹은 JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC
-     * 요일 : 1~7 혹은 SUN MON TUE WED THU FRI SAT
-     * <p>
-     * * : 모든 값
-     * ? : 설정 없음 (일과 요일만 사용 가능)
-     * , : 배열 ex) 1,5,8 : 1,5,8에만
-     * - : 앞부터 뒤까지 ex) 1-3 : 1부터 3까지
-     * / : 앞부터 뒤마다 ex) 1/3 : 1부터 매3마다 1,4,7,11...
-     */
+    private final ScheduledExecutor scheduledExecutor;
+    private final RoomMapper roomMapper;
 
     //결제까지 이어지지 않는 예약기록 삭제
     @Scheduled(cron = "0 0 0 * * *")
     public void deleteReservationNotPaid() {
         reservationMapper.deleteReservationNotPaid();
+    }
+
+    //재고 관리 스케줄러
+    public void soldNumManage(LocalDateTime placeIn, LocalDateTime placeOut, LocalDateTime checkIn, LocalDateTime checkOut, RoomVO roomVO) {
+        LocalDateTime startTime = checkIn.plusHours(placeIn.getHour()).plusMinutes(placeIn.getMinute());
+        LocalDateTime endTime = checkOut.plusHours(placeOut.getHour()).plusMinutes(placeOut.getMinute());
+        long delay = Duration.between(startTime, endTime).toMinutes();
+        Runnable run = () -> {
+            int soldNum = roomVO.getSold_num() - 1;;
+            roomVO.setSold_num(soldNum);
+            roomMapper.updateSoldNum(roomVO);
+        };
+        scheduledExecutor.scheduledExecutorService().schedule(run, delay, TimeUnit.SECONDS);
     }
 }
