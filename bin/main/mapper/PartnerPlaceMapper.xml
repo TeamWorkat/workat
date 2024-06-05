@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.workat.workat_project.partner.repository.PartnerPlaceMapper">
+	<select id="getPlaceList"
+		resultType="org.workat.workat_project.partner.entity.PartnerPlaceVO">
+		SELECT p.place_id, p.place_nm , p.category ,p.place_addr
+		,p.place_tel ,DATE_FORMAT(p.place_in, '%H:%i') AS place_in ,DATE_FORMAT(p.place_out, '%H:%i') AS place_out ,p.loc_id
+		FROM place p
+		JOIN partner partner ON p.user_id = partner.partner_id
+		WHERE partner.partner_id = 1;
+	</select>
+	
+	<select id="getPlaceDetail" resultType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
+	
+		SELECT p.place_id, p.place_nm ,p.category ,p.place_addr ,p.place_tel ,p.place_content ,p.created_date ,p.modified_date
+	,DATE_FORMAT(p.place_in, '%H:%i') AS place_in ,DATE_FORMAT(p.place_out, '%H:%i') AS place_out, p.loc_id, pp.picture_source 
+	FROM place p
+	JOIN place_picture pp ON p.place_id  = pp.place_id
+	where p.place_id = #{placeid}
+	
+	</select>
+
+</mapper>

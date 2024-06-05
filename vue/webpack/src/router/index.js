@@ -8,8 +8,11 @@ import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
 import ReservationCheck from "@/views/ReservationCheck.vue";
 import LoginForm from "@/views/LoginForm.vue";
+import PartnerHome from "@/views/PartnerHome.vue"
+import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
+import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
+import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
 import ReservationDetail from "@/views/ReservationDetail.vue";
-
 
 const routes = [
     {
@@ -84,6 +87,25 @@ const routes = [
         component: LoginForm
     },
     {
+        path: '/partner/home',
+        name: 'PartnerHome',
+        component: PartnerHome
+    },
+    {
+        path: '/partner/placelist',
+        name: 'PartnerPlaceList',
+        component: PartnerPlaceList
+    },
+    {
+        path: '/partner/placeinsert',
+        name: 'PartnerPlaceInsert',
+        component: PartnerPlaceInsert
+    },
+    {
+        path: '/partner/placedetail/:placeid',
+        name: 'PartnerPlaceDetail',
+        component: PartnerPlaceDetail
+            {
         path: '/reservation/detail/:reservation_id',
         name: 'ReservationDetail',
         component: ReservationDetail
