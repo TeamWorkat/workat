@@ -4,7 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.workat.workat_project.room.repository.RoomMapper">
 
-    <select id="getRoomInfo" resultType="org.workat.workat_project.room.entity.RoomVO">
+    <update id="updateSoldNum" parameterType="RoomVO">
+        update
+        room
+        set
+            sold_num = #{sold_num}
+        where
+            room_id = #{room_id}
+    </update>
+
+    <select id="getRoomInfo" resultType="RoomVO">
         select
             *
         from
