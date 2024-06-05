@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.workat.workat_project.payment.repository.PaymentMapper">
+
+    <insert id="saveTempPayment" parameterType="PaymentDTO">
+        insert
+        into payment
+        (payment_id,
+         res_id,
+         amount,
+         order_name)
+        values (#{orderId},
+                #{res_id},
+                #{amount},
+                #{orderName})
+    </insert>
+
+    <update id="updatePaymentFail" parameterType="PaymentVO">
+        update payment
+        set
+            paySuccessYN = #{paySuccessYN},
+            failReason = #{failReason}
+        where
+            payment_id = #{payment_id}
+    </update>
+
+    <update id="updatePaymentSuccess">
+        update payment
+        set
+            paySuccessYN = #{paySuccessYN},
+            paymentKey = #{paymentKey}
+        where
+            payment_id = #{payment_id}
+
+    </update>
+
+    <select id="findPaymentById" resultType="PaymentVO">
+        select *
+        from payment
+        where payment_id = #{orderId}
+    </select>
+</mapper>
