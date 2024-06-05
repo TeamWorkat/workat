@@ -8,6 +8,8 @@ import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
 import ReservationCheck from "@/views/ReservationCheck.vue";
 import LoginForm from "@/views/LoginForm.vue";
+import ReservationDetail from "@/views/ReservationDetail.vue";
+
 
 const routes = [
     {
@@ -17,7 +19,7 @@ const routes = [
         meta: { type: 'home' }
     },
     {
-        path: '/placeDetail/:placeId',
+        path: '/placeDetail/ :placeId',
         name: 'PlaceDetail',
         component: PlaceDetail
     },
@@ -80,7 +82,12 @@ const routes = [
         path: '/user/login',
         name: 'LoginForm',
         component: LoginForm
-    }
+    },
+    {
+        path: '/reservation/detail/:reservation_id',
+        name: 'ReservationDetail',
+        component: ReservationDetail
+    },
 ];
 
 const router = createRouter({
