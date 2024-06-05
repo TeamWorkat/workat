@@ -8,7 +8,9 @@ import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
 import ReservationCheck from "@/views/ReservationCheck.vue";
 import LoginForm from "@/views/LoginForm.vue";
-
+import PartnerHome from "@/views/PartnerHome.vue"
+import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
+import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 const routes = [
     {
         path: '/',
@@ -25,11 +27,6 @@ const routes = [
         path: '/admin/',
         name: 'UserList',
         component: UserList
-    },
-    {
-        path: '/placeDetail',
-        name: 'PlaceDetail',
-        component: PlaceDetail
     },
     {
         path: '/hotel',
@@ -85,7 +82,23 @@ const routes = [
         path: '/user/login',
         name: 'LoginForm',
         component: LoginForm
-    }
+    },
+
+    {
+        path: '/partner/home',
+        name: 'PartnerHome',
+        component: PartnerHome
+    },
+    {
+        path: '/partner/placelist',
+        name: 'PartnerPlaceList',
+        component: PartnerPlaceList
+    },
+    {
+        path: '/partner/placeinsert',
+        name: 'PartnerPlaceInsert',
+        component: PartnerPlaceInsert
+    },
 ];
 
 const router = createRouter({
