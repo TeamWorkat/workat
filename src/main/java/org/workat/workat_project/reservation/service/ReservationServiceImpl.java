@@ -2,6 +2,7 @@ package org.workat.workat_project.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.workat.workat_project.payment.repository.PaymentMapper;
 import org.workat.workat_project.picture.repository.PictureMapper;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.entity.ReserveInfoRequestDTO;
@@ -18,6 +19,7 @@ public class ReservationServiceImpl implements ReservationService{
     private final UserMapper userMapper;
     private final PictureMapper pictureMapper;
     private final RoomMapper roomMapper;
+    private final PaymentMapper paymentMapper;
 
     @Override
     public ReservationVO saveReservationInfo(ReservationVO reservation, String userEmail){
@@ -34,6 +36,7 @@ public class ReservationServiceImpl implements ReservationService{
         reserveInfoRequestDTO.setReservationVO(reservationMapper.selectReservationById(reservationId));
         reserveInfoRequestDTO.setRoomPictureList(pictureMapper.getRoomPictureSources(reserveInfoRequestDTO.getReservationVO().getRoom_id()));
         reserveInfoRequestDTO.setRoomVO(roomMapper.getRoomInfo(reserveInfoRequestDTO.getReservationVO().getPlace_id()).get(0));
+        reserveInfoRequestDTO.setPaymentKey(paymentMapper.findPaymentKeyByReservationId(reservationId));
         return reserveInfoRequestDTO;
     }
 }
