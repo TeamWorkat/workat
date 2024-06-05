@@ -13,4 +13,10 @@ public interface PaymentMapper {
     void updatePaymentFail(PaymentVO paymentVO);
 
     void updatePaymentSuccess(PaymentVO paymentVO);
+
+    void updatePaymentCancel(PaymentVO paymentVO);
+
+    String findPaymentKeyByReservationId(int reservationId);
+
+    PaymentVO findPaymentByPaymentKey(String paymentKey);
 }
