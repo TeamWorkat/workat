@@ -17,7 +17,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in state.items" :key="item.place_id" @click="touchUpInside(item.place_id)">
+            <tr v-for="(item, index) in state.items" :key="item.place_id" @click="touchUpInsideTableCell(item.place_id)">
               <th scope="row">{{ index + 1 }}</th>
               <td>{{ item.place_nm }}</td>
               <td>{{ item.category }}</td>
@@ -37,6 +37,7 @@
 import SideBar from '@/views/SideBar.vue'
 import axios from 'axios'
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'PartnerPlaceList',
@@ -54,14 +55,32 @@ export default {
         state.items = res.data
     })
 
-    
-    function touchUpInside(placeid){
-        console.log(placeid)
+    const router = useRouter()
+    function touchUpInsideTableCell(placeid){
+        // console.log(placeid)
+
+        router.push({
+                name: 'PartnerPlaceDetail',
+                params:{
+                    placeid
+                }
+            })
+
+        // axios.get('/api/partner/placeDetail',{
+        //     params:{
+        //         placeid: placeid
+        //     }
+        // }).then((res) => {
+            
+        //     console.log(res.data)
+        // }).catch((err) => {
+        //     console.error(err)
+        // })
     }
 
     return {
         state,
-        touchUpInside
+        touchUpInsideTableCell
     }
   }
 }
