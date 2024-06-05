@@ -11,6 +11,9 @@ import LoginForm from "@/views/LoginForm.vue";
 import PartnerHome from "@/views/PartnerHome.vue"
 import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
+import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
+
+
 const routes = [
     {
         path: '/',
@@ -98,6 +101,12 @@ const routes = [
         path: '/partner/placeinsert',
         name: 'PartnerPlaceInsert',
         component: PartnerPlaceInsert
+    },
+    {
+        path: '/partner/placedetail/:placeid',
+        name: 'PartnerPlaceDetail',
+        component: PartnerPlaceDetail
+        
     },
 ];
 
