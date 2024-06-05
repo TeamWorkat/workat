@@ -32,7 +32,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final TossPaymentConfig tossPaymentConfig;
     private final PaymentMapper paymentMapper;
     private final ReservationMapper reservationMapper;
-    private final PlaceMapper  placeMapper;
+    private final PlaceMapper placeMapper;
     private final Scheduler scheduler;
 
     @Override
@@ -68,13 +68,13 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         RoomVO roomVO = roomMapper.getRoomInfo(reservationVO.getRoom_id()).get(0);
-        if(roomVO.getRoom_qnt() <= roomVO.getSold_num()){
+        if (roomVO.getRoom_qnt() <= roomVO.getSold_num()) {
             throw new RuntimeException("품절된 상품입니다.");
-        }else {
+        } else {
             PlaceVO placeVO = placeMapper.getPlaceInfo(roomVO.getPlace_id());
             int soldNum = roomVO.getSold_num();
             roomVO.setSold_num(soldNum + 1);
-            scheduler.soldNumManage(placeVO.getPlace_in(),placeVO.getPlace_out(),reservationVO.getCheck_in(),reservationVO.getCheck_out(), roomVO);
+            scheduler.soldNumManage(placeVO.getPlace_in(), placeVO.getPlace_out(), reservationVO.getCheck_in(), reservationVO.getCheck_out(), roomVO);
         }
         paymentVO.setPaymentKey(paymentKey);
         paymentVO.setPaySuccessYN("Y");
@@ -91,6 +91,40 @@ public class PaymentServiceImpl implements PaymentService {
         paymentVO.setFailReason(message);
         paymentVO.setPaySuccessYN("N");
         paymentMapper.updatePaymentFail(paymentVO);
+    }
+
+    @Override
+    public Object cancelPayment(String paymentKey, String cancelReason) {
+        PaymentVO paymentVO = paymentMapper.findPaymentByPaymentKey(paymentKey);
+        if (paymentVO == null) {
+            throw new RuntimeException("존재하지 않는 결제입니다.");
+        }
+        paymentVO.setCancelReason(cancelReason);
+        paymentVO.setCancelYN("Y");
+        paymentMapper.updatePaymentCancel(paymentVO);
+        return tossPaymentCancel(paymentKey, cancelReason);
+
+    }
+
+    private Object tossPaymentCancel(String paymentKey, String cancelReason) {
+        RestTemplate restTemplate = new RestTemplate();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        HttpHeaders headers = getHeaders();
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("cancelReason", cancelReason);
+
+        System.err.println(TossPaymentConfig.URL + paymentKey + "/cancel");
+        try {
+            String jsonPayload = objectMapper.writeValueAsString(payload);
+            return restTemplate.postForObject(TossPaymentConfig.URL + paymentKey + "/cancel",
+                    new HttpEntity<>(jsonPayload, headers),
+                    Map.class);
+        }catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+        return null;
     }
 
     private PaymentSuccessDTO requestPaymentAccept(String paymentKey, String orderId, Long amount) {
@@ -121,11 +155,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     private HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
-        String encodedAuthKey = new String(
-                Base64.getEncoder().encode((tossPaymentConfig.getTestSecretKey() + ":").getBytes(StandardCharsets.UTF_8)));
-        headers.setBasicAuth(encodedAuthKey);
+        String encodedAuthKey = "Basic " + Base64.getEncoder().encodeToString(("test_sk_GjLJoQ1aVZ9mDOzMGdAP3w6KYe2R" + ":").getBytes(StandardCharsets.UTF_8));
+        headers.add("Authorization",encodedAuthKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         return headers;
     }
 }

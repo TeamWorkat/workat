@@ -12,7 +12,7 @@ import PartnerHome from "@/views/PartnerHome.vue"
 import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
-
+import ReservationDetail from "@/views/ReservationDetail.vue";
 
 const routes = [
     {
@@ -22,7 +22,7 @@ const routes = [
         meta: { type: 'home' }
     },
     {
-        path: '/placeDetail/:placeId',
+        path: '/placeDetail/ :placeId',
         name: 'PlaceDetail',
         component: PlaceDetail
     },
@@ -86,7 +86,6 @@ const routes = [
         name: 'LoginForm',
         component: LoginForm
     },
-
     {
         path: '/partner/home',
         name: 'PartnerHome',
@@ -106,7 +105,10 @@ const routes = [
         path: '/partner/placedetail/:placeid',
         name: 'PartnerPlaceDetail',
         component: PartnerPlaceDetail
-        
+            {
+        path: '/reservation/detail/:reservation_id',
+        name: 'ReservationDetail',
+        component: ReservationDetail
     },
 ];
 
