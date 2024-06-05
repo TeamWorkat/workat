@@ -11,4 +11,6 @@ public interface PaymentService {
     PaymentSuccessDTO tossPaymentSuccess(String paymentKey, String orderId, Long amount);
 
     void tossPaymentFail(String code, String message, String orderId);
+
+    Object cancelPayment(String paymentKey, String cancelReason);
 }
