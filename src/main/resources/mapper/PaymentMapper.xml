@@ -19,20 +19,25 @@
 
     <update id="updatePaymentFail" parameterType="PaymentVO">
         update payment
-        set
-            paySuccessYN = #{paySuccessYN},
-            failReason = #{failReason}
-        where
-            payment_id = #{payment_id}
+        set paySuccessYN = #{paySuccessYN},
+            failReason   = #{failReason}
+        where payment_id = #{payment_id}
     </update>
 
     <update id="updatePaymentSuccess">
         update payment
-        set
-            paySuccessYN = #{paySuccessYN},
-            paymentKey = #{paymentKey}
-        where
-            payment_id = #{payment_id}
+        set paySuccessYN = #{paySuccessYN},
+            paymentKey   = #{paymentKey}
+        where payment_id = #{payment_id}
+
+    </update>
+
+    <update id="updatePaymentCancel">
+
+        update payment
+        set cancelReason = #{cancelReason},
+            cancelYN   = #{cancelYN}
+        where payment_id = #{payment_id}
 
     </update>
 
@@ -40,5 +45,19 @@
         select *
         from payment
         where payment_id = #{orderId}
+    </select>
+    <select id="findPaymentKeyByReservationId" resultType="java.lang.String">
+        select
+            paymentKey
+        from payment
+        where
+            res_id = #{reservationId}
+    </select>
+    <select id="findPaymentByPaymentKey" resultType="org.workat.workat_project.payment.entity.PaymentVO">
+        select
+            *
+        from payment
+        where
+            paymentKey = #{paymentKey}
     </select>
 </mapper>
