@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.workat.workat_project.payment.entity.PaymentFailDTO;
 import org.workat.workat_project.payment.entity.PaymentSuccessDTO;
 import org.workat.workat_project.payment.service.PaymentService;
+import org.workat.workat_project.reservation.entity.ReservationVO;
+import org.workat.workat_project.reservation.repository.ReservationMapper;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,11 +19,13 @@ import org.workat.workat_project.payment.service.PaymentService;
 public class PaymentController {
 
     private final PaymentService paymentService;
+    private final ReservationMapper reservationMapper;
 
     @GetMapping("/toss/success")
     public ResponseEntity<PaymentSuccessDTO> tossPaySuccess(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount){
         paymentService.tossPaymentSuccess(paymentKey, orderId, amount);
-        String redirectUrl = "http://localhost:8090/";
+        ReservationVO reservationVO = reservationMapper.findByOrderId(orderId);
+        String redirectUrl = "http://localhost:8090/reservation/detail/" + reservationVO.getRes_id();
         return ResponseEntity.status(HttpStatus.FOUND).header("Location", redirectUrl).build();
     }
 

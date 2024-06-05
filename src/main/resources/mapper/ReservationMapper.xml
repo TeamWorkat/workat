@@ -43,4 +43,17 @@
         where res_id = #{reservationId}
     </select>
 
+    <select id="findByOrderId" resultType="org.workat.workat_project.reservation.entity.ReservationVO">
+        select
+            r.*
+        from
+            reservation r
+        join
+                payment p
+        on
+            r.res_id = p.res_id
+        where
+            p.payment_id = #{orderId}
+    </select>
+
 </mapper>

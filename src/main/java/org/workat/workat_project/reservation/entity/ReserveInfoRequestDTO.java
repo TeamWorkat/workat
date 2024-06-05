@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.workat.workat_project.room.entity.RoomVO;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,5 +15,5 @@ import org.workat.workat_project.room.entity.RoomVO;
 public class ReserveInfoRequestDTO {
     private ReservationVO reservationVO;
     private RoomVO roomVO;
-    private int place_id;
+    private List<String> roomPictureList;
 }
