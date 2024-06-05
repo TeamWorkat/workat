@@ -27,11 +27,6 @@ const routes = [
         component: UserList
     },
     {
-        path: '/placeDetail',
-        name: 'PlaceDetail',
-        component: PlaceDetail
-    },
-    {
         path: '/hotel',
         name: 'UserHotel',
         component: UserHome,
