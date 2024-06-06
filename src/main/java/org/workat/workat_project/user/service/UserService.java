@@ -13,6 +13,5 @@ public interface UserService {
     void deleteUser(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);
     void createUser(UserDetailDTO userDetailDTO);
-
     boolean checkLoginInfo(String user_email, String user_pwd);
 }

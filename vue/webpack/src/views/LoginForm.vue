@@ -4,8 +4,8 @@
     <div class="login-container">
       <h3>Login</h3><br/>
 
-      <input id="email" v-model="user_email" type="email" placeholder="email" required="required">
-      <input id="password" v-model="user_pwd" type="password" placeholder="password" required="required">
+      <input id="email" v-model="user_email" type="email" placeholder="email" required>
+      <input id="password" v-model="user_pwd" type="password" placeholder="password" required>
       <a href="#" class="forgot-password">forgot password?</a>
       <br/>
       <button @click="login" :disabled="loading">Login</button><br/>
@@ -32,20 +32,31 @@ export default {
     async login() {
       this.loading = true;
       this.error = null;
+      console.log('Login attempt:', this.user_email, this.user_pwd);
       try {
-        await axios.post('/api/user/login', {
+        const response = await axios.post('/api/login', {
           user_email: this.user_email,
           user_pwd: this.user_pwd
         });
-        this.$router.push('/');
+
+        if (response.status === 200 && response.data) {
+          this.$router.push('/');
+        } else {
+          this.error = 'Login failed. Please check your email and password.';
+        }
       } catch (error) {
-        this.error = 'Login failed. Please check your email and password.';
+        if (error.response && error.response.status === 401) {
+          this.error = 'Login failed. Please check your email and password.';
+        } else {
+          this.error = 'An error occurred. Please try again later.';
+        }
         console.error('Error during login:', error);
       } finally {
         this.loading = false;
       }
     }
   }
+
 };
 </script>
 
@@ -55,6 +66,7 @@ export default {
   justify-content: center;
   align-items: flex-start;
   height: 100vh;
+  padding-top: 20px;
 }
 
 .login-image {
