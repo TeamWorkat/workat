@@ -105,7 +105,8 @@ const routes = [
         path: '/partner/placedetail/:placeid',
         name: 'PartnerPlaceDetail',
         component: PartnerPlaceDetail
-            {
+    },
+    {
         path: '/reservation/detail/:reservation_id',
         name: 'ReservationDetail',
         component: ReservationDetail
