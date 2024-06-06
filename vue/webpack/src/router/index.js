@@ -27,7 +27,7 @@ const routes = [
         component: PlaceDetail
     },
     {
-        path: '/admin/',
+        path: '/admin',
         name: 'UserList',
         component: UserList
     },
@@ -55,7 +55,6 @@ const routes = [
         component: UserHome,
         meta: { type: 'search' }
     },
-    
     {
         path: '/user/detail',
         name: 'UserDetail',
@@ -73,18 +72,19 @@ const routes = [
         component: UserUpdate
     },
     {
-        path: '/user/signup',
+        path: '/signup',
         name: 'SignupForm',
         component: SignupForm
+    },
+    {
+        path: '/login',
+        name: 'LoginForm',
+        component: LoginForm
     },
     {
         path: '/reservation/check',
         name: 'ReservationCheck',
         component: ReservationCheck,
-    },{
-        path: '/user/login',
-        name: 'LoginForm',
-        component: LoginForm
     },
     {
         path: '/partner/home',
