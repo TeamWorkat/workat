@@ -1,6 +1,6 @@
 <template>
-  <div class="wrap" @click="closeDropdown">
-    <div class="bar" ref="bar" @click.stop>
+    <div class="wrap" @click="closeModalOutside">
+    <div class="bar" ref="bar" @click.stop.prevent>
       <div ref="dropdownButton" @click="toggleDropdown" class="localBtn">
         <p>여행지</p>
         <p>{{ localName }}</p>
@@ -11,65 +11,103 @@
           class="dropdown-menu position-absolute d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px"
           data-bs-theme="light"
         >
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('서울')">서울</a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('경기도')">경기도</a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('강원도')">강원도</a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('경상도')">경상도</a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('전라도')">전라도</a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('충청도')">충청도</a>
-          </li>
-          <li>
-            <a class="dropdown-item rounded-2" @click="selectLocation('제주도')">제주도</a>
+          <li v-for="location in locations" :key="location">
+            <a
+              class="dropdown-item rounded-2"
+              @click="selectLocation(location)"
+              >{{ location }}</a
+            >
           </li>
         </ul>
       </div>
+
       <div class="check-in">
-        <p>체크인</p>
-        <input type="text" placeholder="날짜 추가" />
-      </div>
-      <div class="check-out">
-        <p>체크아웃</p>
-        <input type="text" placeholder="날짜 추가" />
-      </div>
-      <div class="guests">
-        <p>게스트</p>
-        <input type="text" placeholder="게스트 추가" />
+        <p>일정</p>
         
       </div>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-        <button type="submit" class="searchBtn btn-primary">
+      <div class="guests" @click="pushModal">
+        <p>게스트</p>
+        {{ guestCount }} 명
+        
+        <div v-if="popState" >
+          <div class="modal-content">
+            <GuestModal
+            v-model:guestcount="guestCount"
+              
+              @updateCount="handleUpdateCount"
+              class="dropdown-menu position-absolute d-grid gap-1 p-2 rounded-3 mx-0 shadow w-220px"
+            >
+            </GuestModal>
+          </div>
+        </div>
+      </div>
+
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+      />
+      <button type="submit" class="searchBtn btn-primary" @click="search">
         <i class="bi bi-search"></i>
-        </button>
-    
+      </button>
     </div>
+    
   </div>
+  <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
+  
 </template>
 
 <script>
 import { ref, onMounted, nextTick } from 'vue'
+import UserCalendar from '@/components/UserCalendar.vue'
+import axios from 'axios'
+import GuestModal from '@/components/GuestModal.vue'
+import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+
+
 
 export default {
   name: 'MainSearch',
+  components: {
+    UserCalendar,
+    GuestModal,
+  },
+
   setup() {
+    const guestCount = ref(1)
+    const datepick = ref(['', ''])
+    const popState = ref(false)
     const localName = ref('지역')
+    const localValue = ref(0)
     const isDropdownOpen = ref(false)
-    const dropdownStyle = ref({
-      top: '0px',
-      left: '0px',
-    })
+    const dropdownStyle = ref({ top: '0px', left: '0px' })
+    
     const bar = ref(null)
+    const dropdownButton = ref(null)
+    const category = ref('All')
+    const locations = [
+      '서울',
+      '경기도',
+      '강원도',
+      '경상도',
+      '전라도',
+      '충청도',
+      '제주도',
+    ]
+
+    const pushModal = () => {
+      console.log('여기')
+      popState.value = true;
+    }
+
+    // const changePopState =  async () => {
+    //   popState.value = !popState.value
+    //   if (popState.value) {
+    //     await nextTick()
+    //     setModalPosition()
+    //   }
+    // }
 
     const toggleDropdown = async () => {
       isDropdownOpen.value = !isDropdownOpen.value
@@ -79,18 +117,116 @@ export default {
       }
     }
 
+
     const setPosition = () => {
       const rectbar = bar.value.getBoundingClientRect()
-      dropdownStyle.value.top = `${rectbar.bottom}px` // wrap 하단에서 5px 아래
-      dropdownStyle.value.left = `${rectbar.left}px` // wrap 좌측 위치에 맞춤
+      dropdownStyle.value.top = `${rectbar.top}`
+      dropdownStyle.value.left = `0px`
     }
+
+    function defaultDate() {
+      const startDate = new Date()
+      const endDate = new Date(new Date().setDate(startDate.getDate() + 1))
+
+      const startYear = startDate.getFullYear()
+      const startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0')
+      const startDay = startDate.getDate().toString().padStart(2, '0')
+
+      datepick.value[0] = `${startYear}-${startMonth}-${startDay}`
+
+      const endYear = endDate.getFullYear()
+      const endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0')
+      const endDay = endDate.getDate().toString().padStart(2, '0')
+
+      datepick.value[1] = `${endYear}-${endMonth}-${endDay}`
+    }
+    defaultDate()
+
 
     const selectLocation = (location) => {
       localName.value = location
+      switch (location) {
+        case '지역':
+          localValue.value = 0
+          break
+        case '서울':
+          localValue.value = 1
+          break
+        case '경기도':
+          localValue.value = 2
+          break
+        case '강원도':
+          localValue.value = 3
+          break
+        case '경상도':
+          localValue.value = 4
+          break
+        case '전라도':
+          localValue.value = 5
+          break
+        case '충청도':
+          localValue.value = 6
+          break
+        case '제주도':
+          localValue.value = 7
+          break
+        default:
+          break
+      }
+      !isDropdownOpen.value
     }
 
-    const closeDropdown = () => {
-      isDropdownOpen.value = false
+    const handleDateUpdate = (newDate) => {
+      datepick.value = newDate
+      console.log(datepick.value[0], datepick.value[1])
+    }
+
+    const handleUpdateCount = (newCount) => {
+      guestCount.value = newCount
+    }
+
+    const router = useRouter()
+    const route = useRoute()
+
+    // 라우트 메타 타입에 따라 category 변경
+    switch (route.meta.type) {
+      case 'home':
+        category.value = 'All'
+        console.log(category.value)
+        break
+      case 'hotel':
+        category.value = 'hotel'
+        console.log(category.value)
+        break
+      case 'stay':
+        category.value = 'stay'
+        console.log(category.value)
+        break
+      case 'camping':
+        category.value = 'camping'
+        console.log(category.value)
+        break
+    }
+
+    const search = () => {
+      axios
+        .post('/api/place/search', {
+          category: category.value,
+          location: localValue.value,
+          startDate: datepick.value[0],
+          endDate: datepick.value[1],
+          guests: guestCount.value,
+        })
+        .then((res) => {
+          console.log(res)
+          router.push({
+            name: 'UserSearch',
+            query: { data: JSON.stringify(res.data) },
+          })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
 
     onMounted(() => {
@@ -99,22 +235,37 @@ export default {
       }
     })
 
+    const closeModalOutside = (event) => {
+      if (!event.target.closest('.modal-sheet') && !event.target.closest('.dropdown-menu')) {
+        popState.value = false;
+        isDropdownOpen.value = false;
+      }
+    };
     return {
+      
+      closeModalOutside,
+      pushModal,
+      guestCount,
+      datepick,
+      popState,
       localName,
       isDropdownOpen,
       dropdownStyle,
-      toggleDropdown,
-      setPosition,
-      selectLocation,
-      closeDropdown,
       bar,
+      dropdownButton,
+
+      toggleDropdown,
+      selectLocation,
+      handleDateUpdate,
+      handleUpdateCount,
+      search,
+      locations,
     }
   },
 }
 </script>
 
 <style scoped>
-/* 기존 스타일 유지 */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -137,16 +288,17 @@ body {
 .wrap {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .bar {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 650px;
+  width: 900px;
   background: white;
   box-shadow: 0 0 5px hsl(0, 0%, 78%);
-  height: 55px;
+  height: 60px;
   border-radius: 100vw;
   font-size: 0.8rem;
 }
@@ -157,53 +309,27 @@ body {
   transition: background 250ms ease;
 }
 
-/* 수정된 스타일 */
 .localBtn,
 .check-in,
-.check-out,
 .guests {
   width: 22%;
   height: 55px;
-   /* bar의 높이와 동일하게 설정 */
 }
 
 .localBtn:hover,
 .check-in:hover,
-.check-out:hover,
 .guests:hover {
-  background: #ffdd00; /* 다크 그레이 색상 */
+  background: #ffdd00;
   color: white;
 }
 
-input[type='text'] {
-  background: none;
-  border: none;
-  padding: 0.2rem 0 0 0;
-}
 
-input[type='text']:focus {
-  outline: none;
-}
 
-::placeholder {
-  font-size: 0.75rem;
-}
+
 
 .guests {
   position: relative;
 }
-
-/* .guests span {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  background: #ff385c;
-  color: white;
-  font-size: 0.8rem;
-  padding: 0.7rem;
-  border-radius: 50%;
-} */
 
 .bar > div {
   position: relative;
@@ -229,19 +355,33 @@ input[type='text']:focus {
 }
 
 .searchBtn {
-            width: 50px; /* 너비 */
-            height: 50px; /* 높이 */
-            background-color: #ffdd00; /* 배경색 */
-            border: none; /* 테두리 없애기 */
-            border-radius: 50%; /* 원형 버튼으로 만들기 */
-            padding: 0; /* 내부 여백 조정 */
-            display: inline-flex; /* Flexbox를 사용하여 아이콘을 중앙에 위치시킴 */
-            align-items: center; /* 수직 중앙 정렬 */
-            justify-content: center; /* 수평 중앙 정렬 */
-        }
+  width: 50px;
+  height: 50px;
+  background-color: #ffdd00;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-/* .dropdown-menu {
-  position: absolute;
-  z-index: 1000;
-} */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 300px;
+  /* max-width: 80%; */
+}
 </style>

@@ -3,9 +3,8 @@ package org.workat.workat_project.place.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.workat.workat_project.review.entity.ReviewResDTO;
+import org.workat.workat_project.review.entity.StarPointDTO;
 import org.workat.workat_project.room.entity.RoomResDTO;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -19,6 +18,7 @@ public class PlaceDetailDTO {
     private double latitude;
     private double longitude;
     private double rating;
+    private List<StarPointDTO> star_points;
     private List<ReviewResDTO> reviewList;
     private List<RoomResDTO> roomList;
 

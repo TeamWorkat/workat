@@ -5,13 +5,62 @@
 <mapper namespace="org.workat.workat_project.user.repository.UserMapper">
 
     <select id="getUserList" resultType="UserVO">
-        select * from user
+        SELECT * FROM user
     </select>
 
-    <select id="getUserDetail" resultType="org.workat.workat_project.user.entity.UserDetailDTO">
-        select *
-        from user
-        where user_id = #{user_id}
+    <select id="findUserByEmail" resultType="UserVO">
+        SELECT
+            *
+        FROM
+            user
+        WHERE
+            user_email = #{email}
+    </select>        
+
+    <select id="getUserDetail" resultType="UserVO">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
     </select>
+
+    <select id="findById" resultType="UserVO">
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id};
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM user
+               WHERE user_id = #{user_id};
+    </delete>
+
+    <update id="updateUser" parameterType="UserDetailDTO">
+        UPDATE user
+        SET user_email = #{user_email},
+            user_pwd = #{user_pwd},
+            user_nm = #{user_nm},
+            user_tel = #{user_tel}
+        WHERE user_id = #{user_id}
+    </update>
+
+    <update id="updatePassword" parameterType="UserVO">
+        UPDATE user
+        SET user_pwd = #{user_pwd}
+        WHERE user_id = #{user_id}
+    </update>
+
+    <insert id="createUser" parameterType="UserDetailDTO">
+        INSERT INTO user (
+            user_email,
+            user_pwd,
+            user_nm,
+            user_tel
+            ) VALUES (
+                  #{user_email},
+                  #{user_pwd},
+                  #{user_nm},
+                  #{user_tel}
+            )
+    </insert>
 
 </mapper>

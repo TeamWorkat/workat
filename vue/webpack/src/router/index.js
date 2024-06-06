@@ -6,7 +6,14 @@ import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
 import SignupForm from "@/views/SignupForm.vue";
+import ReservationCheck from "@/views/ReservationCheck.vue";
 import LoginForm from "@/views/LoginForm.vue";
+import PartnerHome from "@/views/PartnerHome.vue"
+import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
+import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
+import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
+import ReservationDetail from "@/views/ReservationDetail.vue";
+
 const routes = [
     {
         path: '/',
@@ -15,7 +22,7 @@ const routes = [
         meta: { type: 'home' }
     },
     {
-        path: '/placeDetail/:placeId',
+        path: '/placeDetail/ :placeId',
         name: 'PlaceDetail',
         component: PlaceDetail
     },
@@ -48,7 +55,6 @@ const routes = [
         component: UserHome,
         meta: { type: 'search' }
     },
-
     {
         path: '/user/detail',
         name: 'UserDetail',
@@ -74,10 +80,42 @@ const routes = [
         path: '/login',
         name: 'LoginForm',
         component: LoginForm
-    }
+    },
+    {
+        path: '/reservation/check',
+        name: 'ReservationCheck',
+        component: ReservationCheck,
+    },
+    {
+        path: '/partner/home',
+        name: 'PartnerHome',
+        component: PartnerHome
+    },
+    {
+        path: '/partner/placelist',
+        name: 'PartnerPlaceList',
+        component: PartnerPlaceList
+    },
+    {
+        path: '/partner/placeinsert',
+        name: 'PartnerPlaceInsert',
+        component: PartnerPlaceInsert
+    },
+    {
+        path: '/partner/placedetail/:placeid',
+        name: 'PartnerPlaceDetail',
+        component: PartnerPlaceDetail
+    },
+    {
+        path: '/reservation/detail/:reservation_id',
+        name: 'ReservationDetail',
+        component: ReservationDetail
+    },
 ];
+
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 });
+
 export default router;
