@@ -1,27 +1,29 @@
 <template>
   <div class="user-update-container">
     <h4>프로필 수정</h4>
-    <div v-if="user">
-      <label>이메일:</label>
-      <input v-model="user.user_email" type="email" disabled>
+    <form @submit.prevent="updateUser">
+      <div v-if="user">
+        <label>이메일:</label>
+        <input v-model="user.user_email" type="email" disabled>
 
-      <label>비밀번호:</label>
-      <input v-model="user_pwd" type="password" required="required">
+        <label>비밀번호:</label>
+        <input v-model="user_pwd" type="password" required>
 
-      <label>비밀번호 확인:</label>
-      <input v-model="confirmPassword" type="password" required="required">
+        <label>비밀번호 확인:</label>
+        <input v-model="confirmPassword" type="password" required>
 
-      <label>이름:</label>
-      <input v-model="user.user_nm" type="text">
+        <label>이름:</label>
+        <input v-model="user.user_nm" type="text">
 
-      <label>전화번호:</label>
-      <input v-model="user.user_tel" type="text">
+        <label>전화번호:</label>
+        <input v-model="user.user_tel" type="text">
 
-      <button @click="updateUser">저장</button>
-    </div>
-    <div v-else>
-      <p>사용자 정보를 불러오는 중입니다...</p>
-    </div>
+        <button type="submit">저장</button>
+      </div>
+      <div v-else>
+        <p>사용자 정보를 불러오는 중입니다...</p>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -71,7 +73,7 @@ export default {
           user_pwd: this.user_pwd
         };
         console.log("Updating user:", userToUpdate);
-        await axios.post('/api/user/update', userToUpdate);
+        await axios.post('/api/update', userToUpdate);
         alert('회원 정보 수정이 완료되었습니다.');
         console.log("Redirecting to user detail with user_id:", this.user.user_id);
         this.$router.push({name: 'UserDetail', query: {user_id: this.user.user_id}});
@@ -97,18 +99,18 @@ export default {
 
 .user-update-container input {
   display: block;
-  width: 100%;
+  width: calc(100% - 24px);
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-button {
+button[type="submit"] {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #FFCC5E;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   border-radius: 4px;
   margin-top: 10px;

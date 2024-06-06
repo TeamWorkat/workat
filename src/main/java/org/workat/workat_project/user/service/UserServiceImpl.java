@@ -7,28 +7,22 @@ import org.workat.workat_project.user.entity.UserDetailDTO;
 import org.workat.workat_project.user.entity.UserListDTO;
 import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
-
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
     @Override
     public List<UserListDTO> getList() {
         return userMapper.getUserList();
     }
-
     @Override
     public UserDetailDTO getUserDetail(int user_id) {
         System.out.println("Service Layer - user_id: " + user_id);
         UserVO userVO = userMapper.getUserDetail(user_id);
         return convertToUserDetailDTO(userVO);
     }
-
     private UserDetailDTO convertToUserDetailDTO(UserVO userVO) {
         UserDetailDTO userDetailDTO = new UserDetailDTO();
         userDetailDTO.setUser_id(userVO.getUser_id());
@@ -45,7 +39,6 @@ public class UserServiceImpl implements UserService {
         userDetailDTO.setOauth(userVO.getOauth());
         return userDetailDTO;
     }
-
     @Override
     public boolean checkPassword(int user_id, String rawPassword) {
         UserVO user = userMapper.findById(user_id);
@@ -69,12 +62,10 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User not found");
         }
     }
-
     @Override
     public void deleteUser(int user_id) {
         userMapper.deleteById(user_id);
     }
-
     @Override
     public void updateUser(UserDetailDTO userDetailDTO) {
         if (!isPasswordEncoded(userDetailDTO.getUser_pwd())) {
@@ -83,7 +74,6 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.updateUser(userDetailDTO);
     }
-
     @Override
     public void createUser(UserDetailDTO userDetailDTO) {
         if (!isPasswordEncoded(userDetailDTO.getUser_pwd())) {
