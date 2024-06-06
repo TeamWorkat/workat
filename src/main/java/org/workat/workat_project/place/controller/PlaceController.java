@@ -21,13 +21,12 @@ public class PlaceController {
 
 	@GetMapping("/items")
 	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList() {
-
+		System.err.println(123);
 		return ResponseEntity.ok(placeService.getMainViewPlaceList());
 	}
 
 	@GetMapping("/placeDetail")
 	public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name = "place_id") int placeId) {
-		System.err.println("온다아");
 		return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
 	}
 
