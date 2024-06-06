@@ -16,8 +16,8 @@
     </ul>
 
     <div class="col-md-3 text-end">
-      <button type="button" class="btn btn-outline-primary me-2">Sign In</button>
-      <router-link to="/user/signup" class="btn btn-primary">Sign Up</router-link>
+      <button type="button" class="btn btn-outline-primary me-2" @click="clickSigninButton()">Sign In</button>
+      <button type="button" class="btn btn-primary" @click="clickSignupButton()">Sign Up</button>
     </div>
   </header>
 </div>
@@ -25,14 +25,28 @@
 
 <script>
 
-
 export default {
     name: 
-    'UserHeader'
-    
+    'UserHeader',
+  methods: {
+    clickSigninButton(){
+      this.$router.push({name: 'LoginForm'});
+    },
+    clickSignupButton(){
+      this.$router.push({name: 'SignupForm'});
+    }
+  }
 }
+
 </script>
 
 <style scoped>
-
+button {
+  background-color: #FFCC5E;
+  border: none;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}
 </style>

@@ -1,19 +1,14 @@
 package org.workat.workat_project.user.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.workat.workat_project.user.entity.PasswordCheckDTO;
 import org.workat.workat_project.user.entity.UserDetailDTO;
-import org.workat.workat_project.user.entity.UserListDTO;
 import org.workat.workat_project.user.service.UserServiceImpl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -49,9 +44,4 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<Void> createUser(@RequestBody UserDetailDTO userDetailDTO) {
-        userServiceImpl.createUser(userDetailDTO);
-        return ResponseEntity.noContent().build();
-    }
 }

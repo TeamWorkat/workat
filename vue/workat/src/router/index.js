@@ -11,8 +11,7 @@ const routes = [
     {
         path: '/',
         name: 'UserHome',
-        component: UserHome,
-        meta: { type: 'home' }
+        component: UserHome
     },
     {
         path: '/placeDetail/:placeId',
@@ -20,35 +19,10 @@ const routes = [
         component: PlaceDetail
     },
     {
-        path: '/admin',
+        path: '/admin/',
         name: 'UserList',
         component: UserList
     },
-    {
-        path: '/hotel',
-        name: 'UserHotel',
-        component: UserHome,
-        meta: { type: 'hotel' }
-    },
-    {
-        path: '/stay',
-        name: 'UserStay',
-        component: UserHome,
-        meta: { type: 'stay' }
-    },
-    {
-        path: '/camping',
-        name: 'UserCamping',
-        component: UserHome,
-        meta: { type: 'camping' }
-    },
-    {
-        path: '/search',
-        name: 'UserSearch',
-        component: UserHome,
-        meta: { type: 'search' }
-    },
-
     {
         path: '/user/detail',
         name: 'UserDetail',
@@ -76,8 +50,10 @@ const routes = [
         component: LoginForm
     }
 ];
+
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 });
+
 export default router;
