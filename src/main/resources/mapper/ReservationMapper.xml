@@ -13,7 +13,8 @@
                res_people_num,
                place_id,
                user_id,
-               room_id
+               room_id,
+               res_message
            ) VALUES (
                #{res_price},
                #{res_name},
@@ -22,7 +23,8 @@
                #{res_people_num},
                #{place_id},
                #{user_id},
-               #{room_id}
+               #{room_id},
+               #{res_message}
            )
     </insert>
 
@@ -39,6 +41,19 @@
         select *
         from reservation
         where res_id = #{reservationId}
+    </select>
+
+    <select id="findByOrderId" resultType="org.workat.workat_project.reservation.entity.ReservationVO">
+        select
+            r.*
+        from
+            reservation r
+        join
+                payment p
+        on
+            r.res_id = p.res_id
+        where
+            p.payment_id = #{orderId}
     </select>
 
 </mapper>

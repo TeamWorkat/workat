@@ -14,3 +14,11 @@ mybatis:
 naver:
   client-id: bgjjxkqpe7
   client-secret: faVhvVHYrdLgpCpf0u68vXMGuzKjqVVaPDK3bwt2
+
+
+payment:
+  toss:
+    test_client_key: test_ck_pP2YxJ4K871mNJ6MKR1vVRGZwXLO
+    test_secrete_key: test_sk_GjLJoQ1aVZ9mDOzMGdAP3w6KYe2R
+    success_url: "http://localhost:8080/payment/toss/success"
+    fail_url: "http://localhost:8080/payment/toss/fail"

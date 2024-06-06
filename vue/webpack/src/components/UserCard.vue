@@ -19,16 +19,14 @@
 </template>
 
 <script>
-
 export default {
   name: "UserCard",
   props: {
     item: Object
   },
-   methods: {
+  methods: {
     goDetailPage(placeId) {
       this.$router.push({ name: 'PlaceDetail', params: { placeId } });
-      console.log(placeId);
     },
   },
 
