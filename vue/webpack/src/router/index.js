@@ -13,6 +13,7 @@ import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
 import ReservationDetail from "@/views/ReservationDetail.vue";
+import MyPage from '@/views/MyPage.vue';
 
 const routes = [
     {
@@ -110,6 +111,11 @@ const routes = [
         path: '/reservation/detail/:reservation_id',
         name: 'ReservationDetail',
         component: ReservationDetail
+    },
+    {
+        path: '/mypage/resList',
+        name: 'MyPage',
+        component: MyPage
     },
 ];
 
