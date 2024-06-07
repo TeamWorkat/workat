@@ -12,5 +12,5 @@ public interface PaymentService {
 
     void tossPaymentFail(String code, String message, String orderId);
 
-    Object cancelPayment(String paymentKey, String cancelReason);
+    boolean cancelPayment(String paymentKey, String cancelReason);
 }
