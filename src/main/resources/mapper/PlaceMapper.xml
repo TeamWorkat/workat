@@ -8,7 +8,7 @@
 		resultType="org.workat.workat_project.place.entity.PlaceListDTO">
 		SELECT p.place_id, p.place_nm, pp.picture_source FROM place
 		p, place_picture
-		pp where p.place_id = pp.place_id ;
+		pp where p.status = 'active' AND p.place_id = pp.place_id;
 	</select>
 
     <select id="getPlaceInfo" resultType="PlaceVO">
@@ -27,7 +27,8 @@
     FROM place p
     JOIN place_picture pp ON p.place_id = pp.place_id
     JOIN room r ON p.place_id = r.place_id
-    WHERE (#{location} = 0 OR p.loc_id = #{location})
+    WHERE p.status = 'active' AND
+    (#{location} = 0 OR p.loc_id = #{location})
     AND (#{category} = 'All' OR p.category = #{category})
     AND #{guests} BETWEEN r.min_people AND r.max_people
      AND NOT EXISTS (
@@ -43,7 +44,7 @@
 		resultType="org.workat.workat_project.place.entity.PlaceListDTO">
 		SELECT p.place_id, p.place_nm, pp.picture_source FROM place
 		p, place_picture
-		pp where p.place_id = pp.place_id AND p.category = #{category};
+		pp where p.status = 'active' AND p.place_id = pp.place_id AND p.category = #{category};
 	</select>
 
 </mapper>

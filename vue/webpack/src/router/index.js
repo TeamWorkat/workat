@@ -12,6 +12,7 @@ import PartnerHome from "@/views/PartnerHome.vue"
 import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
+import PartnerPlaceUpdate from "@/views/PartnerPlaceUpdate.vue"
 
 
 const routes = [
@@ -108,6 +109,13 @@ const routes = [
         component: PartnerPlaceDetail
         
     },
+    {
+        path: '/partner/placeupdate/:placeid',
+        name: 'PartnerPlaceUpdate',
+        component: PartnerPlaceUpdate
+        
+    },
+    
 ];
 
 const router = createRouter({
