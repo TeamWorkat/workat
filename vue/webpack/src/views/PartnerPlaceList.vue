@@ -17,7 +17,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in state.items" :key="item.place_id" @click="touchUpInsideTableCell(item.place_id)">
+            <tr
+              v-for="(item, index) in state.items"
+              :key="item.place_id"
+              @click="touchUpInsideTableCell(item.place_id)"
+            >
               <th scope="row">{{ index + 1 }}</th>
               <td>{{ item.place_nm }}</td>
               <td>{{ item.category }}</td>
@@ -25,10 +29,11 @@
               <td>{{ item.place_tel }}</td>
               <td>{{ item.place_in }}</td>
               <td>{{ item.place_out }}</td>
-              <td>{{ item.loc_id }}</td>
+              <td>{{ item.loc_nm }}</td>
             </tr>
           </tbody>
         </table>
+        <button @click="insertPlaceTouchUpInside">추가</button>
       </div>
     </div>
   </div>
@@ -44,45 +49,37 @@ export default {
   components: {
     SideBar,
   },
-  
-  setup(){
+  methods: {
+    insertPlaceTouchUpInside() {
+      this.$router.push({ name: 'PartnerPlaceInsert' })
+    },
+  },
+
+  setup() {
     const state = reactive({
-        items: []
+      items: [],
     })
-    
+
     axios.get('/api/partner/placelist').then((res) => {
-        console.log(res.data)
-        state.items = res.data
+      console.log(res.data)
+      state.items = res.data
     })
 
     const router = useRouter()
-    function touchUpInsideTableCell(placeid){
-        // console.log(placeid)
-
-        router.push({
-                name: 'PartnerPlaceDetail',
-                params:{
-                    placeid
-                }
-            })
-
-        // axios.get('/api/partner/placeDetail',{
-        //     params:{
-        //         placeid: placeid
-        //     }
-        // }).then((res) => {
-            
-        //     console.log(res.data)
-        // }).catch((err) => {
-        //     console.error(err)
-        // })
+    function touchUpInsideTableCell(placeid) {
+      router.push({
+        name: 'PartnerPlaceDetail',
+        params: {
+          placeid,
+        },
+      })
     }
 
     return {
-        state,
-        touchUpInsideTableCell
+      state,
+      touchUpInsideTableCell,
     }
-  }
+  },
 }
 </script>
 <style></style>
