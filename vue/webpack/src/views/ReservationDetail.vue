@@ -65,6 +65,7 @@
   import { ref, computed, watch, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
   import axios from 'axios';
+  import router from "@/router/index.js"
   
   const items = ref(null);
   const route = useRoute();
@@ -97,14 +98,13 @@
         const days = (endDate - startDate) / (1000 * 60 * 60 * 24);
         return days;
       }
-    }
+    } 
     return 0;
   });
 
   const cancelReservation = async () => {
   console.log(paymentKey.value);
   showModal.value = false;
-  alert('예약이 취소되었습니다.');
 
   if (paymentKey.value !== null) {
     try {
@@ -112,13 +112,16 @@
         paymentKey: paymentKey.value,
         cancelReason: cancellationReason.value}
       });
+    const confirmed = confirm('예약이 취소되었습니다. 확인을 누르면 페이지를 이동합니다.');
+      
+    if (confirmed) {
+      router.push({name: "UserHome"});
+    }
     } catch (error) {
       console.error("There was an error cancelling the reservation:", error);
-      // Handle error appropriately (e.g., show error message to the user)
     }
   } else {
     console.error("Payment ID is null. Cannot proceed with cancellation.");
-    // Handle null payment ID case appropriately (e.g., show error message to the user)
   }
 };
   

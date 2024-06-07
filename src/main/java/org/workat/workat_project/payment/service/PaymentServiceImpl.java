@@ -94,7 +94,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Object cancelPayment(String paymentKey, String cancelReason) {
+    public boolean cancelPayment(String paymentKey, String cancelReason) {
         PaymentVO paymentVO = paymentMapper.findPaymentByPaymentKey(paymentKey);
         if (paymentVO == null) {
             throw new RuntimeException("존재하지 않는 결제입니다.");
@@ -106,7 +106,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     }
 
-    private Object tossPaymentCancel(String paymentKey, String cancelReason) {
+    private boolean tossPaymentCancel(String paymentKey, String cancelReason) {
         RestTemplate restTemplate = new RestTemplate();
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -118,13 +118,14 @@ public class PaymentServiceImpl implements PaymentService {
         System.err.println(TossPaymentConfig.URL + paymentKey + "/cancel");
         try {
             String jsonPayload = objectMapper.writeValueAsString(payload);
-            return restTemplate.postForObject(TossPaymentConfig.URL + paymentKey + "/cancel",
+            restTemplate.postForObject(TossPaymentConfig.URL + paymentKey + "/cancel",
                     new HttpEntity<>(jsonPayload, headers),
                     Map.class);
-        }catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-        return null;
+            return true;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private PaymentSuccessDTO requestPaymentAccept(String paymentKey, String orderId, Long amount) {
@@ -156,7 +157,7 @@ public class PaymentServiceImpl implements PaymentService {
     private HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         String encodedAuthKey = "Basic " + Base64.getEncoder().encodeToString(("test_sk_GjLJoQ1aVZ9mDOzMGdAP3w6KYe2R" + ":").getBytes(StandardCharsets.UTF_8));
-        headers.add("Authorization",encodedAuthKey);
+        headers.add("Authorization", encodedAuthKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
         return headers;
     }

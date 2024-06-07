@@ -63,7 +63,6 @@
   import '@vuepic/vue-datepicker/dist/main.css'
   import { loadTossPayments } from '@tosspayments/payment-sdk';
   import axios from 'axios';
-  import { useRouter } from 'vue-router';
 
   const date = ref()
   const request = ref('');
@@ -128,7 +127,7 @@
   const savedInfo = await axios.post('/api/reserve/saveInfo', reserveInfo);
 
   const clientKey = 'test_ck_pP2YxJ4K871mNJ6MKR1vVRGZwXLO';
-  const paymentData = {
+  const paymentData = { 
     amount: savedInfo.data.amount,
     orderId: savedInfo.data.orderId,
     orderName: savedInfo.data.orderName, 
@@ -140,13 +139,6 @@
   try {
     const tossPayments = await loadTossPayments(clientKey);
     tossPayments.requestPayment('카드', paymentData)
-      .then(() => {
-        const router = useRouter();
-        router.push({ name: 'UserHome' });
-      })
-      .catch(error => {
-        console.error(error);
-      });
   } catch (error) {
     console.error('Failed to load Toss Payments SDK:', error);
   }

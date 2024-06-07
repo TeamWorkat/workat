@@ -21,7 +21,6 @@ public class PlaceController {
 
 	@GetMapping("/items")
 	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList() {
-		System.err.println(123);
 		return ResponseEntity.ok(placeService.getMainViewPlaceList());
 	}
 
