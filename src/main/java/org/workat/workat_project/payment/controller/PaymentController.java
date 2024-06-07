@@ -11,8 +11,6 @@ import org.workat.workat_project.payment.service.PaymentService;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
 
-import java.security.Principal;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/payment")
@@ -41,14 +39,10 @@ public class PaymentController {
         );
     }
 
-
     @ResponseBody
     @PostMapping("/toss/cancel")
     public ResponseEntity<Object> tossPaymentCancelPoint(String paymentKey, String cancelReason) {
         System.err.println(paymentKey);
-        System.err.println(cancelReason);
-        paymentService.cancelPayment(paymentKey, cancelReason);
-        return ResponseEntity.status(HttpStatus.FOUND).header("Location",redirectUrl).build();
+        return  ResponseEntity.ok().body((paymentService.cancelPayment(paymentKey, cancelReason)));
     }
-
 }
