@@ -10,16 +10,15 @@
     <div v-else>
       <p>사용자 정보를 불러오는 중입니다...</p>
     </div>
-  </div>
-  <div class="button-container">
-    <button type="button" class="btn btn-primary" @click="clickEditButton()">수정</button>
-    <button type="button" class="btn btn-danger" @click="clickDeleteButton()">탈퇴</button>
+    <div class="button-container">
+      <button type="button" class="btn btn-primary" @click="clickEditButton()">수정</button>
+      <button type="button" class="btn btn-danger" @click="clickDeleteButton()">탈퇴</button>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
 
 export default {
   name: 'UserDetail',
@@ -64,14 +63,14 @@ export default {
   margin: 0 auto;
 }
 
-.button-container {
+.user-detail-container .button-container {
   display: flex;
   justify-content: center;
   margin-top: 10px;
   width: 100%;
 }
 
-.button-container .btn {
+.user-detail-container .button-container .btn {
   margin-left: 10px;
 }
 </style>

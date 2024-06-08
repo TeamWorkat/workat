@@ -17,6 +17,7 @@ import ReservationDetail from "@/views/ReservationDetail.vue";
 import MyPage from '@/views/MyPage.vue';
 import ReservationList from '@/components/myPage/ReservationList.vue';
 import ReviewList from '@/components/myPage/ReviewList.vue';
+import WishList from '@/components/myPage/WishList.vue'
 
 const routes = [
     {
@@ -127,6 +128,14 @@ const routes = [
             path: 'reviewList',
             component: ReviewList,
           },
+          {
+            path: 'wishList',
+            component: WishList,
+          },
+          {
+            path: 'user/detail',
+            component: UserDetail,
+        }
         ],
       },
     {
