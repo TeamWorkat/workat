@@ -13,7 +13,7 @@ import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
 import PartnerPlaceUpdate from "@/views/PartnerPlaceUpdate.vue"
-
+import ReservationDetail from "@/views/ReservationDetail.vue";
 
 const routes = [
     {
@@ -23,12 +23,12 @@ const routes = [
         meta: { type: 'home' }
     },
     {
-        path: '/placeDetail/:placeId',
+        path: '/placeDetail/ :placeId',
         name: 'PlaceDetail',
         component: PlaceDetail
     },
     {
-        path: '/admin/',
+        path: '/admin',
         name: 'UserList',
         component: UserList
     },
@@ -56,7 +56,6 @@ const routes = [
         component: UserHome,
         meta: { type: 'search' }
     },
-    
     {
         path: '/user/detail',
         name: 'UserDetail',
@@ -74,20 +73,20 @@ const routes = [
         component: UserUpdate
     },
     {
-        path: '/user/signup',
+        path: '/signup',
         name: 'SignupForm',
         component: SignupForm
+    },
+    {
+        path: '/login',
+        name: 'LoginForm',
+        component: LoginForm
     },
     {
         path: '/reservation/check',
         name: 'ReservationCheck',
         component: ReservationCheck,
-    },{
-        path: '/user/login',
-        name: 'LoginForm',
-        component: LoginForm
     },
-
     {
         path: '/partner/home',
         name: 'PartnerHome',
@@ -107,7 +106,11 @@ const routes = [
         path: '/partner/placedetail/:placeid',
         name: 'PartnerPlaceDetail',
         component: PartnerPlaceDetail
-        
+    },
+    {
+        path: '/reservation/detail/:reservation_id',
+        name: 'ReservationDetail',
+        component: ReservationDetail
     },
     {
         path: '/partner/placeupdate/:placeid',

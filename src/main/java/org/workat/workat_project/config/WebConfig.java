@@ -1,4 +1,4 @@
-package org.workat.workat_project;
+package org.workat.workat_project.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
 <template>
   <div class="user-detail-container">
-    <h4>프로필</h4>
+    <h4>프로필</h4><br/>
     <div v-if="user">
       <p><strong>이메일:</strong> {{ user.user_email }}</p>
       <p><strong>이름:</strong> {{ user.user_nm }}</p>
@@ -56,16 +56,11 @@ export default {
 .user-detail-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  max-width: 600px;
   padding: 20px;
-}
-
-.user-detail-container h3 {
-  margin-bottom: 20px;
-}
-
-.user-detail-container p {
-  margin: 5px 0;
+  margin: 0 auto;
 }
 
 .button-container {
