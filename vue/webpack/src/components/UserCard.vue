@@ -1,18 +1,13 @@
 <template>
   <div class="card shadow-sm" @click="goDetailPage(item.place_id)">
-    <span
-      class="img"
-      :style="{ backgroundImage: `url(${item.picture_source})` }"
-    />
+    <span class="img" :style="{ backgroundImage: `url(${item.picture_source})` }"></span>
     <div class="card-body">
       <p class="card-text">{{ item.place_nm }}</p>
       <div class="d-flex justify-content-between align-items-center">
-        <!-- <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                </div> -->
-
-        <small class="text-muted"> 설명 </small>
+        <small class="text-muted">설명</small>
+        <button @click.stop="toggleFavorite" class="btn btn-sm btn-outline-secondary">
+          <span class="heart" :class="{ 'is-favorite': isFavorite }"></span>
+        </button>
       </div>
     </div>
   </div>
@@ -24,13 +19,20 @@ export default {
   props: {
     item: Object
   },
+  data() {
+    return {
+      isFavorite: this.item.liked || false
+    };
+  },
   methods: {
     goDetailPage(placeId) {
       this.$router.push({ name: 'PlaceDetail', params: { placeId } });
     },
-  },
-
-}
+    toggleFavorite() {
+      this.isFavorite = !this.isFavorite;
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -44,5 +46,21 @@ export default {
 
 .card .card-body .price {
   text-decoration: line-through;
+}
+
+/* 하트 모양 */
+.heart {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ccc"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* 찜된 상태의 하트 색상 변경 */
+.heart.is-favorite {
+  filter: invert(54%) sepia(88%) saturate(3677%) hue-rotate(338deg) brightness(94%) contrast(88%);
 }
 </style>
