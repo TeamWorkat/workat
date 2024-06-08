@@ -14,6 +14,7 @@ import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
 import PartnerPlaceUpdate from "@/views/PartnerPlaceUpdate.vue"
 import ReservationDetail from "@/views/ReservationDetail.vue";
+import MyPage from '@/views/MyPage.vue';
 
 const routes = [
     {
@@ -113,12 +114,16 @@ const routes = [
         component: ReservationDetail
     },
     {
+        path: '/mypage/resList',
+        name: 'MyPage',
+        component: MyPage
+    },
+    {
         path: '/partner/placeupdate/:placeid',
         name: 'PartnerPlaceUpdate',
         component: PartnerPlaceUpdate
         
-    },
-    
+    }
 ];
 
 const router = createRouter({
