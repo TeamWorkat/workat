@@ -12,6 +12,7 @@ import PartnerHome from "@/views/PartnerHome.vue"
 import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
 import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
+import PartnerPlaceUpdate from "@/views/PartnerPlaceUpdate.vue"
 import ReservationDetail from "@/views/ReservationDetail.vue";
 import MyPage from '@/views/MyPage.vue';
 
@@ -117,6 +118,12 @@ const routes = [
         name: 'MyPage',
         component: MyPage
     },
+    {
+        path: '/partner/placeupdate/:placeid',
+        name: 'PartnerPlaceUpdate',
+        component: PartnerPlaceUpdate
+        
+    }
 ];
 
 const router = createRouter({

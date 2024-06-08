@@ -19,5 +19,5 @@ public class PartnerPlaceVO {
 	private String place_tel;
 	private String place_in ;
 	private String place_out;
-	private int loc_id;
+	private String loc_nm;
 }

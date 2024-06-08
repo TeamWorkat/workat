@@ -2,16 +2,18 @@
   <div class="d-flex">
     <SideBar />
     <div class="flex-grow-1 p-3">
+      <div v-if="items">
         <p>
           숙소명: 
-          <input v-model="place_nm" placeholder="ex) 홍길동 호텔" />
+          <input v-model="items.place_nm" placeholder="ex) 홍길동 호텔" />
         </p>
         <p>
           전화번호:
-          <input v-model="place_tel" placeholder="ex) 028279037" />
+          <input v-model="items.place_tel" placeholder="ex) 028279037" />
         </p>
         <div>
           카테고리:
+
           <select v-model="selectedCategory" @change="updateCategory">
             <option
               v-for="category in categories"
@@ -25,12 +27,13 @@
         </div>
         <p>
           주소:
-          <input v-model="place_addr" placeholder="ex) 경기도 신곡로36" />
+          <input v-model="items.place_addr" placeholder="ex) 경기도 신곡로36" />
         </p>
+
         <p>
           소개글:
           <textarea
-            v-model="place_content"
+            v-model="items.place_content"
             placeholder="add multiple lines"
           >
           </textarea>
@@ -53,8 +56,7 @@
         <div>
           지역:
 
-          <!-- <select v-model="selectedLocation" @change="updateLoaction"> -->
-            <select v-model="selectedLocation" >
+          <select v-model="selectedLocation" @change="updateLoaction">
             <option
               v-for="loaction in loactions"
               :key="loaction"
@@ -66,17 +68,17 @@
           <p>선택된 카테고리: {{ selectedLocation }}</p>
         </div>
 
-        <button @click="insertPlaceTouchUpInside">추가</button>
+        <button @click="updatePlaceTouchUpInside">수정</button>
       </div>
     </div>
-  
+  </div>
 </template>
 <script>
 import axios from 'axios'
 import SideBar from '@/views/SideBar.vue'
 
 export default {
-  name: 'PartnerPlaceInsert',
+  name: 'PartnerPlaceUpdate',
   components: {
     SideBar,
   },
@@ -98,16 +100,39 @@ export default {
         '제주도',
       ],
       selectedLocation: '',
-      parsingLocation: ''
     }
   },
   computed: {
-    
+    placeId() {
+      return this.$route.params.placeid
+    },
   },
   created() {
-    
+    console.log(this.$route.params.placeid)
+    this.fetchPlaceInfo(this.placeId)
   },
   methods: {
+    fetchPlaceInfo(placeId) {
+      axios
+        .get('/api/partner/placeDetail', {
+          params: {
+            placeid: placeId,
+          },
+        })
+        .then((res) => {
+          this.items = res.data
+          // 받아온 데이터의 카테고리를 selectedCategory로 설정
+          this.selectedCategory = res.data.category
+          this.selectedLocation = res.data.loc_nm
+          this.checkin = this.convertTimeStringToObject(res.data.place_in)
+          this.checkout = this.convertTimeStringToObject(res.data.place_out)
+          this.time = [this.checkin, this.checkout]
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
     convertTimeStringToObject(timeString) {
       const [hours, minutes] = timeString.split(':').map(Number)
       return {
@@ -117,34 +142,35 @@ export default {
       }
     },
     updateCategory() {
-      
+      console.log(`선택된 카테고리: ${this.selectedCategory}`)
     },
     updateLocation() {
-      
+      console.log(`선택된 지역: ${this.selectedLocation}`)
     },
 
     updateCheckinoutTime() {
-      
+      console.log(`선택된 카테고리: ${this.checkin}`)
+      console.log(`선택된 카테고리: ${this.checkout}`)
     },
 
-    insertPlaceTouchUpInside() {
+    updatePlaceTouchUpInside() {
       axios
-        .post('/api/partner/placeInsert', {
-          place_nm: this.place_nm,
+        .post('/api/partner/placeUpdate', {
+          place_id: this.placeId,
+          place_nm: this.items.place_nm,
           category: this.selectedCategory,
-          place_addr: this.place_addr,
-          place_tel: this.place_tel,
-          place_content: this.place_content,
+          place_addr: this.items.place_addr,
+          place_tel: this.items.place_tel,
+          place_content: this.items.place_content,
           place_in: this.convertTimeObjectToString(this.time[0]),
           place_out: this.convertTimeObjectToString(this.time[1]),
-          status: 'active',
-          loc_nm: this.parsinglocal(this.selectedLocation),
+          loc_nm: this.selectedLocation,
           //이부분 수정해야함
           picture_source: 'https://workatbucket.s3.amazonaws.com/place/dining-room-3108037_1920.jpg',
           
         })
         .then((res) => {
-          alert('추가되었습니다.');
+          alert('수정되었습니다.');
           window.location.href = 'http://localhost:8090/partner/placelist';
           console.log(res)
         })
@@ -152,34 +178,6 @@ export default {
           alert('실패했습니다.' + err);
           console.log(err)
         })
-    },
-    parsinglocal(loc_nm){
-      switch(loc_nm){
-      case '서울':
-        return this.parsingLocation = 1
-            
-        case '경기도':
-        return this.parsingLocation = 2
-            
-        case '강원도':
-        return this.parsingLocation = 3
-            
-        case '경상도':
-        return this.parsingLocation = 4
-            
-        case '전라도':
-        return this.parsingLocation = 5
-            
-        case '충청도':
-        return this.parsingLocation = 6
-            
-        case '제주도':
-        return this.parsingLocation = 7
-            
-        default:
-        return this.parsingLocation = 8
-            
-      }
     },
     convertTimeObjectToString(timeObject) {
       // 각 시간 값을 가져옵니다.
@@ -197,4 +195,3 @@ export default {
 </script>
 
 <style></style>
-
