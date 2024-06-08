@@ -10,4 +10,15 @@ import java.util.List;
 public interface PartnerPlaceMapper {
 	List<PartnerPlaceVO> getPlaceList();
 	PartnerPlaceDTO getPlaceDetail(int placeid);
+	
+	Integer updatePlace(PartnerPlaceDTO request);
+	Integer updatePlaceloc(PartnerPlaceDTO request);
+	Integer updatePlacepic(PartnerPlaceDTO request);
+	
+	Integer deletePlace(int placeid);
+	Integer deletePlacepic(int placeid);
+	
+	Integer insertPlace(PartnerPlaceDTO request);
+	Integer insertPlacepic(PartnerPlaceDTO request);
+
 }

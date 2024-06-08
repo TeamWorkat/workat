@@ -2,9 +2,7 @@
   <div class="d-flex">
     <SideBar />
     <div class="flex-grow-1 p-3">
-      <div class="addButton">
-        <button @click="addPlaceTouchUpInside">추가</button>
-      </div>
+      
     </div>
   </div>
 </template>
@@ -18,9 +16,7 @@ export default {
     SideBar,
   },
   methods: {
-    addPlaceTouchUpInside() {
-      this.$router.push({ name: 'PartnerPlaceInsert' })
-    },
+    
   },
   setup() {
     // 숙소 추가 버튼 클릭시
