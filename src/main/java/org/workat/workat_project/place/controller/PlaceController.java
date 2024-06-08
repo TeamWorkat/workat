@@ -1,12 +1,8 @@
 package org.workat.workat_project.place.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.tomcat.util.net.SSLHostConfig.Type;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.workat.workat_project.place.entity.PlaceDetailDTO;
 import org.workat.workat_project.place.entity.PlaceListDTO;
@@ -25,13 +21,11 @@ public class PlaceController {
 
 	@GetMapping("/items")
 	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList() {
-
 		return ResponseEntity.ok(placeService.getMainViewPlaceList());
 	}
 
 	@GetMapping("/placeDetail")
 	public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name = "place_id") int placeId) {
-		System.err.println("온다아");
 		return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
 	}
 
