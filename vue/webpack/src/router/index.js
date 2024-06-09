@@ -15,6 +15,8 @@ import PartnerPlaceDetail from "@/views/PartnerPlaceDetail.vue"
 import PartnerPlaceUpdate from "@/views/PartnerPlaceUpdate.vue"
 import ReservationDetail from "@/views/ReservationDetail.vue";
 import MyPage from '@/views/MyPage.vue';
+import ReservationList from '@/components/myPage/ReservationList.vue';
+import ReviewList from '@/components/myPage/ReviewList.vue';
 
 const routes = [
     {
@@ -114,10 +116,19 @@ const routes = [
         component: ReservationDetail
     },
     {
-        path: '/mypage/resList',
-        name: 'MyPage',
-        component: MyPage
-    },
+        path: '/mypage',
+        component: MyPage,
+        children: [
+          {
+            path: 'resList',
+            component: ReservationList,
+          },
+          {
+            path: 'reviewList',
+            component: ReviewList,
+          },
+        ],
+      },
     {
         path: '/partner/placeupdate/:placeid',
         name: 'PartnerPlaceUpdate',
