@@ -1,11 +1,11 @@
 <template>
   <div
-    class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar"
+    class="d-flex flex-column flex-shrink-0 p-3 text-bg-light sidebar"
     style="width: 280px"
   >
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
-        <a href="/mypage/resList" class="nav-link text-white">
+        <a href="/mypage/resList" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#home"></use>
           </svg>
@@ -13,7 +13,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="/mypage/wishList" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#speedometer2"></use>
           </svg>
@@ -21,7 +21,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="/mypage/user/detail" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#table"></use>
           </svg>
@@ -29,7 +29,7 @@
         </a>
       </li>
       <li>
-        <a href="/mypage/reviewList" class="nav-link text-white">
+        <a href="/mypage/reviewList" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#grid"></use>
           </svg>
@@ -41,14 +41,10 @@
 </template>
 
 <script>
-
-
 export default {
-  name:'SideBar',
-    setup() {
-        
-    },
-}
+  name: 'SideBar',
+  setup() {},
+};
 </script>
 
 <style scoped>
@@ -58,8 +54,8 @@ export default {
 }
 
 .nav-link:hover {
-  background: #5682da;
-  color: rgb(0, 0, 0);
+  background: #f3b918;
+  color: #000;
 }
 
 .nav-scroller {
@@ -80,8 +76,7 @@ export default {
   -webkit-overflow-scrolling: touch;
 }
 
-.text-bg-dark {
-  background-color: #777373 !important;
+.text-bg-light {
+  background-color: #fff !important;
 }
-
 </style>
