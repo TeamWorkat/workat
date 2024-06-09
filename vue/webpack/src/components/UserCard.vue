@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "UserCard",
   props: {
@@ -28,11 +30,26 @@ export default {
     goDetailPage(placeId) {
       this.$router.push({ name: 'PlaceDetail', params: { placeId } });
     },
-    toggleFavorite() {
+    async toggleFavorite() {
       this.isFavorite = !this.isFavorite;
+      const newFavoriteStatus = this.isFavorite;
+      const statusToSend = newFavoriteStatus ? 'Y' : 'N';
+      console.log(this.item.place_id)
+      console.log(statusToSend)
+      try {
+        const response = await axios.post('/api/wish/update',{
+          place_id: this.item.place_id,
+          liked: statusToSend
+        });
+        console.log('좋아요 상태 업데이트:', response.data);
+        this.isFavorite = newFavoriteStatus;
+      } catch (error) {
+        console.error('좋아요 상태 업데이트 실패:', error);
+      }
     }
   }
 };
+
 </script>
 
 <style scoped>

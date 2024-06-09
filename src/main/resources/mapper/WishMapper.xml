@@ -4,6 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.workat.workat_project.wish.repository.WishMapper">
 
+    <insert id="insertUserWish">
+
+        INSERT INTO wish (liked,
+                         user_id,
+                         place_id)
+        VALUES (#{liked},
+                #{userId},
+                #{placeId})
+
+    </insert>
+
+    <update id="updateUserWish">
+
+        update wish
+        set liked = #{liked}
+        where user_id = #{userId}
+        and place_id = #{placeId}
+
+    </update>
+
 
     <select id="getUserWishPlace" resultType="org.workat.workat_project.wish.entity.WishListDTO">
         SELECT
@@ -20,5 +40,16 @@
             <if test="category != null">
                 AND p.category = #{category}
             </if>
+    </select>
+
+    <select id="getUserWish" resultType="org.workat.workat_project.wish.entity.WishVO">
+        select
+            *
+        from
+            wish
+        where
+            user_id = #{userId}
+        and
+            place_id = #{placeId}
     </select>
 </mapper>

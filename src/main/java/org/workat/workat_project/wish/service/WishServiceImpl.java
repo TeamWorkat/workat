@@ -6,6 +6,7 @@ import org.workat.workat_project.picture.repository.PictureMapper;
 import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
 import org.workat.workat_project.wish.entity.WishListDTO;
+import org.workat.workat_project.wish.entity.WishVO;
 import org.workat.workat_project.wish.repository.WishMapper;
 
 import java.util.ArrayList;
@@ -29,5 +30,16 @@ public class WishServiceImpl implements WishService {
             list.add(wishListDTOWithOutPicture);
         }
         return list;
+    }
+
+    @Override
+    public WishVO updateUserWish(String name, int placeId, String liked) {
+        WishVO wishVO = wishMapper.getUserWish(userMapper.findUserByEmail(name).getUser_id(),placeId);
+        if(wishVO == null){
+            wishMapper.insertUserWish(userMapper.findUserByEmail(name).getUser_id(), placeId, liked);
+        }else{
+            wishMapper.updateUserWish(userMapper.findUserByEmail(name).getUser_id(), placeId, liked);
+        }
+        return wishMapper.getUserWish(userMapper.findUserByEmail(name).getUser_id(),placeId);
     }
 }
