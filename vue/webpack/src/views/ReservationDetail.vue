@@ -1,12 +1,13 @@
 <template>
-<h1>예약 상세내역</h1>
+<div>
+  <h4 class="reservation-title">예약 상세내역</h4>
+</div>
+<hr class="long-divider">
 <div class="reservation-container">
   <div class="room-picture-container">
     <div v-if="roomPictureList.length > 0" class="room-info">
-      <h1>{{ roomVO.room_name }}</h1>
-      <div v-for="(imageUrl, index) in roomPictureList" :key="index" class="image-wrapper">
-        <img :src="imageUrl" alt="Room Image" class="room-image">
-      </div>
+      <PictureSlide :pictureList="roomPictureList" />
+      <h2 class="room-name">{{ roomVO.room_name }}</h2>
     </div>
   </div>
 
@@ -66,6 +67,7 @@
   import { useRoute } from 'vue-router';
   import axios from 'axios';
   import router from "@/router/index.js"
+  import PictureSlide from '@/components/myPage/PictureSlide.vue';
   
   const items = ref(null);
   const route = useRoute();
@@ -150,16 +152,23 @@ justify-content: space-between;
 }
 
 .room-picture-container {
-width: 40%;
-display: flex;
-flex-direction: column;
-border: 1px solid #ccc;
-border-radius: 5px;
-padding: 10px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 30px; /* 왼쪽 여백 설정 */
 }
 
 .room-info {
-margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수평 가운데 정렬 */
+}
+
+.room-name {
+  margin-top: 10px; /* 위쪽 여백 추가 */
 }
 
 .image-wrapper {
@@ -179,6 +188,7 @@ width: 55%;
 border: 1px solid #ccc;
 border-radius: 5px;
 padding: 10px;
+margin-right: 30px;
 }
 
 .form-group {
@@ -259,5 +269,17 @@ to {
   opacity: 1;
   transform: scale(1);
 }
+}
+
+.long-divider {
+  margin-left: 20px;
+  border: 0; /* 기본 테두리 제거 */
+  height: 2px; /* 구분선의 두께 */
+  background-color: #615e5e; /* 구분선 색상 */
+  margin: 20px 0; /* 위아래 여백 */
+}
+
+.reservation-title {
+  margin-left: 50px; /* 오른쪽 여백 설정 */
 }
 </style>

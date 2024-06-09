@@ -1,14 +1,16 @@
 <template>
+<div>
+  <h4 class="reservation-title">예약 확인 및 결제</h4>
+</div>
+<hr class="long-divider">
     <div class="reservation-container">
       <!-- 방 이미지 -->
       <div class="room-picture-container">
-        <div v-if="roomPictureList.length > 0" class="room-info">
-          <h1>{{ roomVO.room_name }}</h1>
-          <div v-for="(imageUrl, index) in roomPictureList" :key="index" class="image-wrapper">
-            <img :src="imageUrl" alt="Room Image" class="room-image">
-          </div>
-        </div>
-      </div>
+    <div v-if="roomPictureList.length > 0" class="room-info">
+      <PictureSlide :pictureList="roomPictureList" />
+      <h2 class="room-name">{{ roomVO.room_name }}</h2>
+    </div>
+  </div>
   
       <!-- 예약 양식 -->
       <div class="reservation-form">
@@ -21,7 +23,7 @@
             :enable-time-picker="false"
             :month-change-on-scroll="true" 
             :min-date="new Date()"
-            :range="true" 
+            :range="{ noDisabledRange: true }"
             multi-calendars 
             locale="ko" 
             :disabled-dates="disabledDates"
@@ -63,6 +65,7 @@
   import '@vuepic/vue-datepicker/dist/main.css'
   import { loadTossPayments } from '@tosspayments/payment-sdk';
   import axios from 'axios';
+  import PictureSlide from '@/components/myPage/PictureSlide.vue';
 
   const date = ref()
   const request = ref('');
@@ -153,17 +156,25 @@
   }
   
   .room-picture-container {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-  }
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 30px; /* 왼쪽 여백 설정 */
+}
   
-  .room-info {
-    margin-bottom: 20px;
-  }
+.room-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 수평 가운데 정렬 */
+}
+
+.room-name {
+  margin-top: 10px; /* 위쪽 여백 추가 */
+}
+
   
   .image-wrapper {
     flex: 1;
@@ -178,11 +189,12 @@
   }
   
   .reservation-form {
-    width: 55%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-  }
+width: 55%;
+border: 1px solid #ccc;
+border-radius: 5px;
+padding: 10px;
+margin-right: 30px;
+}
   
   .form-group {
     margin-bottom: 10px;
@@ -214,5 +226,18 @@
   p {
     margin: 0;
   }
+
+  
+.long-divider {
+  margin-left: 20px;
+  border: 0; /* 기본 테두리 제거 */
+  height: 2px; /* 구분선의 두께 */
+  background-color: #615e5e; /* 구분선 색상 */
+  margin: 20px 0; /* 위아래 여백 */
+}
+
+.reservation-title {
+  margin-left: 50px; /* 오른쪽 여백 설정 */
+}
   </style>
   
