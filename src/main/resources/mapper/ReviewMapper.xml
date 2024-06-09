@@ -22,4 +22,25 @@
         GROUP BY rating;
     </select>
 
+    <select id="getUserReviewList" resultType="ReviewListDTO">
+        SELECT
+          r.review_id,
+          r.res_id,
+          r.rating,
+          u.user_nm,
+          p.place_nm,
+          p.place_in,
+          p.place_out,
+          p.category AS placeCategory,
+          r.created_date AS reviewCreatedDate
+        FROM
+          review r
+        JOIN
+          user u ON r.user_id = u.user_id
+        JOIN
+          place p ON r.place_id = p.place_id
+        WHERE
+         u.user_email = #{mail};
+    </select>
+
 </mapper>
