@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.workat.workat_project.wish.repository.WishMapper">
+
+
+    <select id="getUserWishPlace" resultType="org.workat.workat_project.wish.entity.WishListDTO">
+        SELECT
+            p.place_id,
+            p.place_nm,
+            w.liked
+        FROM
+            wish w
+        JOIN
+            place p ON w.place_id = p.place_id
+        WHERE
+            w.user_id = #{userId}
+            AND w.liked = 'Y'
+            <if test="category != null">
+                AND p.category = #{category}
+            </if>
+    </select>
+</mapper>
