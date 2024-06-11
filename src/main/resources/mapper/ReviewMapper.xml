@@ -3,6 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.workat.workat_project.review.repository.ReviewMapper">
+    <insert id="insertUserReview" parameterType="org.workat.workat_project.review.entity.ReviewInsertDTO" useGeneratedKeys="true" keyProperty="review_id">
+        INSERT INTO review (res_id,
+                                 rating,
+                                 content,
+                                 user_id,
+                                 place_id
+                                 )
+        VALUES (#{res_id},
+                #{rating},
+                #{content},
+                #{user_id},
+                #{place_id}
+                )
+    </insert>
+
+
     <select id="getReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
         select *
         from review

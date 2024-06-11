@@ -1,17 +1,16 @@
 <template>
-<div class="star-rating">
-    <h3>별점</h3>   
-    <div class="stars" v-for="index in 5" :key="index">
-      <span class="star" v-if="index <= starAvg">🍎</span>
-      <span v-else>🍏</span>
+  <div class="row">
+    <div class="col-md-3  offset-md-2 star-rating">
+      <div class="stars" v-for="index in 5" :key="index" style="display: inline-block;">
+      <img class="star" v-if="index <= starAvg" src='/img/별점.png' alt="Full Star" style="width: 50px; height: 50px;">
+      <img v-else src='/img/빈별점.png' alt="Empty Star" style="width: 50px; height: 50px;">
     </div>
-    <h3>{{starAvg}}</h3>
-  </div>
-<div>
-    <div class="star-point-bar-wrapper">
+      <h3>{{starAvg}}</h3>
+    </div>
+    <div class="col-md-6 star-point-bar">
       <StarPointBar :starPoints="props.starPoints"/>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup>
@@ -35,20 +34,7 @@ const starAvg = ref(props.rating ? props.rating : 0)
 </script>  
 
 <style scoped>
-
-.star-rating-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.star-rating {
-    display: flex;
-    align-items: center;
-  margin-right: 400px; /* 별점과 바 그래프 사이의 간격 조절 */
-}
-
-.star-point-bar-wrapper {
-  margin-top: 100px; /* StarPointBar 위 여백 추가 */
+.star-rating{
+  margin-top: 40px;
 }
 </style>
