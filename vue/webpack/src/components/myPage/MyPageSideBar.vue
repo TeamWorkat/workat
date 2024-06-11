@@ -48,13 +48,12 @@ export default {
 </script>
 
 <style scoped>
-/* sidebar */
 .sidebar {
   height: 100vh;
 }
 
 .nav-link:hover {
-  background: #f3b918;
+  background: #ffdd00;
   color: #000;
 }
 

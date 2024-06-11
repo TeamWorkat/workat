@@ -11,7 +11,6 @@ import org.workat.workat_project.payment.entity.PaymentDTO;
 import org.workat.workat_project.payment.entity.PaymentSuccessDTO;
 import org.workat.workat_project.payment.entity.PaymentVO;
 import org.workat.workat_project.payment.repository.PaymentMapper;
-import org.workat.workat_project.place.entity.PlaceVO;
 import org.workat.workat_project.place.repository.PlaceMapper;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
@@ -71,10 +70,8 @@ public class PaymentServiceImpl implements PaymentService {
         if (roomVO.getRoom_qnt() <= roomVO.getSold_num()) {
             throw new RuntimeException("품절된 상품입니다.");
         } else {
-            PlaceVO placeVO = placeMapper.getPlaceInfo(roomVO.getPlace_id());
             int soldNum = roomVO.getSold_num();
             roomVO.setSold_num(soldNum + 1);
-            scheduler.soldNumManage(placeVO.getPlace_in(), placeVO.getPlace_out(), reservationVO.getCheck_in(), reservationVO.getCheck_out(), roomVO);
         }
         paymentVO.setPaymentKey(paymentKey);
         paymentVO.setPaySuccessYN("Y");
