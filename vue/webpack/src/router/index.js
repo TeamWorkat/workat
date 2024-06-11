@@ -18,6 +18,7 @@ import MyPage from '@/views/MyPage.vue';
 import ReservationList from '@/components/myPage/ReservationList.vue';
 import ReviewList from '@/components/myPage/ReviewList.vue';
 import WishList from '@/components/myPage/WishList.vue'
+import ReviewInsert from '@/views/ReviewInsert.vue'
 
 const routes = [
     {
@@ -143,6 +144,11 @@ const routes = [
         name: 'PartnerPlaceUpdate',
         component: PartnerPlaceUpdate
         
+    },
+    {
+        path: '/review/insertForm/:reservation_id',
+        name: 'ReviewInsert',
+        component: ReviewInsert
     }
 ];
 
