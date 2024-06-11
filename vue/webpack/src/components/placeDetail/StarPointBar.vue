@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="col-md-6  offset-md-4">
       <Bar :data="dataCollection" :options="options" />
     </div>
   </template>
@@ -25,6 +25,7 @@
   const rating1 = props.starPoints ? props.starPoints.find(item => item.rating === 1)?.count || 0 : 0;
 
   const options = {
+    maxBarThickness: 10,
     responsive: false,
     maintainAspectRatio: false,
     animation: {
@@ -52,7 +53,7 @@
       legend: {
         display: false
       },
-      tooltip: { // 기존 툴팁 사용 안 함
+      tooltip: {
         enabled: false
       },
     }
@@ -63,12 +64,12 @@
     datasets: [
       {
         datalabels: {
-        anchor: 'end', // 데이터 레이블을 막대의 끝에 위치
-        align: 'end', // 데이터 레이블을 막대의 오른쪽에 정렬
-        offset: 4, // 데이터 레이블을 막대의 위로 약간 올림
-        color: '#36A2EB',
+        anchor: 'end',
+        align: 'end',
+        offset: 4,
+        color: 'black',
       },
-        backgroundColor: '#f87979',
+        backgroundColor: '#ffdd00',
         pointBackgroundColor: 'white',
         borderWidth: 1,
         pointBorderColor: '#249EBF',

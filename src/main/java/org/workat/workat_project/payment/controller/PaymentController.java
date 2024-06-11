@@ -22,6 +22,7 @@ public class PaymentController {
 
     @GetMapping("/toss/success")
     public ResponseEntity<PaymentSuccessDTO> tossPaySuccess(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount) {
+        System.err.println(paymentKey + " " + orderId + " " + amount);
         paymentService.tossPaymentSuccess(paymentKey, orderId, amount);
         ReservationVO reservationVO = reservationMapper.findByOrderId(orderId);
         return ResponseEntity.status(HttpStatus.FOUND).header("Location", redirectUrl + "reservation/detail/ "+reservationVO.getRes_id()).build();

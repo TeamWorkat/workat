@@ -2,30 +2,39 @@
     <div class="place-details">
       <div class="place-info">
         <h2>{{ placeInfo.place_nm }}</h2>
+        <p>체크인:{{ formatDate(placeInfo.place_in) }} | 체크아웃:{{ formatDate(placeInfo.place_out) }}</p>
         <div v-for="(placePictureSource, idx) in placePictureSources" :key="idx" class="place-image-container">
           <img :src="placePictureSource" class="place-image" />  
         </div>    
-        <p><strong>카테고리:</strong> {{ placeInfo.category }}</p>
         <p><strong>주소:</strong> {{ placeInfo.place_addr }}</p>
         <p><strong>전화번호:</strong> {{ placeInfo.place_tel }}</p>
-        <p><strong>소개:</strong> {{ placeInfo.place_content }}</p>
+        <p><strong>소개글:</strong></p>
+        <p> {{ placeInfo.place_content }}</p>
       </div>
     </div>
   </template>
   
   <script>
+  import { format } from 'date-fns';
+
   export default {
-    props: {
-      placePictureSources: {
-        type: Array,
-        required: true
-      },
-      placeInfo: {
-        type: Object,
-        required: true
-      }
+  props: {
+    placePictureSources: {
+      type: Array,
+      required: true
+    },
+    placeInfo: {
+      type: Object,
+      required: true
     }
-  };
+  },
+  methods: {
+    formatDate(date) {
+      return format(new Date(date), 'HH:mm');
+    }
+  }
+};
+
   </script>
   
   <style>
@@ -36,7 +45,7 @@
   }
   
   .place-info {
-    text-align: center;
+    text-align: left;
   }
   
   .place-image-container {
