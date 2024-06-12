@@ -56,7 +56,7 @@
         <div>
           지역:
 
-          <select v-model="selectedLocation" @change="updateLoaction">
+          <select v-model="selectedLocation" @change="updateLocation">
             <option
               v-for="loaction in loactions"
               :key="loaction"
@@ -68,7 +68,23 @@
           <p>선택된 카테고리: {{ selectedLocation }}</p>
         </div>
 
+        <div>
+    <p>사진: </p>
+        <div v-for="(item, index) in items.picture_sources" :key="index" class="image-container">
+          <span class="img" :style="{ backgroundImage: `url(${item})` }"></span>
+          <button class="delete-button" @click="removeItem(index)">-</button>
+        </div>
+    <input type="file" multiple @change="handleFileUpload"/>
+        <button @click="submitFiles">Upload</button>
+  </div>
+        
+      
+        
+
+        
+      <div>
         <button @click="updatePlaceTouchUpInside">수정</button>
+      </div>
       </div>
     </div>
   </div>
@@ -100,6 +116,11 @@ export default {
         '제주도',
       ],
       selectedLocation: '',
+      
+      //file
+      selectedFiles: [],
+      fileFolder: 'place'
+
     }
   },
   computed: {
@@ -111,7 +132,38 @@ export default {
     console.log(this.$route.params.placeid)
     this.fetchPlaceInfo(this.placeId)
   },
+  
   methods: {
+    handleFileUpload(event) {
+      this.selectedFiles = Array.from(event.target.files);
+    },
+    async submitFiles() {
+      if (this.selectedFiles.length === 0 || !this.fileFolder) {
+        alert('Please select files and enter a folder name.');
+        return;
+      }
+
+      const formData = new FormData();
+      this.selectedFiles.forEach(file => {
+        formData.append('files', file);
+      });
+      
+      formData.append('fileFolder', this.fileFolder);
+    
+      
+      try {
+        const response = await axios.post('/api/test/aws', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('Files uploaded successfully:', response.data);
+      } catch (error) {
+        console.error('Error uploading files:', error);
+        
+      }
+    },
+
     fetchPlaceInfo(placeId) {
       axios
         .get('/api/partner/placeDetail', {
@@ -166,7 +218,7 @@ export default {
           place_out: this.convertTimeObjectToString(this.time[1]),
           loc_nm: this.selectedLocation,
           //이부분 수정해야함
-          picture_source: 'https://workatbucket.s3.amazonaws.com/place/dining-room-3108037_1920.jpg',
+          picture_sources: this.items.picture_sources
           
         })
         .then((res) => {
@@ -190,8 +242,38 @@ export default {
       // 시간과 분을 콜론으로 연결합니다.
       return `${formattedHours}:${formattedMinutes}`
     },
+    removeItem(index) {
+      this.items.picture_sources.splice(index, 1);
+      console.log(this.items.picture_sources)
+    }
   },
 }
 </script>
 
-<style></style>
+<style scoped>
+.img {
+  display: inline-block;
+  width: 150px;  /* 또는 적절한 값으로 변경 */
+  height: 150px; /* 또는 적절한 값으로 변경 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 20%;
+}
+
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>

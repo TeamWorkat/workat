@@ -12,8 +12,10 @@ public interface PartnerPlaceMapper {
 	PartnerPlaceDTO getPlaceDetail(int placeid);
 	
 	Integer updatePlace(PartnerPlaceDTO request);
-	Integer updatePlaceloc(PartnerPlaceDTO request);
+	
 	Integer updatePlacepic(PartnerPlaceDTO request);
+	
+	void inactivePlace(PartnerPlaceDTO request);
 	
 	Integer deletePlace(int placeid);
 	Integer deletePlacepic(int placeid);
