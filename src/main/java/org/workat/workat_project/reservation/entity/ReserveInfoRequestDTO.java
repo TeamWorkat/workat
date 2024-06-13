@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.workat.workat_project.review.entity.ReviewVO;
 import org.workat.workat_project.room.entity.RoomVO;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -18,4 +20,6 @@ public class ReserveInfoRequestDTO {
     private List<String> roomPictureList;
     private String paymentKey;
     private String place_nm;
+    private ReviewVO reviewVO;
+    private Map<String, String> reviewImgList;
 }

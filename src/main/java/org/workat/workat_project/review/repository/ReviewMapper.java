@@ -17,4 +17,7 @@ public interface ReviewMapper {
     List<ReviewListDTO> getUserReviewList(String mail);
 
     int insertUserReview(ReviewInsertDTO reviewInsertDTO);
+
+    ReviewVO getUserReviewInfo(int reviewId);
+
 }

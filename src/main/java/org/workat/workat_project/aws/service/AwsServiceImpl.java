@@ -25,15 +25,12 @@ public class AwsServiceImpl implements AwsService {
     @Override
     public String uploadFile(MultipartFile file, String fileFolder) {
 
-        //파일 이름 생성
         String fileName = getFileFolder(fileFolder) + createFileName(file.getOriginalFilename());
 
-        //파일 변환
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(file.getSize());
         objectMetadata.setContentType(file.getContentType());
 
-        //파일 업로드
         try (InputStream inputStream = file.getInputStream()) {
             amazonS3.putObject(
                     new PutObjectRequest(s3Component.getBucket(), fileName, inputStream, objectMetadata).withCannedAcl(CannedAccessControlList.PublicReadWrite)
@@ -45,12 +42,10 @@ public class AwsServiceImpl implements AwsService {
         return fileName;
     }
 
-    //파일 이름 생성 로직
     private String createFileName(String originalFileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(originalFileName));
     }
 
-    //파일의 확장자명을 가져오는 로직
     private String getFileExtension(String fileName) {
         try {
             return fileName.substring(fileName.lastIndexOf("."));

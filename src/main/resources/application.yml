@@ -20,7 +20,7 @@ payment:
   toss:
     test_client_key: ${TOSS_TEST_CLIENT}
     test_secrete_key: ${TOSS_TEST_SECRET}
-    success_url: "http://localhost:8080//api/payment/toss/success"
+    success_url: "http://localhost:8080/api/payment/toss/success"
     fail_url: "http://localhost:8080/api/payment/toss/fail"
 
 cloud:
