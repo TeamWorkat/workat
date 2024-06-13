@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.workat.workat_project.aws.service.AwsService;
 import org.workat.workat_project.review.entity.ReviewInsertDTO;
 import org.workat.workat_project.review.entity.ReviewListDTO;
+import org.workat.workat_project.review.entity.ReviewResDTO;
 import org.workat.workat_project.review.service.ReviewService;
 
 import java.security.Principal;
@@ -29,8 +30,15 @@ public class ReviewController {
 
     @PostMapping("/insert")
     @ResponseBody
-    public ResponseEntity<Integer> insertUserReview(Principal principal, ReviewInsertDTO reviewDTO){
-        int inserted = reviewService.insertReview("user1@example.com", reviewDTO);
-        return ResponseEntity.ok(inserted);
+    public ResponseEntity<Integer> insertUserReview(Principal principal, ReviewInsertDTO reviewDTO) {
+        reviewService.insertReview("user1@example.com", reviewDTO);
+        return ResponseEntity.ok(reviewDTO.getReview_id());
+    }
+
+    @GetMapping("/detail")
+    @ResponseBody
+    public ResponseEntity<ReviewResDTO> userReviewDetail(@RequestParam(name = "review_id") int reviewId) {
+        System.err.println("reviewId: " + reviewId);
+        return ResponseEntity.ok(reviewService.userReviewDetail(reviewId));
     }
 }
