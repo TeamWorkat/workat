@@ -3,6 +3,7 @@ package org.workat.workat_project.picture.repository;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PictureMapper {
@@ -11,4 +12,7 @@ public interface PictureMapper {
     List<String> getRoomPictureSources(int roomId);
 
     List<String> getReviewPictureSources(int reviewId);
+
+    void insertUserReviewPicture(String fileName, String fileSource, int reviewId);
+
 }

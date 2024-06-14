@@ -72,7 +72,10 @@
         WHERE r.user_id = #{userId}
           AND r.res_id in
               (select res_id
-               from payment);
+               from payment
+               where
+                   paymentKey is not null)
+
     </select>
 
 </mapper>

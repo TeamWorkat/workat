@@ -38,6 +38,7 @@
     <textarea id="request" v-model="reservationVO.res_message" rows="4" readonly></textarea>
   </div>
     <button @click="showModal = true">예약취소</button>
+    <button v-if="canWriteReview" @click="writeReview">후기작성</button>
   </div>
 </div>
 
@@ -79,7 +80,11 @@
   const showReasonInput = ref(false);
   const cancellationReason = ref('');
   const paymentKey = computed(() => items.value?.paymentKey || {});
-
+  const canWriteReview = computed(() => {
+  const checkOutTime = new Date(reservationVO.value.check_out);
+    const currentTime = new Date();
+    return currentTime > checkOutTime;
+} )
 
   const fetchPlaceDetails = async (resId) => {
     await axios.get(`/api/reserve/resDetail?res_id=${resId}`)
@@ -104,13 +109,17 @@
     return 0;
   });
 
+  const writeReview = (resId) => {
+  router.push({ name: 'ReviewInsert', params: { reservation_id: resId.value } });
+};
+
   const cancelReservation = async () => {
   console.log(paymentKey.value);
   showModal.value = false;
 
   if (paymentKey.value !== null) {
     try {
-      await axios.post('/api/payment/toss/cancel',null, {params:{
+      await axios.post('/api/payment/toss/cancel', null, {params:{
         paymentKey: paymentKey.value,
         cancelReason: cancellationReason.value}
       });

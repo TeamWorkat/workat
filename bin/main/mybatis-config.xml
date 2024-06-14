@@ -14,5 +14,7 @@
         <typeAlias type="org.workat.workat_project.payment.entity.PaymentDTO" alias="PaymentDTO"></typeAlias>
         <typeAlias type="org.workat.workat_project.payment.entity.PaymentVO" alias="PaymentVO"></typeAlias>
         <typeAlias type="org.workat.workat_project.room.entity.RoomVO" alias="RoomVO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.reservation.entity.ReservationListDTO" alias="ReservationListDTO"></typeAlias>
+        <typeAlias type="org.workat.workat_project.review.entity.ReviewListDTO" alias="ReviewListDTO"></typeAlias>
     </typeAliases>
 </configuration>

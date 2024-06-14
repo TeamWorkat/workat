@@ -13,5 +13,7 @@ public class ReviewResDTO {
     private ReviewVO reviewVO;
     private ReplyVO replyVO;
     private List<String> review_picture_source;
-
+    private String place_nm;
+    private LocalDateTime check_in;
+    private LocalDateTime check_out;
 }

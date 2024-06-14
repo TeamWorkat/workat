@@ -41,7 +41,7 @@ public class PaymentController {
 
     @ResponseBody
     @PostMapping("/toss/cancel")
-    public ResponseEntity<Object> tossPaymentCancelPoint(String paymentKey, String cancelReason) {
+    public ResponseEntity<Object> tossPaymentCancelPoint(@RequestParam("paymentKey") String paymentKey, @RequestParam("cancelReason") String cancelReason) {
         System.err.println(paymentKey);
         return  ResponseEntity.ok().body((paymentService.cancelPayment(paymentKey, cancelReason)));
     }

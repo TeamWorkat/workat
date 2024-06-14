@@ -1,24 +1,26 @@
 <template>
   <div class="top-section">
-    <div class="room-list">
-      <div 
-        v-for="room in roomList" 
-        :key="room.roomVO.room_id" 
-        :class="['room-item', { 'selected': selectedRoomId === room.roomVO.room_id }]"
-        @click="selectRoom(room.roomVO.room_id)"
-      >
-        <h3>{{ room.roomVO.room_name }}</h3>
-        <p><strong>가격:</strong> {{ room.roomVO.room_price }}원</p>
-        <p><strong>수용인원:</strong> {{ room.roomVO.max_people }}명</p>
-        <p><strong>설명:</strong> {{ room.roomVO.room_content }}</p>
-        <div v-if="room.room_picture_source.length > 0">
-          <p><strong>방 사진:</strong></p>
-          <div class="room-images">
-            <img v-for="(source, index) in room.room_picture_source" :key="index" :src="source" alt="Room Image">
-          </div>
+    <div>
+    <div 
+      v-for="room in roomList" 
+      :key="room.roomVO.room_id" 
+      class="room-item"
+      :class="{ 'selected': selectedRoomId === room.roomVO.room_id }"
+    >
+      <div class="room-content">
+        <div v-if="room.room_picture_source.length > 0" class="room-images">
+          <PictureSlide :pictureList="room.room_picture_source" />
+        </div>
+        <div class="room-details">
+          <h3>{{ room.roomVO.room_name }}</h3>
+          <p><strong>가격:</strong> {{ room.roomVO.room_price }}원</p>
+          <p><strong>수용인원:</strong> {{ room.roomVO.max_people }}명</p>
+          <p><strong>설명:</strong> {{ room.roomVO.room_content }}</p>
+          <button @click="selectRoom(room.roomVO.room_id)">선택하기</button>
         </div>
       </div>
     </div>
+  </div>
     <div class="reservation-calendar">
       <ReservationCalendar :selectedRoom="selectedRoom" :placeInfo="placeInfo" />
     </div>
@@ -27,10 +29,12 @@
 
 <script>
 import ReservationCalendar from './ReservationCalendar.vue';
+import PictureSlide from '../myPage/PictureSlide.vue';
 
 export default {
   components: {
     ReservationCalendar,
+    PictureSlide
   },
   props: {
     roomList: {
@@ -73,8 +77,8 @@ export default {
 <style scoped>
 .room-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: row;
+  overflow-x: auto;
 }
 
 .top-section {
@@ -83,13 +87,22 @@ export default {
     gap: 20px;
     grid-column: span 2;
   }
+  .room-content {
+  display: flex;
+  align-items: center; 
+}
 
 .room-item {
   border: 1px solid #ccc;
   padding: 10px;
-  border-radius: 5px;
-  width: calc(33.333% - 20px);
-  cursor: pointer;
+  border-radius: 10px;
+  margin: 5px 10px; 
+  flex: 1;
+}
+.room-details {
+  white-space: nowrap;
+  margin-right: 50px;
+  margin-left: 50px; 
 }
 
 .room-item.selected {

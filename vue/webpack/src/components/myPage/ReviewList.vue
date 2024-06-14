@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row row-cols-1">
           <div class="col" v-for="(item, idx) in items" :key="idx">
-            <ReviewCard :item="item" />
+            <ReviewCard :item="item" @click="goToReviewDetail(item.review_id)"/>
           </div>
         </div>
       </div>
@@ -16,6 +16,9 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import ReviewCard from './ReviewCard.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const items = ref([]);
 
@@ -31,6 +34,11 @@ const fetchReviews = async () => {
       .catch(error => {
         console.error("There was an error fetching the place details:", error);
       });
+};
+
+const goToReviewDetail = (reviewId) => {
+  console.log(items.value.review_id)
+  router.push({ name: 'ReviewDetail', params: {  review_id: reviewId } });
 };
 
 </script>

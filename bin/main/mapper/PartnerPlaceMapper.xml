@@ -7,105 +7,152 @@
 	<select id="getPlaceList"
 		resultType="org.workat.workat_project.partner.entity.PartnerPlaceVO">
 		SELECT p.place_id, p.place_nm , p.category ,p.place_addr
-		,p.place_tel ,DATE_FORMAT(p.place_in, '%H:%i') AS place_in ,DATE_FORMAT(p.place_out, '%H:%i') AS place_out ,l.loc_nm
+		,p.place_tel ,DATE_FORMAT(p.place_in, '%H:%i') AS place_in
+		,DATE_FORMAT(p.place_out, '%H:%i') AS place_out ,l.loc_nm
 		FROM place p
 		JOIN partner partner ON p.user_id = partner.partner_id
-		JOIN  location l ON p.loc_id  = l.loc_id 
-		WHERE p.status = 'active' AND partner.partner_id = 1;
-	
+		JOIN location l
+		ON p.loc_id = l.loc_id
+		WHERE p.status = 'active' AND partner.partner_id
+		= 1;
+
 	</select>
-	
-	<select id="getPlaceDetail" resultType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-	
-	SELECT p.place_id, p.place_nm ,p.category ,p.place_addr ,p.place_tel ,p.place_content ,p.created_date ,p.modified_date
-	,DATE_FORMAT(p.place_in, '%H:%i') AS place_in ,DATE_FORMAT(p.place_out, '%H:%i') AS place_out, l.loc_nm, pp.picture_source 
-	FROM place p
-	JOIN place_picture pp ON p.place_id  = pp.place_id
-	JOIN  location l ON p.loc_id  = l.loc_id 
-	where p.place_id = #{placeid}
+
+	<select id="getPlaceDetail"
+		resultType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
+
+		SELECT p.place_id, p.place_nm ,p.category ,p.place_addr
+		,p.place_tel
+		,p.place_content ,p.created_date ,p.modified_date
+		,DATE_FORMAT(p.place_in, '%H:%i') AS place_in
+		,DATE_FORMAT(p.place_out, '%H:%i') AS place_out, l.loc_nm,
+		GROUP_CONCAT(pp.picture_source ORDER BY pp.picture_source) AS
+		picture_source
+		FROM place p
+		JOIN place_picture pp ON p.place_id =
+		pp.place_id
+		JOIN location l ON p.loc_id = l.loc_id
+		where p.place_id =
+		#{placeid}
+		and pp.status = 'active'
 	</select>
-	
-	 <update id="updatePlace" parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-    UPDATE place
-    SET place_nm = #{place_nm}, 
-    place_addr = #{place_addr}, 
-    place_tel = #{place_tel}, 
-    place_content = #{place_content}, 
-    place_in = #{place_in},
-    place_out = #{place_out}
-	WHERE place_id = #{place_id}
+
+	<update id="updatePlace"
+		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
+		UPDATE
+		place
+		SET
+		place_nm = #{place_nm},
+		place_addr = #{place_addr},
+		place_tel = #{place_tel},
+		place_content = #{place_content},
+		place_in = #{place_in},
+		place_out = #{place_out},
+		loc_id = CASE
+		WHEN #{loc_nm} = '서울' THEN 1
+		WHEN #{loc_nm} = '경기도' THEN 2
+		WHEN #{loc_nm} = '강원도' THEN 3
+		WHEN #{loc_nm} = '경상도' THEN 4
+		WHEN #{loc_nm} = '전라도' THEN 5
+		WHEN #{loc_nm} = '충청도' THEN 6
+		WHEN #{loc_nm} = '제주도' THEN 7
+		ELSE 8
+		END
+		WHERE
+		place_id = #{place_id};
+	</update>
+
+
+<update id="allInactive" parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
+        UPDATE 
+        	place_picture
+		SET
+			status = 'inactive'
+		WHERE 
+			place_id = #{place_id};
 </update>
 
- <update id="updatePlaceloc" parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-UPDATE place
-SET loc_id = CASE 
-                WHEN #{loc_nm} = '서울' THEN 1
-                WHEN #{loc_nm} = '경기도' THEN 2
-                WHEN #{loc_nm} = '강원도' THEN 3
-                WHEN #{loc_nm} = '경상도' THEN 4
-                WHEN #{loc_nm} = '전라도' THEN 5
-                WHEN #{loc_nm} = '충청도' THEN 6
-                WHEN #{loc_nm} = '제주도' THEN 7
-                ELSE 8
-             END
-WHERE place_id = #{place_id};
 
+
+<update id="inactivePlace" parameterType="map">
+        UPDATE
+        	place_picture
+		SET 
+			status = 'active'
+		WHERE
+			place_id = #{place_id}
+		AND
+			picture_source = #{picture_source};
 </update>
 
- <update id="updatePlacepic" parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-    UPDATE place_picture
-SET picture_source = #{picture_source}
-WHERE place_id = #{place_id}
-</update>
-
-<insert id="insertPlace" parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO"
-    useGeneratedKeys="true"
-    keyColumn="place_id" keyProperty="place_id">
-    INSERT INTO place (
-        place_nm,
-        category,
-        place_addr,
-        place_tel,
-        place_content,
-        place_in,
-        place_out,
-        status,
-        loc_id,
-        user_id
-    ) VALUES (
-        #{place_nm},
-        #{category},
-        #{place_addr},
-        #{place_tel},
-        #{place_content},
-        #{place_in},
-        #{place_out},
-        #{status},
-        #{loc_nm},
-        '1'
+<insert id="updatePlacepic" parameterType="map">
+    INSERT INTO
+		place_picture (picture_source, picture_origin_name, status, place_id)
+    SELECT
+        #{picture_source}, 'static_origin_name', 'inactive', #{place_id}
+    FROM DUAL
+    WHERE NOT EXISTS (
+        SELECT 1 FROM place_picture WHERE picture_source = #{picture_source} AND place_id = #{place_id}
     );
 </insert>
 
-<insert id="insertPlacepic" parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-    INSERT INTO place_picture (
-    	picture_source,
-        place_id,
-        status
-    )
-    VALUES(#{picture_source}, #{place_id}, #{status});
-</insert>
 
-<update id="deletePlace">
-UPDATE place
-SET status = 'inactive'
-WHERE place_id = #{place_id}
-</update>
 
-<update id="deletePlacepic">
-UPDATE place_picture
-SET status = 'inactive'
-WHERE place_id = #{place_id}
-</update>
 
-	
+
+
+	<insert id="insertPlace"
+		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO"
+		useGeneratedKeys="true" keyColumn="place_id" keyProperty="place_id">
+		INSERT INTO
+		place (
+		place_nm,
+		category,
+		place_addr,
+		place_tel,
+		place_content,
+		place_in,
+		place_out,
+		status,
+		loc_id,
+		user_id
+		) VALUES (
+		#{place_nm},
+		#{category},
+		#{place_addr},
+		#{place_tel},
+		#{place_content},
+		#{place_in},
+		#{place_out},
+		#{status},
+		#{loc_nm},
+		'1'
+		);
+	</insert>
+
+	<insert id="insertPlacepic"
+		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
+		INSERT INTO place_picture (
+		picture_source,
+		place_id,
+		status
+		)
+		VALUES(#{picture_source}, #{place_id}, #{status});
+	</insert>
+
+	<update id="deletePlace">
+		UPDATE place
+		SET status = 'inactive'
+		WHERE place_id =
+		#{place_id}
+	</update>
+
+	<update id="deletePlacepic">
+		UPDATE place_picture
+		SET status = 'inactive'
+		WHERE
+		place_id = #{place_id}
+	</update>
+
+
 </mapper>

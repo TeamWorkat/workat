@@ -71,10 +71,8 @@ public class PaymentServiceImpl implements PaymentService {
         if (roomVO.getRoom_qnt() <= roomVO.getSold_num()) {
             throw new RuntimeException("품절된 상품입니다.");
         } else {
-            PlaceVO placeVO = placeMapper.getPlaceInfo(roomVO.getPlace_id());
             int soldNum = roomVO.getSold_num();
             roomVO.setSold_num(soldNum + 1);
-            scheduler.soldNumManage(placeVO.getPlace_in(), placeVO.getPlace_out(), reservationVO.getCheck_in(), reservationVO.getCheck_out(), roomVO);
         }
         paymentVO.setPaymentKey(paymentKey);
         paymentVO.setPaySuccessYN("Y");

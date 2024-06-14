@@ -1,22 +1,38 @@
 <template>
   <div class="container" v-if="items">
-    <div class="top-section">
+  <div class="row">
+    <div class="col-md-6">
       <PlaceInfo :placeInfo="items.placeVO" :placePictureSources="items.place_picture_source" />
+    </div>
+    <div class="col-md-6 naver-map">
       <NaverMap :roadAddr="items.roadAddr" :jibunAddr="items.jibunAddr" :lat="items.latitude" :lon="items.longitude" />
     </div>
-    <h3>객실 정보</h3>
-    <div class="bottom-section">
+</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class=" room-detail-container">
+        <h3>객실 정보</h3> 
+        </div>   
         <RoomDetail :roomList="items.roomList" :placeInfo="items.placeVO" />
+      </div>
     </div>
-    <div class="star-rating">
-      <StarPoint :rating="items.rating" :starPoints="items.star_points"/>
+    <div class="row">
+      <div class="col-md-12 star-point">
+        <StarPoint :rating="items.rating" :starPoints="items.star_points"/>
     </div>
-    <div class="review-section">
-      <h3>이용 후기</h3>
-      <ReviewDetail :reviewList="items.reviewList" :rating="items.rating" />
     </div>
-  </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class=" review-list">
+        <h3>이용 후기</h3>
+        <ReviewDetail :reviewList="items.reviewList" :rating="items.rating" />
+      </div>
+
+        </div>
+        </div>
+        </div>
 </template>
+
   
   <script>
   import NaverMap from "@/components/placeDetail/NaverMap.vue";
@@ -68,47 +84,16 @@
   </script>
   
   <style scoped>
-  .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-  }
-  
-  .top-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    grid-column: span 2;
-  }
-  
-  .bottom-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    grid-column: span 2;
-  }
-  
-  .review-section {
-    grid-column: span 2;
-  }
-  
-  .room-calendar-section {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .room-section {
-    flex: 1;
-  }
-
-  .calendar-section {
-    flex: 1;
-  }
-
-  .star-rating {
-  display: flex;
+  .room-detail-container {
+  margin-left: 50px;
+}
+.naver-map{
+  margin-top: 100px;
+}
+.star-point{
+  margin-top: 50px;
+}
+.review-list{
+  margin-top: 50px;
 }
   </style>
