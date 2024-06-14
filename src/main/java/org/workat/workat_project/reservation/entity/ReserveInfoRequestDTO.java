@@ -17,5 +17,4 @@ public class ReserveInfoRequestDTO {
     private RoomVO roomVO;
     private List<String> roomPictureList;
     private String paymentKey;
-    private String place_nm;
 }

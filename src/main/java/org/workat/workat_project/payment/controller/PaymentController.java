@@ -22,7 +22,6 @@ public class PaymentController {
 
     @GetMapping("/toss/success")
     public ResponseEntity<PaymentSuccessDTO> tossPaySuccess(@RequestParam String paymentKey, @RequestParam String orderId, @RequestParam Long amount) {
-        System.err.println(paymentKey + " " + orderId + " " + amount);
         paymentService.tossPaymentSuccess(paymentKey, orderId, amount);
         ReservationVO reservationVO = reservationMapper.findByOrderId(orderId);
         return ResponseEntity.status(HttpStatus.FOUND).header("Location", redirectUrl + "reservation/detail/ "+reservationVO.getRes_id()).build();
@@ -42,7 +41,7 @@ public class PaymentController {
 
     @ResponseBody
     @PostMapping("/toss/cancel")
-    public ResponseEntity<Object> tossPaymentCancelPoint(String paymentKey, String cancelReason) {
+    public ResponseEntity<Object> tossPaymentCancelPoint(@RequestParam("paymentKey") String paymentKey, @RequestParam("cancelReason") String cancelReason) {
         System.err.println(paymentKey);
         return  ResponseEntity.ok().body((paymentService.cancelPayment(paymentKey, cancelReason)));
     }

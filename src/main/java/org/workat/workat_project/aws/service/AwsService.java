@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 public interface AwsService {
     String getFileFolder(String fileFolder);
 
-    String uploadFile(MultipartFile file, String fileFolder);
+    String uploadFile(MultipartFile files, String fileFolder);
 
     String getFileUrl(String fileName);
 

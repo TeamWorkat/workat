@@ -53,7 +53,7 @@ export default {
 }
 
 .nav-link:hover {
-  background: #ffdd00;
+  background: #f3b918;
   color: #000;
 }
 
