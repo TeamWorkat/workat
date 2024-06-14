@@ -9,6 +9,7 @@ import org.workat.workat_project.reservation.entity.ReservationListDTO;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.entity.ReserveInfoRequestDTO;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
+import org.workat.workat_project.review.repository.ReviewMapper;
 import org.workat.workat_project.room.repository.RoomMapper;
 import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
@@ -26,6 +27,7 @@ public class ReservationServiceImpl implements ReservationService{
     private final RoomMapper roomMapper;
     private final PaymentMapper paymentMapper;
     private final PlaceMapper placeMapper;
+    private final ReviewMapper reviewMapper;
 
     @Override
     public ReservationVO saveReservationInfo(ReservationVO reservation, String userEmail){

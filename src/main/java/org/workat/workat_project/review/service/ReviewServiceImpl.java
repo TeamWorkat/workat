@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.workat.workat_project.aws.service.AwsService;
 import org.workat.workat_project.picture.repository.PictureMapper;
+import org.workat.workat_project.place.repository.PlaceMapper;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
 import org.workat.workat_project.review.entity.ReviewInsertDTO;
@@ -33,6 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReservationMapper reservationMapper;
     private final UserMapper userMapper;
     private final AwsService awsService;
+    private final PlaceMapper placeMapper;
 
     @Override
     public List<ReviewResDTO> getReviewInfoList(int placeId){
@@ -75,5 +77,18 @@ public class ReviewServiceImpl implements ReviewService {
                     pictureMapper.insertUserReviewPicture(fileName,fileSource,reviewInsertDTO.getReview_id());
                 }
         return 1;
+    }
+
+    @Override
+    public ReviewResDTO userReviewDetail(int reviewId) {
+        ReviewVO reviewVO = reviewMapper.getUserReviewInfo(reviewId);
+        ReviewResDTO reviewResDTO = new ReviewResDTO();
+        reviewResDTO.setReplyVO(reviewMapper.getReply(reviewId));
+        reviewResDTO.setReview_picture_source(pictureMapper.getReviewPictureSources(reviewId));
+        reviewResDTO.setReviewVO(reviewVO);
+        reviewResDTO.setPlace_nm(placeMapper.getPlaceInfo(reviewVO.getPlace_id()).getPlace_nm());
+        reviewResDTO.setCheck_in(reservationMapper.selectReservationById(reviewVO.getRes_id()).getCheck_in());
+        reviewResDTO.setCheck_out(reservationMapper.selectReservationById(reviewVO.getRes_id()).getCheck_out());
+        return reviewResDTO;
     }
 }

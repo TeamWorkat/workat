@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h4 class="review-title">리뷰작성</h4>
+      <h4 class="review-title">리뷰수정</h4>
     </div>
     <hr class="long-divider">
     <div class="row">
@@ -14,9 +14,9 @@
           @click="onClick"
         >
           <div class="file-upload" :class="{ dragged: isDragged }">
-            <div v-if="fileList.length" class="file-preview-container">
+            <div v-if="reviewPictureList.length" class="file-preview-container">
               <div class="file-preview">
-                <img :src="fileList[fileList.length - 1].src" class="file-preview-image"/>
+                <img :src="reviewPictureList[reviewPictureList.length - 1]" class="file-preview-image"/>
               </div>
             </div>
             <div v-else>
@@ -26,9 +26,9 @@
         </div>
         <input type="file" ref="fileInput" class="file-upload-input" @change="onFileChange" multiple />
         <div class="file-upload-list">
-          <div class="file-upload-list__item" v-for="(file, index) in fileList" :key="index">
+          <div class="file-upload-list__item" v-for="(file, index) in reviewPictureList" :key="index">
             <div class="file-upload-list__item__data">
-              <img class="file-upload-list__item__data-thumbnail" :src="file.src" />
+              <img class="file-upload-list__item__data-thumbnail" :src="file" />
               <div class="file-upload-list__item__data-name">
                 {{ file.name }}
               </div>
@@ -38,32 +38,36 @@
             </div>
           </div>
         </div>
-      </div>
-      <div id="app" class="col-md-5 review"  style="background-color: #f2f2f2; padding: 20px; border-radius: 5px;">
-        <div class="form-group review-group">
-          <div class="form-group">
-            <h4>{{ placeName }}</h4>
-          </div>
-          <div class="form-group">
-            <label for="check-in">방문일:</label>
-            <h6>{{ formatDate(reservationVO.check_in) }}~{{ formatDate(reservationVO.check_out) }}</h6>
-          </div>
-          <label for="rating">별점:</label>
-          <div class="rating">
+        </div>
+      
+      <div id="app" class="col-md-5 review" style="background-color: #f2f2f2; padding: 20px; border-radius: 5px;">
+  <div class="form-group review-group">
+    <div class="form-group">
+      <h4>{{ placeName }}</h4>
+    </div>
+    <div class="form-group">
+      <label for="check-in">방문일:</label>
+      <h6>{{ formatDate(check_in) }} ~ {{ formatDate(check_out) }}</h6>
+    </div>
+    <label for="rating">별점:</label>
+    <div class="rating">
             <span v-for="index in 5" :key="index">
-              <img v-if="index <= rating" @click="setRating(index)" src="/img/별점.png" alt="YellowStar" style="width: 50px; height: 50px;">
+              <img v-if="index <= computedRating" @click="setRating(index)" src="/img/별점.png" alt="YellowStar" style="width: 50px; height: 50px;">
               <img v-else @click="setRating(index)" src="/img/빈별점.png" alt="GrayStar" style="width: 50px; height: 50px;">
             </span>
           </div>
-        </div>
-        <div class="form-group review-group" style="margin-top: 20px;">
-          <label for="review">여행후기:</label>
-          <textarea id="review" v-model="review" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
-        </div>
-        <button @click="uploadFiles" style="margin-top: 20px;">등록</button>
-      </div>
-    </div>
+  </div>  
+  <div class="form-group review-group" style="margin-top: 20px;">
+    <label for="review">여행후기:</label>
+    <textarea id="review" :value="reviewVO.content" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
+  </div>
+  <div class="reservation-form">  
+    <button @click="uploadFiles" style="margin-top: 20px;">수정</button>
+      <button>삭제</button>
+      <button>목록</button>
+    </div></div></div>
   </template>
+
   
   
   <script setup>
@@ -74,24 +78,29 @@
 
   const items = ref(null);
   const route = useRoute();
-  const fileList = ref([])
   const isDragged = ref(false)
   const rating = ref(0)
-  const resId = computed(() => route.params.reservation_id);
+  const reviewId = computed(() => route.params.review_id);
   const review = ref('')
-  const reservationVO = computed(() => items.value?.reservationVO || {});
+  const reviewVO = computed(() => items.value?.reviewVO || {});
   const placeName = computed(()=>items.value?.place_nm || null);
+  const check_in = computed(()=>items.value?.check_in || null);
+  const check_out = computed(()=>items.value?.check_out || null);
+  const reviewPictureList = computed(()=>items.value?.review_picture_source || {} );
 
-  const fetchPlaceDetails = async (resId) => {
-    console.log(resId)
-    await axios.get(`/api/reserve/resDetail?res_id=${resId}`)
-      .then(res => {
-        items.value = res.data;
-      })
-      .catch(error => {
-        console.error("There was an error fetching the place details:", error);
-      });
-  };
+  const computedRating = computed(() => {
+  return items.value && items.value.reviewVO ? items.value.reviewVO.rating : 0;
+});
+
+  const fetchReviewDetails = async (reviewId) => {
+      await axios.get(`/api/review/detail?review_id=${reviewId}`)
+        .then(res => {
+          items.value = res.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the review details:", error);
+        });
+    };
 
 
   const setRating = (index) => {
@@ -130,7 +139,7 @@
     for (let i = 0; i < files.length; i++) {
       const src = await readFiles(files[i])
       files[i].src = src
-      fileList.value.push(files[i])
+      reviewPictureList.value.push(files[i])
     }
   }
   
@@ -145,22 +154,18 @@
   }
   
   const handleRemove = (index) => {
-    fileList.value.splice(index, 1)
+    reviewPictureList.value.splice(index, 1)
   }
   
   const uploadFiles = async () => {
     let formData = new FormData()
-    console.log(rating.value);
-    console.log(reservationVO.value.place_id)
-    console.log(reservationVO.value.res_id)
-    console.log(review.value);
-    fileList.value.forEach(file => {
+    reviewPictureList.value.forEach(file => {
       formData.append('files', file)
     })
-    formData.append('res_id', reservationVO.value.res_id);
+    formData.append('res_id', reviewVO.value.res_id);
     formData.append('rating', rating.value);
     formData.append('content', review.value);
-    formData.append('place_id', reservationVO.value.place_id);
+    formData.append('place_id', reviewVO.value.place_id);
     console.log(formData)
     try {
       let response = await axios.post('/api/review/insert', formData, {
@@ -189,9 +194,9 @@
   return formattedDate;
 };
 
-  onMounted(() => {
-    fetchPlaceDetails(resId.value);
-  });
+onMounted(() => {
+      fetchReviewDetails(reviewId.value);
+    });
   
   const fileInput = ref(null)
   </script>

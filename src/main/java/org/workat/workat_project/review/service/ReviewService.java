@@ -12,4 +12,6 @@ public interface ReviewService {
     List<ReviewListDTO> userReviewList(String mail);
 
     int insertReview(String mail, ReviewInsertDTO reviewInsertDTO);
+
+    ReviewResDTO userReviewDetail(int reviewId);
 }
