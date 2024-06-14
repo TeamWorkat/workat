@@ -11,6 +11,7 @@ import org.workat.workat_project.payment.entity.PaymentDTO;
 import org.workat.workat_project.payment.entity.PaymentSuccessDTO;
 import org.workat.workat_project.payment.entity.PaymentVO;
 import org.workat.workat_project.payment.repository.PaymentMapper;
+import org.workat.workat_project.place.entity.PlaceVO;
 import org.workat.workat_project.place.repository.PlaceMapper;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.repository.ReservationMapper;
