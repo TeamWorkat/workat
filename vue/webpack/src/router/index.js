@@ -20,6 +20,7 @@ import ReviewList from '@/components/myPage/ReviewList.vue';
 import WishList from '@/components/myPage/WishList.vue'
 import PartnerReserveList from "@/views/PartnerReserveList.vue"
 import PartnerReserveDetail from "@/views/PartnerReserveDetail.vue"
+import ReviewInsert from '@/views/ReviewInsert.vue'
 
 
 const routes = [
@@ -157,9 +158,11 @@ const routes = [
         name: 'PartnerReserveDetail',
         component: PartnerReserveDetail  
     },
-    
-
-
+    {
+        path: '/review/insertForm/:reservation_id',
+        name: 'ReviewInsert',
+        component: ReviewInsert
+    }
 ];
 
 const router = createRouter({

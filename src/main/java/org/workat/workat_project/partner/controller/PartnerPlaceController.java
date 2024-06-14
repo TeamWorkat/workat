@@ -29,7 +29,6 @@ public class PartnerPlaceController {
 	
 	@GetMapping("/placeDetail")
 	public ResponseEntity<PartnerPlaceDTO> getPlaceDetail(@RequestParam(name = "placeid") int placeid){
-		
 		return ResponseEntity.ok(placeService.getPlaceDetail(placeid));
 	}
 	

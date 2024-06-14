@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.workat.workat_project.payment.repository.PaymentMapper;
 import org.workat.workat_project.picture.repository.PictureMapper;
+import org.workat.workat_project.place.repository.PlaceMapper;
 import org.workat.workat_project.reservation.entity.ReservationListDTO;
 import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.entity.ReserveInfoRequestDTO;
@@ -12,7 +13,6 @@ import org.workat.workat_project.room.repository.RoomMapper;
 import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class ReservationServiceImpl implements ReservationService{
     private final PictureMapper pictureMapper;
     private final RoomMapper roomMapper;
     private final PaymentMapper paymentMapper;
+    private final PlaceMapper placeMapper;
 
     @Override
     public ReservationVO saveReservationInfo(ReservationVO reservation, String userEmail){
@@ -39,6 +40,7 @@ public class ReservationServiceImpl implements ReservationService{
     public ReserveInfoRequestDTO reservationDetail(int reservationId) {
         ReserveInfoRequestDTO reserveInfoRequestDTO = new ReserveInfoRequestDTO();
         reserveInfoRequestDTO.setReservationVO(reservationMapper.selectReservationById(reservationId));
+        reserveInfoRequestDTO.setPlace_nm(placeMapper.getPlaceInfo(reservationMapper.selectReservationById(reservationId).getPlace_id()).getPlace_nm());
         reserveInfoRequestDTO.setRoomPictureList(pictureMapper.getRoomPictureSources(reserveInfoRequestDTO.getReservationVO().getRoom_id()));
         reserveInfoRequestDTO.setRoomVO(roomMapper.getRoomInfo(reserveInfoRequestDTO.getReservationVO().getPlace_id()).get(0));
         reserveInfoRequestDTO.setPaymentKey(paymentMapper.findPaymentKeyByReservationId(reservationId));

@@ -12,8 +12,6 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 naver:
-  client-id: ${NAVER_CLIENT}
-  client-secret: ${NAVER_SECRET_CLIENT}
 
 
 payment:
