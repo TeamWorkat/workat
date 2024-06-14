@@ -6,9 +6,9 @@
 	namespace="org.workat.workat_project.place.repository.PlaceMapper">
 	<select id="getMainViewPlaceList"
 		resultType="org.workat.workat_project.place.entity.PlaceListDTO">
-		SELECT p.place_id, p.place_nm, pp.picture_source FROM place
-		p, place_picture
-		pp where p.status = 'active' AND p.place_id = pp.place_id;
+		SELECT place_id, place_nm FROM place
+
+		where status = 'active' ;
 	</select>
 
     <select id="getPlaceInfo" resultType="PlaceVO">

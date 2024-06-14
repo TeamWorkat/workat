@@ -22,7 +22,11 @@ public class PlaceController {
 
 	@GetMapping("/items")
 	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList(Authentication auth) {
-		return ResponseEntity.ok(placeService.getMainViewPlaceList(auth.getName()));
+		String username = null;
+		if (auth != null) {
+			username = auth.getName();
+		}
+		return ResponseEntity.ok(placeService.getMainViewPlaceList(username));
 	}
 
 	@GetMapping("/placeDetail")
