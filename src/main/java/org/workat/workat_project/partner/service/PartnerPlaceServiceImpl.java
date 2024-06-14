@@ -2,8 +2,9 @@ package org.workat.workat_project.partner.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ public class PartnerPlaceServiceImpl implements PartnerPlaceService {
 	public PartnerPlaceDTO getPlaceDetail(int placeid) {
 		PartnerPlaceDTO partnerDTO = placeMapper.getPlaceDetail(placeid);
 		String[] picture_sources = partnerDTO.getPicture_source().split(",");
+
 		partnerDTO.setPicture_sources(picture_sources);
 		return partnerDTO;
 	}
@@ -42,20 +44,38 @@ public class PartnerPlaceServiceImpl implements PartnerPlaceService {
 	@Override
 	public Integer updatePlace(PartnerPlaceDTO request) {
 		logger.debug("aaa");
-//		int updateCount = 0;
-//		updateCount += placeMapper.updatePlace(request);
-//		updateCount += placeMapper.updatePlaceloc(request);
-//		updateCount += placeMapper.updatePlacepic(request);
-		
-		
+
 		placeMapper.updatePlace(request);
 		
-		placeMapper.updatePlacepic(request);
-		placeMapper.inactivePlace(request);
+		placeMapper.allInactive(request);
 		
 		
-		// TODO Auto-generated method stub
-//		return updateCount == 3 ? 1 : 0;
+    for (String pic : request.getPicture_sources()) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("picture_source", pic);
+        System.out.println(pic);
+        params.put("place_id", request.getPlace_id());
+        placeMapper.updatePlacepic(params);    
+        placeMapper.inactivePlace(params);
+        
+    }
+//    for (String pic : request.getPicture_sources()) {
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("picture_source", pic);
+//        System.out.println(pic);
+//        params.put("place_id", request.getPlace_id());
+//        placeMapper.updatePlacepic(params);    
+//        
+//    }
+    
+    
+
+//		placeMapper.inactivePlace(request);
+
+		
+//		placeMapper.updatePlacepic(request);
+		
+		
 		return 1;
 	}
 

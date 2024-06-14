@@ -6,6 +6,12 @@ spring:
     username: ${DATA_SOURCE_NAME}
     password: ${DATA_SOURCE_PWD}
     driver-class-name: org.mariadb.jdbc.Driver
+    
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 
 mybatis:
   config-location: classpath:mybatis-config.xml

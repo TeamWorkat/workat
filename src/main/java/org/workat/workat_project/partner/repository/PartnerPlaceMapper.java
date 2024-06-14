@@ -5,6 +5,7 @@ import org.workat.workat_project.partner.entity.PartnerPlaceDTO;
 import org.workat.workat_project.partner.entity.PartnerPlaceVO;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PartnerPlaceMapper {
@@ -12,10 +13,16 @@ public interface PartnerPlaceMapper {
 	PartnerPlaceDTO getPlaceDetail(int placeid);
 	
 	Integer updatePlace(PartnerPlaceDTO request);
-	Integer updatePlacepic(PartnerPlaceDTO request);
 	
-	void inactivePlace(PartnerPlaceDTO request);
-
+	void allInactive(PartnerPlaceDTO request);
+//	Integer updatePlacepic(PartnerPlaceDTO request);
+	
+//	void inactivePlace(PartnerPlaceDTO request);
+	void inactivePlace(Map<String, Object>  params);
+//	void updatePlacepic(PartnerPlaceDTO request);
+	
+	void updatePlacepic(Map<String, Object> params);
+	
 	Integer deletePlace(int placeid);
 	Integer deletePlacepic(int placeid);
 	
