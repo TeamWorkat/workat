@@ -2,6 +2,7 @@ package org.workat.workat_project.review.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,14 +25,14 @@ public class ReviewController {
 
     @GetMapping("/list")
     @ResponseBody
-    public ResponseEntity<List<ReviewListDTO>> userReviewList(Principal principal) {
-        return ResponseEntity.ok(reviewService.userReviewList("user1@example.com"));
+    public ResponseEntity<List<ReviewListDTO>> userReviewList(Authentication principal) {
+        return ResponseEntity.ok(reviewService.userReviewList(principal.getName()));
     }
 
     @PostMapping("/insert")
     @ResponseBody
-    public ResponseEntity<Integer> insertUserReview(Principal principal, ReviewInsertDTO reviewDTO) {
-        reviewService.insertReview("user1@example.com", reviewDTO);
+    public ResponseEntity<Integer> insertUserReview(Authentication principal, ReviewInsertDTO reviewDTO) {
+        reviewService.insertReview(principal.getName(), reviewDTO);
         return ResponseEntity.ok(reviewDTO.getReview_id());
     }
 

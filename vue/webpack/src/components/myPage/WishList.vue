@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import axios from 'axios';
+import axios from '@/axios.js';
 import { ref, onMounted } from 'vue';
 import UserCard from '@/components/UserCard.vue';
 

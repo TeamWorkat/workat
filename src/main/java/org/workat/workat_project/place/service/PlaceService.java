@@ -9,7 +9,7 @@ import org.workat.workat_project.place.entity.SearchVO;
 
 public interface PlaceService {
 
-	List<PlaceListDTO> getMainViewPlaceList();
+	List<PlaceListDTO> getMainViewPlaceList(String name);
 
 	PlaceDetailDTO getPlaceDetail(int placeId);
 	

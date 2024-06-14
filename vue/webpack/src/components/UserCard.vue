@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from '@/axios';
+import axios from '@/axios.js';
 
 export default {
   name: "UserCard",
@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.item.liked || false
+      isFavorite: this.item.liked === "Y" || false
     };
   },
   methods: {

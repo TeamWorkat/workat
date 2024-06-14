@@ -67,7 +67,7 @@ const routes = [
         meta: { type: 'search' }
     },
     {
-        path: '/user/detail/:user_id',
+        path: '/user/detail',
         name: 'UserDetail',
         component: UserDetail
     },

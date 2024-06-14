@@ -3,6 +3,7 @@ package org.workat.workat_project.place.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.workat.workat_project.place.entity.PlaceDetailDTO;
 import org.workat.workat_project.place.entity.PlaceListDTO;
@@ -20,8 +21,8 @@ public class PlaceController {
 	private final PlaceService placeService;
 
 	@GetMapping("/items")
-	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList() {
-		return ResponseEntity.ok(placeService.getMainViewPlaceList());
+	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList(Authentication auth) {
+		return ResponseEntity.ok(placeService.getMainViewPlaceList(auth.getName()));
 	}
 
 	@GetMapping("/placeDetail")

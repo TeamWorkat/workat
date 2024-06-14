@@ -21,11 +21,12 @@ public class WishController {
 
     @GetMapping("/list")
     public ResponseEntity<List<WishListDTO>> userWishList(Authentication principal, String category) {
-        return ResponseEntity.ok(wishService.userWishList("user1@example.com", category));
+        return ResponseEntity.ok(wishService.userWishList(principal.getName(), category));
     }
 
     @PostMapping("/update")
     public ResponseEntity<WishVO> addWish(Authentication principal, @RequestBody WishVO wishVO) {
-        return ResponseEntity.ok(wishService.updateUserWish("user1@example.com", wishVO.getPlace_id(), wishVO.getLiked()));
+        System.err.println(principal.getName());
+        return ResponseEntity.ok(wishService.updateUserWish(principal.getName(), wishVO.getPlace_id(), wishVO.getLiked()));
     }
 }

@@ -13,4 +13,5 @@ public class PlaceListDTO {
 	private int place_id;
 	private String picture_source;
 	private String place_nm;
+	private String liked;
 }

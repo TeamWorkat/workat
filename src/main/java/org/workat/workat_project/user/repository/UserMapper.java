@@ -12,6 +12,7 @@ public interface UserMapper {
     List<UserListDTO> getUserList();
     UserVO findUserByEmail(String email);
     UserVO getUserDetail(int user_id);
+    UserVO getUserDetailByUsername(String username);
     UserVO findById(int user_id);
     void deleteById(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);

@@ -3,6 +3,7 @@ package org.workat.workat_project.user.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.workat.workat_project.user.entity.LoginDTO;
@@ -20,8 +21,8 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @GetMapping("/detail")
-    public ResponseEntity<UserDetailDTO> getUserDetail(@RequestParam(name= "user_id") int user_id) {
-        return ResponseEntity.ok(userServiceImpl.getUserDetail(user_id));
+    public ResponseEntity<UserDetailDTO> getUserDetail(Authentication authentication) {
+        return ResponseEntity.ok(userServiceImpl.getUserDetail(authentication.getName()));
     }
 
     @PostMapping("/check-password")

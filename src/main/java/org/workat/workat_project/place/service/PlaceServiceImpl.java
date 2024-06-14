@@ -3,6 +3,7 @@ package org.workat.workat_project.place.service;
 
 import java.text.DecimalFormat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +29,18 @@ import org.workat.workat_project.review.entity.ReviewResDTO;
 import org.workat.workat_project.review.repository.ReviewMapper;
 import org.workat.workat_project.review.service.ReviewService;
 import org.workat.workat_project.room.service.RoomService;
+import org.workat.workat_project.user.entity.UserVO;
+import org.workat.workat_project.user.repository.UserMapper;
+import org.workat.workat_project.wish.entity.WishVO;
+import org.workat.workat_project.wish.repository.WishMapper;
 
 @Service
 @RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
 
     private final ReviewMapper reviewMapper;
+    private final WishMapper wishMapper;
+    private final UserMapper userMapper;
     @Value("${naver.client-id}")
     private String clientId;
     @Value("${naver.client-secret}")
@@ -52,8 +59,18 @@ public class PlaceServiceImpl implements PlaceService {
     }
     
     @Override
-    public List<PlaceListDTO> getMainViewPlaceList() {
-        return placeMapper.getMainViewPlaceList();
+    public List<PlaceListDTO> getMainViewPlaceList(String name) {
+        List<PlaceListDTO> returnList = new ArrayList<>();
+        List<PlaceListDTO> mainViewPlaceList = placeMapper.getMainViewPlaceList();
+        UserVO userVO = userMapper.findUserByEmail(name);
+        for (PlaceListDTO placeListDTO : mainViewPlaceList) {
+            WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(),placeListDTO.getPlace_id());
+            if (wishVO != null) {
+                placeListDTO.setLiked(wishVO.getLiked());
+            }
+            returnList.add(placeListDTO);
+        }
+        return returnList;
     }
     @Override
     public List<PlaceListDTO> getCategoryViewPlaceList(String category) {

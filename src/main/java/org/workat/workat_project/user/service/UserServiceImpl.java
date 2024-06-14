@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailDTO getUserDetail(int user_id) {
-        UserVO userVO = userMapper.getUserDetail(user_id);
+    public UserDetailDTO getUserDetail(String user_id) {
+        UserVO userVO = userMapper.findUserByEmail(user_id);
         return convertToUserDetailDTO(userVO);
     }
 

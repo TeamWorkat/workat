@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import axios from 'axios';
+import axios from '@/axios.js';
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
