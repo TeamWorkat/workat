@@ -25,7 +25,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="/partner/reservelist" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#speedometer2"></use>
           </svg>

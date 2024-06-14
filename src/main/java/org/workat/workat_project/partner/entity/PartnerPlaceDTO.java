@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -24,6 +22,7 @@ public class PartnerPlaceDTO {
 	private String loc_nm;
 	private String picture_source;
 	private String status;
+	private String[] picture_sources;
 }
 	
 	

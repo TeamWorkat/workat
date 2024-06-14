@@ -2,9 +2,9 @@ spring:
   application.name: workat_project
 
   datasource:
-    url: "jdbc:mariadb://175.45.194.221:3306/workat_db"
-    username: "bituser"
-    password: "0000"
+    url: ${DATA_SOURCE_URL}
+    username: ${DATA_SOURCE_NAME}
+    password: ${DATA_SOURCE_PWD}
     driver-class-name: org.mariadb.jdbc.Driver
 
 mybatis:
@@ -12,13 +12,27 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 naver:
-  client-id: bgjjxkqpe7
-  client-secret: faVhvVHYrdLgpCpf0u68vXMGuzKjqVVaPDK3bwt2
 
 
 payment:
   toss:
-    test_client_key: test_ck_pP2YxJ4K871mNJ6MKR1vVRGZwXLO
-    test_secrete_key: test_sk_GjLJoQ1aVZ9mDOzMGdAP3w6KYe2R
+    test_client_key: ${TOSS_TEST_CLIENT}
+    test_secrete_key: ${TOSS_TEST_SECRET}
     success_url: "http://localhost:8080/payment/toss/success"
     fail_url: "http://localhost:8080/payment/toss/fail"
+
+cloud:
+  aws:
+    region:
+      static: us-east-1
+    s3:
+      bucket: workatbucket
+      folder:
+        folderName1: place/
+        folderName2: room/
+        folderName3: review/
+    stack:
+      auto: false
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}

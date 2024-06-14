@@ -18,9 +18,12 @@ import MyPage from '@/views/MyPage.vue';
 import ReservationList from '@/components/myPage/ReservationList.vue';
 import ReviewList from '@/components/myPage/ReviewList.vue';
 import WishList from '@/components/myPage/WishList.vue'
+import PartnerReserveList from "@/views/PartnerReserveList.vue"
+import PartnerReserveDetail from "@/views/PartnerReserveDetail.vue"
 import ReviewInsert from '@/views/ReviewInsert.vue'
 import ReviewDetail from '@/views/ReviewDetail'
 import ReviewUpdate from '@/views/ReviewUpdate.vue';
+
 
 const routes = [
     {
@@ -146,6 +149,16 @@ const routes = [
         name: 'PartnerPlaceUpdate',
         component: PartnerPlaceUpdate
         
+    },
+    {
+        path: '/partner/reservelist',
+        name: 'PartnerReserveList',
+        component: PartnerReserveList
+    },
+    {
+        path: '/partner/reserveDetail/:res_id',
+        name: 'PartnerReserveDetail',
+        component: PartnerReserveDetail  
     },
     {
         path: '/review/insertForm/:reservation_id',
