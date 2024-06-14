@@ -27,6 +27,14 @@
         WHERE
             review_id = #{review_id}
     </update>
+    <delete id="deleteUserReview">
+        update
+        review
+        set
+            status = "inactive"
+        where
+            review_id = #{reviewId}
+    </delete>
 
     <select id="getReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
         select
@@ -66,7 +74,9 @@
         JOIN
           place p ON r.place_id = p.place_id
         WHERE
-         u.user_email = #{mail};
+         u.user_email = #{mail}
+        AND
+            r.status = "active";
     </select>
 
     <select id="getUserReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">

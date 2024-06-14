@@ -16,4 +16,6 @@ public interface ReviewService {
     ReviewResDTO userReviewDetail(int reviewId);
 
     ReviewInsertDTO updateUserReview(String name, ReviewInsertDTO reviewDTO);
+
+    void deleteUserReview(int reviewId);
 }

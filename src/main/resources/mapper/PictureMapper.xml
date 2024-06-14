@@ -22,6 +22,14 @@
                 #{item}
             </foreach>
     </update>
+    <delete id="deleteReviewPicture">
+        update
+        review_picture
+        set
+            status = "inactive"
+        where
+            review_id = #{review_id}
+    </delete>
 
     <select id="getPlacePictureSources" resultType="String">
         SELECT picture_source
