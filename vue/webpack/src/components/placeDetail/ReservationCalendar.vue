@@ -132,6 +132,11 @@ function reserve() {
 .reservation-form {
   max-width: 400px;
   margin: 0 auto;
+  background-color: #fff5cc; /* Soft yellow background */
+  padding: 20px;
+  border: 2px solid #ffd700; /* Gold border */
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -141,28 +146,41 @@ function reserve() {
 label {
   display: block;
   font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
 }
 
 input[type="number"] {
   width: 100%;
   padding: 8px;
   font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #ffd700; /* Gold background */
+  color: #333; /* Dark text */
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #ffcc00; /* Darker gold on hover */
 }
 
 p {
   margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+p.total {
+  font-weight: bold;
+  font-size: 18px;
 }
 </style>

@@ -4,7 +4,6 @@
 </div>
 <hr class="long-divider">
     <div class="reservation-container">
-      <!-- 방 이미지 -->
       <div class="room-picture-container">
     <div v-if="roomPictureList.length > 0" class="room-info">
       <PictureSlide :pictureList="roomPictureList" />
@@ -12,9 +11,7 @@
     </div>
   </div>
   
-      <!-- 예약 양식 -->
       <div class="reservation-form">
-        <!-- 체크인/체크아웃 -->
         <div class="form-group">
           <label for="check-in">체크인/체크아웃</label>
           <VueDatePicker 
@@ -30,7 +27,7 @@
           />
         </div>
   
-        <!-- 인원 -->
+    
         <div class="form-group">
           <label for="guests">인원:</label>
           <input id="guests" type="number" v-model="guests" min="0" :max="maxPeople"/>
@@ -42,7 +39,7 @@
           <h6>{{ minPeople }}인 이상 추가요금:{{ addPrice }}</h6>
         </div>
   
-        <!-- 합계 -->
+
         <div class="form-group">
           <label>합계:</label>
           <p>{{ totalFee }}원</p>
@@ -53,7 +50,6 @@
         <textarea id="request" v-model="request" rows="4" placeholder="예약과 관련된 요청사항을 입력해주세요."></textarea>
       </div>
   
-        <!-- 결제 버튼 -->
         <button @click="payment">결제하기</button>
       </div>
     </div>
