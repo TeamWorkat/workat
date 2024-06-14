@@ -13,7 +13,7 @@ import org.workat.workat_project.reservation.repository.ReservationMapper;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/payment")
+@RequestMapping("/api/payment")
 public class PaymentController {
 
     private final PaymentService paymentService;

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/review")
+@RequestMapping("/api/review")
 public class ReviewController {
     private final ReviewService reviewService;
     private final AwsService awsService;

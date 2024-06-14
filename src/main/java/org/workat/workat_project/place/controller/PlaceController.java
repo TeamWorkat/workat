@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/place")
+@RequestMapping("/api/place")
 public class PlaceController {
 
 	private final PlaceService placeService;

@@ -40,7 +40,7 @@
 </template>
 <script>
 import SideBar from '@/views/SideBar.vue'
-import axios from 'axios'
+import axios from '@/axios';
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
