@@ -20,5 +20,6 @@ public class ReviewInsertDTO {
     private List<MultipartFile> files;
     private int user_id;
     private int review_id;
+    private List<String> src;
 
 }

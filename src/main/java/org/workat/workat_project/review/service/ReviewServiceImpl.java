@@ -23,7 +23,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -90,5 +92,25 @@ public class ReviewServiceImpl implements ReviewService {
         reviewResDTO.setCheck_in(reservationMapper.selectReservationById(reviewVO.getRes_id()).getCheck_in());
         reviewResDTO.setCheck_out(reservationMapper.selectReservationById(reviewVO.getRes_id()).getCheck_out());
         return reviewResDTO;
+    }
+
+    @Override
+    public ReviewInsertDTO updateUserReview(String name, ReviewInsertDTO reviewDTO) {
+        if(reviewDTO.getSrc() != null){
+            Map<String, Object> paramMap = new HashMap<>();
+                   paramMap.put("reviewId", reviewDTO.getReview_id());
+                   paramMap.put("src", reviewDTO.getSrc());
+            pictureMapper.updateUserReviewSource(paramMap);
+        }
+        if(reviewDTO.getFiles() != null){
+        for (MultipartFile file : reviewDTO.getFiles()) {
+                    String uploadUrl = awsService.uploadFile(file, "review");
+                    String fileSource = awsService.getFileUrl(uploadUrl);
+                    String fileName = file.getOriginalFilename();
+                    pictureMapper.insertUserReviewPicture(fileName,fileSource,reviewDTO.getReview_id());
+                }
+        }
+        reviewMapper.updateReviewInfo(reviewDTO);
+        return reviewDTO;
     }
 }

@@ -14,4 +14,6 @@ public interface ReviewService {
     int insertReview(String mail, ReviewInsertDTO reviewInsertDTO);
 
     ReviewResDTO userReviewDetail(int reviewId);
+
+    ReviewInsertDTO updateUserReview(String name, ReviewInsertDTO reviewDTO);
 }

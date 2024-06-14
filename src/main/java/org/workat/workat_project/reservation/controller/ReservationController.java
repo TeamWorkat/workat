@@ -12,7 +12,6 @@ import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.entity.ReserveInfoRequestDTO;
 import org.workat.workat_project.reservation.service.ReservationService;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -40,8 +39,6 @@ public class ReservationController {
     @GetMapping("/list")
     @ResponseBody
     public ResponseEntity<List<ReservationListDTO>> getReservations(Authentication principal) {
-        System.err.println("온다");
-        System.err.println(principal.getName());
         return ResponseEntity.ok(reservationService.userReservationList(principal.getName()));
     }
 }

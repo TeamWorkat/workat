@@ -68,7 +68,7 @@
   
   <script setup>
   import { ref, computed, onMounted } from 'vue'
-  import axios from 'axios'
+  import axios from '@/axios'
   import { useRoute } from 'vue-router';
   import router from "@/router/index.js"
 
