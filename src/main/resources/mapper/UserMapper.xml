@@ -15,7 +15,7 @@
             user
         WHERE
             user_email = #{email}
-    </select>        
+    </select>
 
     <select id="getUserDetail" resultType="UserVO">
         SELECT *

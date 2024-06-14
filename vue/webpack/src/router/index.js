@@ -32,7 +32,7 @@ const routes = [
         component: PlaceDetail
     },
     {
-        path: '/admin',
+        path: '/admin/list',
         name: 'UserList',
         component: UserList
     },
@@ -61,10 +61,9 @@ const routes = [
         meta: { type: 'search' }
     },
     {
-        path: '/user/detail',
+        path: '/user/detail/:user_id',
         name: 'UserDetail',
-        component: UserDetail,
-        props: route => ({ user_id: route.query.user_id })
+        component: UserDetail
     },
     {
         path: '/user/delete',
@@ -89,7 +88,7 @@ const routes = [
     {
         path: '/reservation/check',
         name: 'ReservationCheck',
-        component: ReservationCheck,
+        component: ReservationCheck
     },
     {
         path: '/partner/home',
@@ -122,19 +121,19 @@ const routes = [
         children: [
           {
             path: 'resList',
-            component: ReservationList,
+            component: ReservationList
           },
           {
             path: 'reviewList',
-            component: ReviewList,
+            component: ReviewList
           },
           {
             path: 'wishList',
-            component: WishList,
+            component: WishList
           },
           {
             path: 'user/detail',
-            component: UserDetail,
+            component: UserDetail
         }
         ],
       },

@@ -74,7 +74,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from '@/axios';
 import SideBar from '@/views/SideBar.vue'
 
 export default {

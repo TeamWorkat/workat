@@ -10,8 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.workat.workat_project.user.entity.CustomUserDetails;
 import org.workat.workat_project.user.entity.UserVO;
-import org.workat.workat_project.user.service.UserServiceImpl;
-
 import java.io.IOException;
 
 public class JWTFilter extends OncePerRequestFilter {
@@ -23,7 +21,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
         String authorization = request.getHeader("Authorization");
         System.out.println("Authorization header: " + authorization);
 
@@ -35,24 +32,31 @@ public class JWTFilter extends OncePerRequestFilter {
 
         String token = authorization.split(" ")[1];
 
-        if (jwtUtil.isExpired(token)) {
-            System.out.println("Token is expired");
-            filterChain.doFilter(request, response);
+        try {
+            if (jwtUtil.isExpired(token)) {
+                System.out.println("Token is expired");
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Token is expired");
+                return;
+            }
+
+            String user_email = jwtUtil.getUsername(token);
+            String role = jwtUtil.getRole(token);
+
+            UserVO userVO = new UserVO();
+            userVO.setUser_email(user_email);
+            userVO.setRole(role);
+            CustomUserDetails customUserDetails = new CustomUserDetails(userVO);
+
+            System.out.println("USER ROLE: " + role);
+
+            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (Exception e) {
+            System.out.println("Token validation error: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid token");
             return;
         }
 
-        String user_email = jwtUtil.getUsername(token);
-        String role = jwtUtil.getRole(token);
-
-        UserVO userVO = new UserVO();
-        userVO.setUser_email(user_email);
-        userVO.setRole(role);
-        CustomUserDetails customUserDetails = new CustomUserDetails(userVO);
-
-        System.out.println(customUserDetails);
-
-        Authentication authtoken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authtoken);
         filterChain.doFilter(request, response);
     }
 }

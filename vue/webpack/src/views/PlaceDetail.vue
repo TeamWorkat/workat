@@ -23,8 +23,8 @@
   import PlaceInfo from "@/components/placeDetail/PlaceInfo.vue"; 
   import ReviewDetail from "@/components/placeDetail/ReviewDetail.vue"; 
   import RoomDetail from "@/components/placeDetail/RoomDetail.vue"; 
-  import StarPoint from "@/components/placeDetail/StarPoint.vue"; 
-  import axios from 'axios';
+  import StarPoint from "@/components/placeDetail/StarPoint.vue";
+  import axios from '@/axios';
 
   export default {
     components: {

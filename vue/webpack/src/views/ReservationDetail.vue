@@ -65,7 +65,7 @@
   <script setup>
   import { ref, computed, watch, onMounted } from 'vue';
   import { useRoute } from 'vue-router';
-  import axios from 'axios';
+  import axios from '@/axios';
   import router from "@/router/index.js"
   import PictureSlide from '@/components/myPage/PictureSlide.vue';
   

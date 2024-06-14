@@ -60,12 +60,10 @@
 <script>
 import { ref, onMounted, nextTick } from 'vue'
 import UserCalendar from '@/components/UserCalendar.vue'
-import axios from 'axios'
+import axios from '@/axios'
 import GuestModal from '@/components/GuestModal.vue'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
-
-
 
 export default {
   name: 'MainSearch',

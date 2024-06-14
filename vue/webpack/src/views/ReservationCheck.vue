@@ -64,7 +64,7 @@
   import VueDatePicker from '@vuepic/vue-datepicker'
   import '@vuepic/vue-datepicker/dist/main.css'
   import { loadTossPayments } from '@tosspayments/payment-sdk';
-  import axios from 'axios';
+  import axios from '@/axios';
   import PictureSlide from '@/components/myPage/PictureSlide.vue';
 
   const date = ref()

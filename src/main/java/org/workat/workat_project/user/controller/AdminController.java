@@ -15,12 +15,12 @@ import java.util.List;
 @Controller
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     private final UserServiceImpl userServiceImpl;
 
-    @GetMapping("/users")
+    @GetMapping("/list")
     public ResponseEntity<List<UserListDTO>> getUserList() {
         return ResponseEntity.ok(userServiceImpl.getList());
 
