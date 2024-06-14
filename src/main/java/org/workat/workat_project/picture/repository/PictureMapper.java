@@ -11,4 +11,6 @@ public interface PictureMapper {
     List<String> getRoomPictureSources(int roomId);
 
     List<String> getReviewPictureSources(int reviewId);
+
+    void insertUserReviewPicture(String fileName, String fileSource, int reviewId);
 }
