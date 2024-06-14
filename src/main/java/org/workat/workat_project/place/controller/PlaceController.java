@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/place")
+@RequestMapping("/place")
 public class PlaceController {
 
 	private final PlaceService placeService;
@@ -26,6 +26,7 @@ public class PlaceController {
 
 	@GetMapping("/placeDetail")
 	public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name = "place_id") int placeId) {
+		System.err.println(placeId);
 		return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
 	}
 

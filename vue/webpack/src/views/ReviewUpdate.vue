@@ -28,7 +28,7 @@
         <div class="file-upload-list">
           <div class="file-upload-list__item" v-for="(file, index) in reviewPictureList" :key="index">
             <div class="file-upload-list__item__data">
-              <img class="file-upload-list__item__data-thumbnail" :src="file" />
+              <img class="file-upload-list__item__data-thumbnail" :src="typeof file === 'string' ? file : file.src" />
               <div class="file-upload-list__item__data-name">
                 {{ file.name }}
               </div>
