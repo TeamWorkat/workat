@@ -53,25 +53,33 @@ public class PlaceServiceImpl implements PlaceService {
 
 
     @Override
-    
+
     public List<PlaceListDTO> getSearchPlaceList(SearchVO request) {
-    	return placeMapper.getSearchPlaceList(request);
+        return placeMapper.getSearchPlaceList(request);
     }
-    
+
     @Override
     public List<PlaceListDTO> getMainViewPlaceList(String name) {
         List<PlaceListDTO> returnList = new ArrayList<>();
         List<PlaceListDTO> mainViewPlaceList = placeMapper.getMainViewPlaceList();
-        UserVO userVO = userMapper.findUserByEmail(name);
-        for (PlaceListDTO placeListDTO : mainViewPlaceList) {
-            WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(),placeListDTO.getPlace_id());
-            if (wishVO != null) {
-                placeListDTO.setLiked(wishVO.getLiked());
-            }
-            returnList.add(placeListDTO);
+        for(PlaceListDTO mainViewPlace : mainViewPlaceList) {
+            mainViewPlace.setPicture_source(pictureMapper.getPlacePictureSources(mainViewPlace.getPlace_id()));
         }
-        return returnList;
+        if (name != null) {
+            UserVO userVO = userMapper.findUserByEmail(name);
+            for (PlaceListDTO placeListDTO : mainViewPlaceList) {
+                WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(), placeListDTO.getPlace_id());
+                if (wishVO != null) {
+                    placeListDTO.setLiked(wishVO.getLiked());
+                }
+                returnList.add(placeListDTO);
+            }
+            return returnList;
+        } else {
+            return mainViewPlaceList;
+        }
     }
+
     @Override
     public List<PlaceListDTO> getCategoryViewPlaceList(String category) {
         return placeMapper.getCategoryViewPlaceList(category);

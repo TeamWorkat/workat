@@ -1,6 +1,6 @@
 <template>
   <div class="card shadow-sm" @click="goDetailPage(item.place_id)">
-    <span class="img" :style="{ backgroundImage: `url(${item.picture_source})` }"></span>
+    <span class="img" :style="{ backgroundImage: `url(${item.picture_source[0]})` }"></span>
     <div class="card-body">
       <p class="card-text">{{ item.place_nm }}</p>
       <div class="d-flex justify-content-between align-items-center">
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from '@/axios.js';
+import axios from '@/axios';
 
 export default {
   name: "UserCard",
