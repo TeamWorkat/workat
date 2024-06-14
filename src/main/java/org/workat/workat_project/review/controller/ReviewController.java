@@ -42,4 +42,13 @@ public class ReviewController {
         System.err.println("reviewId: " + reviewId);
         return ResponseEntity.ok(reviewService.userReviewDetail(reviewId));
     }
+
+    @PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<Integer> updateUserReview(Authentication principal, ReviewInsertDTO reviewDTO) {
+        System.err.println(reviewDTO.getPlace_id());
+        System.err.println(reviewDTO.getSrc());
+        ReviewInsertDTO reviewInsertDTO = reviewService.updateUserReview(principal.getName(),reviewDTO);
+        return ResponseEntity.ok(reviewInsertDTO.getReview_id());
+    }
 }

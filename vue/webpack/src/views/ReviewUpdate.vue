@@ -16,7 +16,7 @@
           <div class="file-upload" :class="{ dragged: isDragged }">
             <div v-if="reviewPictureList.length" class="file-preview-container">
               <div class="file-preview">
-                <img :src="reviewPictureList[reviewPictureList.length - 1]" class="file-preview-image"/>
+                <img :src="typeof reviewPictureList[reviewPictureList.length - 1] === 'string' ? reviewPictureList[reviewPictureList.length - 1] : reviewPictureList[reviewPictureList.length - 1].src" class="file-preview-image"/>
               </div>
             </div>
             <div v-else>
@@ -59,7 +59,7 @@
   </div>  
   <div class="form-group review-group" style="margin-top: 20px;">
     <label for="review">여행후기:</label>
-    <textarea id="review" :value="reviewVO.content" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
+    <textarea id="review" v-model="reviewVO.content" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
   </div>
   <div class="reservation-form">  
     <button @click="uploadFiles" style="margin-top: 20px;">수정</button>
@@ -72,16 +72,14 @@
   
   <script setup>
   import { ref, computed, onMounted } from 'vue'
-  import axios from 'axios'
+  import axios from '@/axios'
   import { useRoute } from 'vue-router';
   import router from "@/router/index.js"
 
   const items = ref(null);
   const route = useRoute();
   const isDragged = ref(false)
-  const rating = ref(0)
   const reviewId = computed(() => route.params.review_id);
-  const review = ref('')
   const reviewVO = computed(() => items.value?.reviewVO || {});
   const placeName = computed(()=>items.value?.place_nm || null);
   const check_in = computed(()=>items.value?.check_in || null);
@@ -104,7 +102,9 @@
 
 
   const setRating = (index) => {
-    rating.value = index
+    if (items.value && items.value.reviewVO) {
+        items.value.reviewVO.rating = index;
+      }
   }
   
   const onClick = () => {
@@ -160,15 +160,21 @@
   const uploadFiles = async () => {
     let formData = new FormData()
     reviewPictureList.value.forEach(file => {
+    if (file instanceof File) {
       formData.append('files', file)
-    })
+    }else{
+      formData.append('src',file)
+    }
+  })
     formData.append('res_id', reviewVO.value.res_id);
-    formData.append('rating', rating.value);
-    formData.append('content', review.value);
+    formData.append('rating', items.value.reviewVO.rating);
+    formData.append('content', reviewVO.value.content);
     formData.append('place_id', reviewVO.value.place_id);
+    formData.append('review_id', reviewVO.value.review_id);
+
     console.log(formData)
     try {
-      let response = await axios.post('/api/review/insert', formData, {
+      let response = await axios.post('/api/review/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -179,7 +185,7 @@
       console.log('Files uploaded successfully:', response.data)
       router.push({ name: 'ReviewDetail', params: { review_id: reviewId } });    } catch (error) {
       console.error('Error uploading files:', error)
-    }
+    } 
   }
 
   const formatDate = (dateString) => {

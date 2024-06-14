@@ -19,9 +19,18 @@
                 )
     </insert>
 
+    <update id="updateReviewInfo" parameterType="org.workat.workat_project.review.entity.ReviewInsertDTO">
+        UPDATE review
+        SET
+            content = #{content},
+            rating = #{rating}
+        WHERE
+            review_id = #{review_id}
+    </update>
 
     <select id="getReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
-        select *
+        select
+            *
         from review
         where place_id = #{placeId}
     </select>
