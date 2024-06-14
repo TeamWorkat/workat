@@ -33,7 +33,7 @@
   </div>
   <div class="reservation-form">  
       <button @click="updateReview">수정</button>
-      <button>삭제</button>
+      <button @click="reviewDelete(reviewVO.review_id)">삭제</button>
       <button>목록</button>
     </div>
   
@@ -79,6 +79,17 @@
       await axios.get(`/api/review/detail?review_id=${reviewId}`)
         .then(res => {
           items.value = res.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the review details:", error);
+        });
+    };
+
+    const reviewDelete = async (reviewId) => {
+      await axios.get(`/api/review/delete?review_id=${reviewId}`)
+        .then(res => {
+          if(res != null)
+          router.push({ path: '/mypage/reviewList' });
         })
         .catch(error => {
           console.error("There was an error fetching the review details:", error);

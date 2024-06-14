@@ -21,4 +21,6 @@ public interface ReviewMapper {
     ReviewVO getUserReviewInfo(int reviewId);
 
     void updateReviewInfo(ReviewInsertDTO reviewDTO);
+
+    void deleteUserReview(int reviewId);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.workat.workat_project.aws.service.AwsService;
+import org.workat.workat_project.picture.repository.PictureMapper;
 import org.workat.workat_project.review.entity.ReviewInsertDTO;
 import org.workat.workat_project.review.entity.ReviewListDTO;
 import org.workat.workat_project.review.entity.ReviewResDTO;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
     private final AwsService awsService;
+    private final PictureMapper pictureMapper;
 
     @GetMapping("/list")
     @ResponseBody
@@ -50,5 +52,13 @@ public class ReviewController {
         System.err.println(reviewDTO.getSrc());
         ReviewInsertDTO reviewInsertDTO = reviewService.updateUserReview(principal.getName(),reviewDTO);
         return ResponseEntity.ok(reviewInsertDTO.getReview_id());
+    }
+
+    @GetMapping("/delete")
+    @ResponseBody
+    public ResponseEntity<Integer> deleteUserReview(@RequestParam(name = "review_id") int reviewId) {
+        pictureMapper.deleteReviewPicture(reviewId);
+        reviewService.deleteUserReview(reviewId);
+        return ResponseEntity.ok(reviewId);
     }
 }

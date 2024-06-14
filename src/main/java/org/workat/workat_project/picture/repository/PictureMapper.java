@@ -16,5 +16,7 @@ public interface PictureMapper {
 
     void insertUserReviewPicture(String fileName, String fileSource, int reviewId);
 
-    void updateUserReviewSource(Map<String, Object> srcMap );
+    void updateUserReviewSource(Map<String, Object> srcMap);
+
+    void deleteReviewPicture(int reviewId);
 }
