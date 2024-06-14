@@ -68,6 +68,11 @@ public class PartnerPlaceServiceImpl implements PartnerPlaceService {
 	}
 
 	@Override
+	public Integer deletePlacepic(int placeid) {
+		return 0;
+	}
+
+	@Override
 	public Integer insertPlace(PartnerPlaceDTO request) {
 		int insertCount = 0;
 		insertCount += placeMapper.insertPlace(request);

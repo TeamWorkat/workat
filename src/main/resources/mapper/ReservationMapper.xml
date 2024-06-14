@@ -75,6 +75,7 @@
                from payment
                where
                    paymentKey is not null)
+
     </select>
 
 </mapper>
