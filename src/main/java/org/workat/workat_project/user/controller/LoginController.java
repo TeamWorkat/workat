@@ -22,13 +22,13 @@ public class LoginController {
     private final UserServiceImpl userServiceImpl;
     private final JWTUtil jwtUtil;
 
-    @PostMapping("/api/signup")
+    @PostMapping("/signup")
     public ResponseEntity<Void> createUser(@RequestBody UserDetailDTO userDetailDTO) {
         userServiceImpl.createUser(userDetailDTO);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> params, HttpServletResponse res) {
         UserVO user = userServiceImpl.findUserByEmail(params.get("user_email"));
 

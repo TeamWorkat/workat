@@ -13,7 +13,7 @@ import org.workat.workat_project.user.service.UserServiceImpl;
 @Controller
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
