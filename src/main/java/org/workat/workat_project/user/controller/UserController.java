@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.workat.workat_project.user.entity.LoginDTO;
 import org.workat.workat_project.user.entity.UserDetailDTO;
+import org.workat.workat_project.user.repository.UserMapper;
 import org.workat.workat_project.user.service.UserServiceImpl;
 
 
@@ -19,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping("/detail")
     public ResponseEntity<UserDetailDTO> getUserDetail(Authentication authentication) {
@@ -26,16 +29,16 @@ public class UserController {
     }
 
     @PostMapping("/check-password")
-    public ResponseEntity<Boolean> checkPassword(@RequestBody LoginDTO loginDTO) {
-        boolean isValid = userServiceImpl.checkPassword(loginDTO.getUser_id(), loginDTO.getUser_pwd());
+    public ResponseEntity<Boolean> checkPassword(@RequestBody LoginDTO loginDTO, Authentication principal) {
+        boolean isValid = userServiceImpl.checkPassword(loginDTO.getUser_pwd(), principal.getName());
         System.out.println(loginDTO);
         System.out.println(ResponseEntity.ok(isValid));
         return ResponseEntity.ok(isValid);
     }
 
-    @DeleteMapping("/{user_id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable int user_id) {
-        userServiceImpl.deleteUser(user_id);
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteUser(Authentication principal) {
+        userServiceImpl.deleteUser(userMapper.findUserByEmail(principal.getName()).getUser_id());
         return ResponseEntity.noContent().build();
     }
 

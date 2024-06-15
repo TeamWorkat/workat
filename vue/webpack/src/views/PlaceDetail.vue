@@ -9,8 +9,6 @@
     </div>
 </div>
     <div class="row">
-      <hr class="long-divider">
-
       <div class="col-md-12">
         <div class=" room-detail-container">
         <h3>객실 정보</h3> 

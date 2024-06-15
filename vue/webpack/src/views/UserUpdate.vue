@@ -45,13 +45,7 @@ export default {
   methods: {
     async fetchUserDetail() {
       try {
-        const user_id = this.$route.query.user_id;
-        console.log('Loaded user_id from URL:', user_id);
-        if (!user_id) {
-          console.error('user_id is missing from query parameters');
-          return;
-        }
-        const url = `/api/user/detail?user_id=${user_id}`;
+        const url = `/api/user/detail`;
         console.log('Fetching user detail from URL:', url);
 
         const response = await axios.get(url);
@@ -66,17 +60,16 @@ export default {
         alert('비밀번호가 일치하지 않습니다.');
         return;
       }
-
       try {
         const userToUpdate = {
           ...this.user,
           user_pwd: this.user_pwd
         };
         console.log("Updating user:", userToUpdate);
-        await axios.post('/api/update', userToUpdate);
+        await axios.post('/api/user/update', userToUpdate);
         alert('회원 정보 수정이 완료되었습니다.');
         console.log("Redirecting to user detail with user_id:", this.user.user_id);
-        this.$router.push({name: 'UserDetail', query: {user_id: this.user.user_id}});
+        this.$router.push({path: '/mypage/user/detail'});
       } catch (error) {
         console.error('Error updating user:', error);
       }

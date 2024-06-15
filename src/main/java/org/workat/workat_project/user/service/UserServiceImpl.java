@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean checkPassword(int user_id, String rawPassword) {
-        UserVO user = userMapper.findById(user_id);
+    public boolean checkPassword(String rawPassword, String user_email) {
+        UserVO user = userMapper.findUserByEmail(user_email);
         if (user != null) {
             String storedPassword = user.getUser_pwd();
             if (!isPasswordEncoded(storedPassword)) {

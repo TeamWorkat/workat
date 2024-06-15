@@ -24,6 +24,7 @@
 
 <script>
 import axios from '@/axios';
+import store from "@/scripts/store";
 
 export default {
   name: 'UserDelete',
@@ -34,13 +35,11 @@ export default {
       user_id: null
     };
   },
-  mounted() {
-    this.user_id = this.$route.query.user_id || this.$route.params.user_id;
-  },
+  
   methods: {
     async checkPassword() {
       try {
-        const response = await axios.post(`/api/user/check-password?user_id=${this.user_id}`, {
+        const response = await axios.post(`/api/user/check-password`, {
           user_id: this.user_id,
           user_pwd: this.rawPassword
         });
@@ -56,8 +55,12 @@ export default {
     },
     async confirmDelete() {
       try {
-        await axios.delete(`/api/user/${this.user_id}`);
+        await axios.delete(`/api/user/delete`);
         alert('계정이 성공적으로 삭제되었습니다.');
+        store.commit('clearAccount');
+        sessionStorage.removeItem("user_id");
+        sessionStorage.removeItem("token");
+        this.token = null;
         this.$router.push('/');
       } catch (error) {
         console.error('Error deleting account:', error);
