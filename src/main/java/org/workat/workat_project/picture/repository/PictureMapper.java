@@ -19,4 +19,6 @@ public interface PictureMapper {
     void updateUserReviewSource(Map<String, Object> srcMap);
 
     void deleteReviewPicture(int reviewId);
+
+    void updateUserReviewSourceOne(int reviewId);
 }

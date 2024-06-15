@@ -31,21 +31,16 @@ public class PlaceController {
 
 	@GetMapping("/placeDetail")
 	public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name = "place_id") int placeId) {
-		System.err.println(placeId);
 		return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
 	}
 
 	@PostMapping("/search")
 	public ResponseEntity<List<PlaceListDTO>> getSearchPlaceList(@RequestBody SearchVO request) {
-
-		System.out.println(request + "!!!!!!!!");
-
 		return ResponseEntity.ok(placeService.getSearchPlaceList(request));
 	}
 
 	@GetMapping("/category")
 	public ResponseEntity<List<PlaceListDTO>> getCategoryViewPlaceList(@RequestParam(name = "category") String category) {
-		System.out.println(category);
 		return ResponseEntity.ok(placeService.getCategoryViewPlaceList(category));
 	}
 
