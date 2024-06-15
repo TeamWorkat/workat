@@ -77,5 +77,15 @@
                    paymentKey is not null)
 
     </select>
+    <select id="getReservationVOList" resultType="org.workat.workat_project.reservation.entity.ReservationVO">
+        select
+            *
+        from
+            reservation
+        where
+            res_cancel_yn = "N"
+        and
+            room_id = #{roomId}
+    </select>
 
 </mapper>

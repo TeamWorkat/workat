@@ -23,7 +23,7 @@
 
       <div class="check-in">
         <p>일정</p>
-        
+        <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
       </div>
 
       <div class="guests" @click="pushModal">
@@ -53,7 +53,6 @@
     </div>
     
   </div>
-  <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
   
 </template>
 

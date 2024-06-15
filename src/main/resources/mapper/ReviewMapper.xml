@@ -41,6 +41,7 @@
             *
         from review
         where place_id = #{placeId}
+        and status = "active"
     </select>
 
     <select id="getReply" resultType="org.workat.workat_project.review.entity.ReplyVO">
