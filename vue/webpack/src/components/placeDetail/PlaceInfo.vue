@@ -1,8 +1,5 @@
 <template>
     <div class="place-details">
-      <h2>{{ placeInfo.place_nm }}</h2>
-        <p>체크인:{{ formatDate(placeInfo.place_in) }} | 체크아웃:{{ formatDate(placeInfo.place_out) }}</p>
-        <hr class="long-divider">
       <div class="place-info">
         <div v-if="placePictureSources.length > 0" class="room-info">
         <PictureSlide :pictureList="placePictureSources" />

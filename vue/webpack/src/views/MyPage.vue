@@ -11,7 +11,7 @@ import { useRoute } from 'vue-router';
 import MyPageSideBar from '@/components/myPage/MyPageSideBar.vue';
 
 const route = useRoute();
-const routesWithSidebar = ['/mypage','/mypage/resList','/mypage/reviewList', '/mypage/wishList','/mypage/user/detail']; // 사이드바를 표시할 경로 목록
+const routesWithSidebar = ['/mypage','/mypage/resList','/mypage/reviewList', '/mypage/wishList','/mypage/user/detail','/mypage/user/update','/mypage/user/delete']; // 사이드바를 표시할 경로 목록
 
 const showSidebar = computed(() => routesWithSidebar.includes(route.path));
 

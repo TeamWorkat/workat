@@ -10,7 +10,7 @@ public interface UserService {
     List<UserListDTO> getList();
     UserDetailDTO getUserDetail(String user_id);
     UserVO findUserByEmail(String user_email);
-    boolean checkPassword(int user_id, String user_pwd);
+    boolean checkPassword(String user_pwd, String user_email);
     void deleteUser(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);
     void createUser(UserDetailDTO userDetailDTO);

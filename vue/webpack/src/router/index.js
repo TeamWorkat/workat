@@ -140,6 +140,14 @@ const routes = [
           {
             path: 'user/detail',
             component: UserDetail
+        },
+        {
+            path: 'user/update',
+            component: UserUpdate
+        },
+        {
+            path: 'user/delete',
+            component: UserDelete
         }
         ],
       },

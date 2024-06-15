@@ -95,14 +95,7 @@ export default {
       this.$router.push({ name: 'LoginForm' });
     },
     clickMypageButton() {
-      // const user_id = store.state.account.user_id?.toString().trim();
       this.$router.push({ path: '/mypage/resList'});
-
-      // if (user_id) {
-      //   this.$router.push({ name: 'ReservationList'});
-      // } else {
-      //   console.error("User ID is not available.");
-      // }
     },
     clickSignupButton() {
       this.$router.push({ name: 'SignupForm' });
