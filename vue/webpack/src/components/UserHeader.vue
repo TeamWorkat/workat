@@ -12,7 +12,7 @@
               src="/img/work_at_icon.png"
               alt="Bootstrap"
               width="100px"
-              height="50px"
+              height="80px"
           />
         </a>
       </div>

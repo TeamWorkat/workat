@@ -1,11 +1,12 @@
 <template>
     <div class="place-details">
-      <div class="place-info">
-        <h2>{{ placeInfo.place_nm }}</h2>
+      <h2>{{ placeInfo.place_nm }}</h2>
         <p>체크인:{{ formatDate(placeInfo.place_in) }} | 체크아웃:{{ formatDate(placeInfo.place_out) }}</p>
-        <div v-for="(placePictureSource, idx) in placePictureSources" :key="idx" class="place-image-container">
-          <img :src="placePictureSource" class="place-image" />  
-        </div>    
+        <hr class="long-divider">
+      <div class="place-info">
+        <div v-if="placePictureSources.length > 0" class="room-info">
+        <PictureSlide :pictureList="placePictureSources" />
+      </div>
         <p><strong>주소:</strong> {{ placeInfo.place_addr }}</p>
         <p><strong>전화번호:</strong> {{ placeInfo.place_tel }}</p>
         <p><strong>소개글:</strong></p>
@@ -16,7 +17,7 @@
   
   <script>
   import { format } from 'date-fns';
-
+  import PictureSlide from '../myPage/PictureSlide.vue';
   export default {
   props: {
     placePictureSources: {
@@ -28,6 +29,7 @@
       required: true
     }
   },
+  components: {PictureSlide},
   methods: {
     formatDate(date) {
       return format(new Date(date), 'HH:mm');

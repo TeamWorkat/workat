@@ -64,6 +64,7 @@ const roomPictureList = computed(() => {return props.selectedRoom ? props.select
 const router = useRouter();
 
 const bak = computed(() => {
+  console.log(disabledDates);
   if (date.value && date.value.length === 2) {
     const [startDate, endDate] = date.value;
     if (startDate instanceof Date && endDate instanceof Date) {
