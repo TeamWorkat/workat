@@ -63,8 +63,7 @@
   </div>
   <div class="reservation-form">  
     <button @click="uploadFiles" style="margin-top: 20px;">수정</button>
-      <button>삭제</button>
-      <button>목록</button>
+    <button @click="goBack">취소</button>
     </div></div></div>
   </template>
 
@@ -85,7 +84,9 @@
   const check_in = computed(()=>items.value?.check_in || null);
   const check_out = computed(()=>items.value?.check_out || null);
   const reviewPictureList = computed(()=>items.value?.review_picture_source || {} );
-
+  const goBack = () => {
+    router.go(-1); // 뒤로 가기
+  }
   const computedRating = computed(() => {
   return items.value && items.value.reviewVO ? items.value.reviewVO.rating : 0;
 });

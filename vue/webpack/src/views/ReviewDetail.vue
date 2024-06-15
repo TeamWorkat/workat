@@ -34,7 +34,7 @@
   <div class="reservation-form">  
       <button @click="updateReview">수정</button>
       <button @click="reviewDelete(reviewVO.review_id)">삭제</button>
-      <button>목록</button>
+      <button @click="goBackList">목록</button>
     </div>
   
 </div>
@@ -70,7 +70,9 @@
     const check_in = computed(()=>items.value?.check_in || null);
     const check_out = computed(()=>items.value?.check_out || null);
 
-
+    const goBackList = () => {
+    router.push({ path: '/mypage/reviewList'});
+  };
 
     const showReasonInput = ref(false);
     const cancellationReason = ref('');
