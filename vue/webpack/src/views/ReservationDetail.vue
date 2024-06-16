@@ -14,7 +14,7 @@
   <div class="reservation-form">
     <div class="form-group">
       <label for="check-in">체크인/체크아웃</label>
-      <h6>{{ reservationVO.check_in }}~{{ reservationVO.check_out }}</h6>
+      <h6>{{ formatDate(reservationVO.check_in) }}~{{ formatDate(reservationVO.check_out) }}</h6>
     </div>
 
     <div class="form-group">
@@ -37,26 +37,26 @@
     <label for="request">요청사항:</label>
     <textarea id="request" v-model="reservationVO.res_message" rows="4" readonly></textarea>
   </div>
-    <button @click="showModal = true">예약취소</button>
-    <button v-if="canWriteReview" @click="writeReview">후기작성</button>
+    <button class="btn btn-primary" @click="showModal = true">예약취소</button>
+    <button class="btn btn-primary" v-if="canWriteReview" @click="writeReview" style="margin-left: 10px;">후기작성</button>
   </div>
 </div>
 
 <div v-if="showModal" class="modal-overlay" @click="showModal = false">
   <div class="modal-content" @click.stop>
     <template v-if="!showReasonInput">
-      <h2>예약을 취소하시겠습니까?</h2>
+      <h5>예약을 취소하시겠습니까?</h5>
       <div class="modal-buttons">
-        <button class="confirm-button" @click="showReasonInput = true">확인</button>
-        <button class="cancel-button" @click="showModal = false">취소</button>
+        <button class="btn btn-primary" @click="showReasonInput = true">확인</button>
+        <button class="btn btn-primary" @click="showModal = false" style="margin-left: 10px;">취소</button>
       </div>
     </template>
     <template v-else>
-      <h2>취소 사유를 입력하세요:</h2>
+      <h5>취소 사유를 입력하세요:</h5>
       <textarea v-model="cancellationReason" rows="4" placeholder="취소 사유를 입력하세요"></textarea>
       <div class="modal-buttons">
-        <button class="confirm-button" @click="cancelReservation">제출</button>
-        <button class="cancel-button" @click="showReasonInput = false">뒤로</button>
+        <button class="btn btn-primary" @click="cancelReservation">제출</button>
+        <button class="btn btn-primary" @click="showReasonInput = false" style="margin-left: 10px;">뒤로</button>
       </div>
     </template>
   </div>
@@ -135,6 +135,18 @@
     console.error("Payment ID is null. Cannot proceed with cancellation.");
   }
 };
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  
+  // 원하는 포맷 형식으로 변환
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+  
+  return formattedDate;
+};
   
   onMounted(() => {
     fetchPlaceDetails(resId.value);
@@ -190,6 +202,15 @@ align-items: center;
 .room-image {
 width: 50%;
 height: 50%;
+}
+
+button {
+  background-color: #FFCC5E;
+  border: none;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
 }
 
 .reservation-form {

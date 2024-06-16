@@ -1,30 +1,35 @@
 <template>
   <div class="container" v-if="items">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <PlaceInfo :placeInfo="items.placeVO" :placePictureSources="items.place_picture_source" />
     </div>
-    <div class="col-md-6 naver-map">
-      <NaverMap :roadAddr="items.roadAddr" :jibunAddr="items.jibunAddr" :lat="items.latitude" :lon="items.longitude" />
+    <div class="col-md-12 naver-map">
+      <h3>객실 정보</h3>
+      <br>
+      <RoomDetail :roomList="items.roomList" :placeInfo="items.placeVO" />
     </div>
 </div>
-    <div class="row">
+    <div class="row" style="margin-top: 50px;">
       <div class="col-md-12">
         <div class=" room-detail-container">
-        <h3>객실 정보</h3> 
+        <h3>숙소 위치</h3> 
         </div>   
-        <RoomDetail :roomList="items.roomList" :placeInfo="items.placeVO" />
+        <div>
+        <NaverMap :roadAddr="items.roadAddr" :jibunAddr="items.jibunAddr" :lat="items.latitude" :lon="items.longitude" style="margin-top: 50px; margin-bottom: 20px; border:1px solid gainsboro; border-radius: 15px;" />
+        </div>
       </div>
+      <p>{{ items.jibunAddr }}</p>
     </div>
     <div class="row">
       <div class="col-md-12 star-point">
-        <StarPoint :rating="items.rating" :starPoints="items.star_points"/>
+        <h3>이용 후기</h3>
+        <StarPoint :rating="items.rating" :starPoints="items.star_points" style="margin-top: 70px;"/>
     </div>
     </div>
         <div class="row">
           <div class="col-md-12">
             <div class=" review-list">
-        <h3>이용 후기</h3>
         <ReviewDetail :reviewList="items.reviewList" :rating="items.rating" />
       </div>
 
@@ -84,11 +89,8 @@
   </script>
   
   <style scoped>
-  .room-detail-container {
-  margin-left: 50px;
-}
 .naver-map{
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .star-point{
   margin-top: 50px;

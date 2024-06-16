@@ -18,24 +18,24 @@
       </div>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <a
+        <div
             href="/hotel"
             class="nav-link px-2"
             :class="{ active: activeMenu === 'hotel' }"
             @click="setActiveMenu('hotel')"
-        >호텔</a>
-        <a
+        >호텔</div>
+        <div
             href="/stay"
             class="nav-link px-2"
             :class="{ active: activeMenu === 'stay' }"
             @click="setActiveMenu('stay')"
-        >스테이</a>
-        <a
+        >스테이</div>
+        <div
             href="/camping"
             class="nav-link px-2"
             :class="{ active: activeMenu === 'camping' }"
             @click="setActiveMenu('camping')"
-        >캠핑</a>
+        >캠핑</div>
       </ul>
 
       <div class="col-md-3 text-end">
@@ -60,6 +60,7 @@
             class="btn btn-primary"
             v-if="!token"
             @click="clickSignupButton"
+            style="margin-left: 10px;"
         >
           Sign Up
         </button>
@@ -68,6 +69,7 @@
             class="btn btn-primary"
             v-else
             @click="clickLogoutButton"
+            style="margin-left: 10px;"
         >
           Log Out
         </button>
@@ -90,6 +92,7 @@ export default {
   methods: {
     setActiveMenu(menu) {
       this.activeMenu = menu;
+      this.$router.push({ path: "/" + menu })
     },
     clickSigninButton() {
       this.$router.push({ name: 'LoginForm' });
@@ -105,7 +108,9 @@ export default {
       sessionStorage.removeItem("user_id");
       sessionStorage.removeItem("token");
       this.token = null;
-      this.$router.push({ name: 'UserHome' });
+      this.$router.push({ name: 'UserHome' }).then(() => {
+      window.location.reload();
+    });
     }
   },
   watch: {

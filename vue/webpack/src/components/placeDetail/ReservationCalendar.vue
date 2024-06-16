@@ -133,7 +133,7 @@ function reserve() {
 .reservation-form {
   max-width: 400px;
   margin: 0 auto;
-  background-color: #fff5cc; /* Soft yellow background */
+  background-color: #ffffff; /* Soft yellow background */
   padding: 20px;
   border: 2px solid #ffd700; /* Gold border */
   border-radius: 15px;
