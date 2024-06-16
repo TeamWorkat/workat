@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/place/**", "/signup/**", "/login/**", "/logout/**", "/user/**", "/review/**", "/payment/**","/reserve/**").permitAll()
+                        .requestMatchers("/place/**", "/signup/**", "/login/**", "/logout/**", "/user/**", "/review/**", "/payment/**","/reserve/**", "/check-email/**").permitAll()
                         .requestMatchers("/partner/**").hasAuthority("ROLE_PARTNER")
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())

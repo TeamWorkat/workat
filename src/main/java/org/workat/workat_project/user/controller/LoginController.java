@@ -22,6 +22,14 @@ public class LoginController {
     private final UserServiceImpl userServiceImpl;
     private final JWTUtil jwtUtil;
 
+    @PostMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestBody Map<String, String> request) {
+        String user_email = request.get("user_email");
+        System.out.println(user_email);
+        boolean exists = userServiceImpl.isEmailAlreadyExists(user_email);
+        return ResponseEntity.ok(exists);
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<Void> createUser(@RequestBody UserDetailDTO userDetailDTO) {
         userServiceImpl.createUser(userDetailDTO);

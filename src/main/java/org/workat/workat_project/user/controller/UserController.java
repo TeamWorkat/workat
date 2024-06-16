@@ -20,8 +20,6 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
-    @Autowired
-    private UserMapper userMapper;
 
     @GetMapping("/detail")
     public ResponseEntity<UserDetailDTO> getUserDetail(Authentication authentication) {

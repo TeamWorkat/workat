@@ -15,4 +15,5 @@ public interface UserMapper {
     void updateUser(UserDetailDTO userDetailDTO);
     void updatePassword(UserVO user);
     void createUser(UserDetailDTO userDetailDTO);
+    boolean checkEmail(String user_email);
 }

@@ -76,6 +76,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean isEmailAlreadyExists(String user_email) {
+        return userMapper.checkEmail(user_email);
+    }
+
     private UserDetailDTO convertToUserDetailDTO(UserVO userVO) {
         UserDetailDTO userDetailDTO = new UserDetailDTO();
         userDetailDTO.setUser_id(userVO.getUser_id());
