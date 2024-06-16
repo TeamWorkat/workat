@@ -74,12 +74,12 @@ const routes = [
         component: UserDetail
     },
     {
-        path: '/user/delete',
+        path: '/user/delete/:user_id',
         name: 'UserDelete',
         component: UserDelete
     },
     {
-        path: '/user/update',
+        path: '/user/update/:user_id',
         name: 'UserUpdate',
         component: UserUpdate
     },

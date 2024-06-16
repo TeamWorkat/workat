@@ -29,10 +29,11 @@
         WHERE user_id = #{user_id};
     </select>
 
-    <delete id="deleteById">
-        DELETE FROM user
-               WHERE user_id = #{user_id};
-    </delete>
+    <update id="deleteUser">
+        UPDATE user
+        SET status = 'inactive'
+        WHERE user_id = #{user_id}
+    </update>
 
     <update id="updateUser" parameterType="UserDetailDTO">
         UPDATE user

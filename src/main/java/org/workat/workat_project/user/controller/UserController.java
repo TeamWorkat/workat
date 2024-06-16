@@ -36,9 +36,11 @@ public class UserController {
         return ResponseEntity.ok(isValid);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteUser(Authentication principal) {
-        userServiceImpl.deleteUser(userMapper.findUserByEmail(principal.getName()).getUser_id());
+    @PostMapping("/delete")
+    public ResponseEntity<Void> deleteUser(@RequestBody UserDetailDTO userDetailDTO) {
+        int user_id = userDetailDTO.getUser_id();
+        System.out.println(user_id);
+        userServiceImpl.deleteUser(user_id);
         return ResponseEntity.noContent().build();
     }
 
