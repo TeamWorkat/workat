@@ -49,7 +49,7 @@ export default {
       } catch (err) {
         console.error("Login error:", err);
         error.value = "Invalid email or password.";
-        window.alert("이메일 및 비밀번호를 다시 확인해주세요.");
+        window.alert("Invalid email or password. Please check again.");
       } finally {
         loading.value = false;
       }

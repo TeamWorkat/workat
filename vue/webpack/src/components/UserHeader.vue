@@ -92,7 +92,7 @@ export default {
       this.activeMenu = menu;
     },
     clickSigninButton() {
-      this.$router.push({ name: 'LoginForm' });
+      this.$router.push({ name: 'LoginPage' });
     },
     clickMypageButton() {
       // const user_id = store.state.account.user_id?.toString().trim();
