@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.findUserByEmail(user_email);
     }
 
-
     @Override
     public boolean checkPassword(String rawPassword, String user_email) {
         UserVO user = userMapper.findUserByEmail(user_email);

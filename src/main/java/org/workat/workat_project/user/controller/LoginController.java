@@ -29,7 +29,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> params, HttpServletResponse res) {
+    public ResponseEntity<?> userLogin(@RequestBody Map<String, String> params, HttpServletResponse res) {
         UserVO user = userServiceImpl.findUserByEmail(params.get("user_email"));
 
         if (user != null && userServiceImpl.checkPassword(params.get("user_pwd"),user.getUser_email())) {

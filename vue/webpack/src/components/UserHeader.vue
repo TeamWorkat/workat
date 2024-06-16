@@ -95,13 +95,13 @@ export default {
       this.$router.push({ path: "/" + menu })
     },
     clickSigninButton() {
-      this.$router.push({ name: 'LoginForm' });
+      this.$router.push({ name: 'LoginPage' });
     },
     clickMypageButton() {
       this.$router.push({ path: '/mypage/resList'});
     },
     clickSignupButton() {
-      this.$router.push({ name: 'SignupForm' });
+      this.$router.push({ name: 'SignupPage' });
     },
     clickLogoutButton() {
       store.commit('clearAccount');
