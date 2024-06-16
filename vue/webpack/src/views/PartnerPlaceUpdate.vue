@@ -75,7 +75,6 @@
             :key="item"
             class="image-container"
           >
-          
             <span
               class="img"
               :style="{ backgroundImage: `url(${item})` }"
@@ -83,11 +82,11 @@
             <button class="delete-button" @click="removeItem(index)">-</button>
           </div>
           <input type="file" multiple @change="handleFileUpload" />
-          <button @click="submitFiles">Upload</button>
+          <button @click="submitFiles">수정</button>
         </div>
-        <div>
+        <!-- <div>
           <button @click="updatePlaceTouchUpInside">수정</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -125,10 +124,10 @@ export default {
       pictureArray: reactive([]),
 
       //file
-      
+
       fileFolder: 'place',
 
-      insertFileNum: 0
+      insertFileNum: 0,
     }
   },
   computed: {
@@ -143,9 +142,8 @@ export default {
 
   methods: {
     handleFileUpload(event) {
-      
       const files = Array.from(event.target.files)
-      
+
       if (this.picturefileURL.length + files.length <= 3) {
         files.forEach((file) => {
           const reader = new FileReader()
@@ -155,58 +153,63 @@ export default {
           reader.readAsDataURL(file)
           this.pictureArray.push(file)
         })
-        console.log(this.picturefileURL, "URLRLRLRLRLRLRLRLRL")
+        console.log(this.picturefileURL, 'URLRLRLRLRLRLRLRLRL')
         if (this.insertFileNum != 0) {
-            this.pictureArray.splice(-this.insertFileNum, this.insertFileNum);
+          this.pictureArray.splice(-this.insertFileNum, this.insertFileNum)
         }
 
-        console.log(this.pictureArray,'array')
+        console.log(this.pictureArray, 'array')
         this.insertFileNum = files.length
         console.log(this.insertFileNum, '개수')
       } else {
         alert('사진은 3개까지 업로드 가능합니다.')
         console.log(this.picturefileURL)
       }
-
-     
     },
 
     async submitFiles() {
-      
       if (this.pictureArray.length === 0 || !this.fileFolder) {
         alert('Please select files and enter a folder name.')
         return
       }
-      
+
       const formData = new FormData()
       this.pictureArray.forEach((file) => {
         // if (typeof file === 'string' && file.startsWith('data:image/')) {
-          if (file instanceof File){
+        if (file instanceof File) {
           formData.append('files', file)
         }
       })
       formData.append('fileFolder', this.fileFolder)
-      try {
-        const response = await axios.post('/api/test/aws', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        console.log('Files uploaded successfully:', response.data)
-        
-        response.data.forEach((url) =>{
-          this.picturefileURL.push(url)
-        })
-        console.log(this.picturefileURL)
-        this.picturefileURL = this.picturefileURL.filter(url => url.startsWith('https://workatbucket.s3.amazonaws.com/place/'));
+
+      const files = formData.getAll('files')
+      if (files.length === 0) {
+        console.log('추가한 업로드 파일이 없음')
         this.updatePlaceTouchUpInside()
-        console.log(this.picturefileURL, "결과 URL")
-      } catch (error) {
-        console.error('Error uploading files:', error)
+      } else {
+        try {
+          const response = await axios.post('/api/test/aws', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          console.log('Files uploaded successfully:', response.data)
+
+          response.data.forEach((url) => {
+            this.picturefileURL.push(url)
+          })
+          console.log(this.picturefileURL)
+          this.picturefileURL = this.picturefileURL.filter((url) =>
+            url.startsWith('https://workatbucket.s3.amazonaws.com/place/')
+          )
+          this.updatePlaceTouchUpInside()
+          console.log(this.picturefileURL, '결과 URL')
+        } catch (error) {
+          console.error('Error uploading files:', error)
+        }
+        console.log('Files added to FormData:', files)
       }
     },
-
-
 
     fetchPlaceInfo(placeId) {
       axios
@@ -227,8 +230,6 @@ export default {
           this.picturefileURL = res.data.picture_sources
           this.pictureArray = [...this.picturefileURL]
 
-          
-          
           console.log(this.pictureArray, '처음array')
           console.log(this.picturefileURL, '처음 url')
         })
@@ -257,7 +258,6 @@ export default {
     },
 
     updatePlaceTouchUpInside() {
-      
       axios
         .post('/api/partner/placeUpdate', {
           place_id: this.placeId,
@@ -269,7 +269,7 @@ export default {
           place_in: this.convertTimeObjectToString(this.time[0]),
           place_out: this.convertTimeObjectToString(this.time[1]),
           loc_nm: this.selectedLocation,
-          
+
           picture_sources: this.picturefileURL,
         })
         .then((res) => {

@@ -19,10 +19,16 @@ import ReservationList from '@/components/myPage/ReservationList.vue';
 import ReviewList from '@/components/myPage/ReviewList.vue';
 import WishList from '@/components/myPage/WishList.vue'
 import PartnerReserveList from "@/views/PartnerReserveList.vue"
+import PartnerRoomList from "@/views/PartnerRoomList.vue"
 import PartnerReserveDetail from "@/views/PartnerReserveDetail.vue"
 import ReviewInsert from '@/views/ReviewInsert.vue'
 import ReviewDetail from '@/views/ReviewDetail'
-import ReviewUpdate from '@/views/ReviewUpdate.vue';
+import ReviewUpdate from '@/views/ReviewUpdate.vue'
+import PartnerRoomDetail from '@/views/PartnerRoomDetail.vue'
+import PartnerRoomUpdate from '@/views/PartnerRoomUpdate.vue'
+import PartnerRoomInsert from '@/views/PartnerRoomInsert.vue'
+import PartnerReviewList from "@/views/PartnerReviewList.vue"
+import PartnerReviewDetail from "@/views/PartnerReviewDetail.vue"
 
 
 const routes = [
@@ -161,6 +167,11 @@ const routes = [
         component: PartnerReserveDetail  
     },
     {
+        path: '/partner/roomList',
+        name: 'PartnerRoomList',
+        component: PartnerRoomList  
+    },
+    {
         path: '/review/insertForm/:reservation_id',
         name: 'ReviewInsert',
         component: ReviewInsert,
@@ -175,7 +186,33 @@ const routes = [
         path: '/review/update/:review_id',
         name: 'ReviewUpdate',
         component: ReviewUpdate
-    }
+    },
+    {
+        path: '/partner/roomDetail/:room_id',
+        name: 'PartnerRoomDetail',
+        component: PartnerRoomDetail  
+    },
+    {
+        path: '/partner/roomUpdate/:room_id',
+        name: 'PartnerRoomUpdate',
+        component: PartnerRoomUpdate  
+    },
+    {
+        path: '/partner/roomInsert',
+        name: 'PartnerRoomInsert',
+        component: PartnerRoomInsert  
+    },
+
+    {
+        path: '/partner/reviewList',
+        name: 'PartnerReviewList',
+        component: PartnerReviewList  
+    },
+    {
+        path: '/partner/reviewDetail/:review_id',
+        name: 'PartnerReviewDetail',
+        component: PartnerReviewDetail  
+    },
 ];
 
 const router = createRouter({

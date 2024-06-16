@@ -27,6 +27,6 @@ public interface PartnerPlaceMapper {
 	Integer deletePlacepic(int placeid);
 	
 	Integer insertPlace(PartnerPlaceDTO request);
-	Integer insertPlacepic(PartnerPlaceDTO request);
+	Integer insertPlacepic(Map<String, Object>  params);
 
 }

@@ -18,14 +18,16 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 naver:
+  client-id: ${NAVER_CLIENT}
+  client-secret: ${NAVER_SECRET_CLIENT}
 
 
 payment:
   toss:
     test_client_key: ${TOSS_TEST_CLIENT}
     test_secrete_key: ${TOSS_TEST_SECRET}
-    success_url: "http://localhost:8080/payment/toss/success"
-    fail_url: "http://localhost:8080/payment/toss/fail"
+    success_url: "http://localhost:8080/api/payment/toss/success"
+    fail_url: "http://localhost:8080/api/payment/toss/fail"
 
 cloud:
   aws:
@@ -42,3 +44,7 @@ cloud:
     credentials:
       accessKey: ${AWS_ACCESS_KEY_ID}
       secretKey: ${AWS_SECRET_ACCESS_KEY}
+
+server:
+  servlet:
+    context-path: /api

@@ -10,11 +10,11 @@
 		,p.place_tel ,DATE_FORMAT(p.place_in, '%H:%i') AS place_in
 		,DATE_FORMAT(p.place_out, '%H:%i') AS place_out ,l.loc_nm
 		FROM place p
-		JOIN partner partner ON p.user_id = partner.partner_id
+		JOIN user u ON p.user_id = u.user_id
 		JOIN location l
 		ON p.loc_id = l.loc_id
-		WHERE p.status = 'active' AND partner.partner_id
-		= 1;
+		WHERE p.status = 'active' 
+		AND u.user_id= 133;
 
 	</select>
 
@@ -106,38 +106,40 @@
 		useGeneratedKeys="true" keyColumn="place_id" keyProperty="place_id">
 		INSERT INTO
 		place (
-		place_nm,
-		category,
-		place_addr,
-		place_tel,
-		place_content,
-		place_in,
-		place_out,
-		status,
-		loc_id,
-		user_id
+			place_nm,
+			category,
+			place_addr,
+			place_tel,
+			place_content,
+			place_in,
+			place_out,
+			status,
+			loc_id,
+			user_id
 		) VALUES (
-		#{place_nm},
-		#{category},
-		#{place_addr},
-		#{place_tel},
-		#{place_content},
-		#{place_in},
-		#{place_out},
-		#{status},
-		#{loc_nm},
-		'1'
+			#{place_nm},
+			#{category},
+			#{place_addr},
+			#{place_tel},
+			#{place_content},
+			#{place_in},
+			#{place_out},
+			#{status},
+			#{loc_nm},
+			'1'
 		);
 	</insert>
 
 	<insert id="insertPlacepic"
 		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-		INSERT INTO place_picture (
-		picture_source,
-		place_id,
-		status
+		INSERT INTO 
+			place_picture (
+				picture_source,
+				place_id,
+				picture_origin_name,
+				status
 		)
-		VALUES(#{picture_source}, #{place_id}, #{status});
+		VALUES(#{picture_source}, #{place_id}, 'static_origin_name','active');
 	</insert>
 
 	<update id="deletePlace">
