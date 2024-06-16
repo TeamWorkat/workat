@@ -27,38 +27,33 @@ public class PartnerReviewServiceImpl implements PartnerReviewService {
 		return reviewMapper.getReviewList();
 	}
 
-//	@Override
-//	public PartnerRoomDTO getRoomDetail(int room_id) {
-//		PartnerRoomDTO roomDTO = roomMapper.getRoomDetail(room_id);
-//		String[] picture_sources = roomDTO.getPictureURLArray().split(",");
-//		roomDTO.setPicture_sources(picture_sources);
-//		return roomDTO;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public Integer updateRoom(PartnerRoomDTO request) {
-//		roomMapper.updateRoom(request);
-//		roomMapper.allInactive(request);
-//
-//		for (String pic : request.getPicture_sources()) {
-//			Map<String, Object> params = new HashMap<>();
-//			params.put("picture_source", pic);
-//			System.out.println(pic);
-//			params.put("room_id", request.getRoom_id());
-//			roomMapper.updateRoompic(params);
-//			roomMapper.inactiveRoom(params);
-//		}
-//		return 1;
-//	}
-//	
-//	@Transactional
-//	@Override
-//	public Integer deleteRoom(int room_id) {
-//		roomMapper.deleteRoom(room_id);
-//		roomMapper.deleteRoompic(room_id);
-//		return 1;
-//	}
+	@Override
+	public PartnerReviewDTO getReviewDetail(int review_id) {
+	    PartnerReviewDTO reviewDTO = reviewMapper.getReviewDetail(review_id);
+	   System.out.println(reviewDTO);
+
+	    String pictureURLArray = reviewDTO.getPictureURLArray();
+	    String[] picture_sources;
+	    
+	    if (pictureURLArray.equals("null")){
+	    	reviewDTO.setPicture_sources(
+	    			new String[]{"https://workatbucket.s3.amazonaws.com/place/ff16b058-c790-44de-9cdb-36199af0ee21.png"});
+	    }else {
+	    	picture_sources = pictureURLArray.split(",");
+	        reviewDTO.setPicture_sources(picture_sources);
+	    }
+	    
+	    return reviewDTO;
+	}
+
+
+	@Transactional
+	@Override
+	public Integer deleteReview(int review_id) {
+		reviewMapper.deleteReview(review_id);
+		reviewMapper.deleteReviewpic(review_id);
+		return 1;
+	}
 //
 //
 //	@Transactional

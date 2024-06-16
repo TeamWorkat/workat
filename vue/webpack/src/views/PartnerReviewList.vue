@@ -14,6 +14,7 @@
               <th scope="col">숙소명</th>
               <th scope="col">객실명</th>
               <th scope="col">답글작성여부</th>
+              <th scope="col">리뷰숨김여부</th>
             </tr>
           </thead>
           <tbody>
@@ -30,6 +31,9 @@
               <td>{{ item.place_nm }}</td>
               <td>{{ item.room_name }}</td>
               <td>{{ item.reply_exist }}</td>
+              <td>
+              <span v-if="item.status === 'active'">안숨김</span>
+              <span v-else>숨김</span></td>
             </tr> 
           </tbody>
         </table>
@@ -59,6 +63,7 @@ export default {
       items: [],
     })
 
+  
     axios.get('/api/partner/reviewlist').then((res) => {
       console.log(res.data)
       state.items = res.data

@@ -52,8 +52,8 @@
       </button>
     </div>
     
-  </div>
-  <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
+  </div>  
+  <UserCalendar @update-date="handleDateUpdate"/>
   
 </template>
 
@@ -100,14 +100,6 @@ export default {
       console.log('여기')
       popState.value = true;
     }
-
-    // const changePopState =  async () => {
-    //   popState.value = !popState.value
-    //   if (popState.value) {
-    //     await nextTick()
-    //     setModalPosition()
-    //   }
-    // }
 
     const toggleDropdown = async () => {
       isDropdownOpen.value = !isDropdownOpen.value
@@ -322,9 +314,6 @@ body {
   background: #ffdd00;
   color: white;
 }
-
-
-
 
 
 .guests {

@@ -20,6 +20,7 @@ public class PartnerReviewDTO {
 	private String reply_exist; 
 	private int rating;
 	private String content;
+	private String reply_content;
 	private String created_date;
 	private String modified_date;
 	private String status;

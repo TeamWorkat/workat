@@ -7,13 +7,15 @@
 	<select id="getReviewList"
 		resultType="org.workat.workat_project.partner.entity.PartnerReviewDTO">
 SELECT 
+	rv.review_id,
     rv.res_id, 
     rs.res_name, 
     rs.check_in, 
     rs.check_out, 
     p.place_nm, 
     r.room_name, 
-    rv.reply_exist 
+    rv.reply_exist,
+    rv.status
 FROM
     review rv
 INNER JOIN
@@ -29,30 +31,43 @@ WHERE
     AND u.user_id = '133';
 
 	</select>
-<!-- 
-	<select id="getRoomDetail"
-		resultType="org.workat.workat_project.partner.entity.PartnerRoomDTO">
-		SELECT
-			r.room_id
-   			, r.room_name
-   			, room_qnt
-   			, r.room_price
-   			, r.room_content
-   			, r.max_people
-   			, r.min_people
-   			, r.add_price
-   			, r.status
-   			, GROUP_CONCAT(rp.picture_source) AS pictureURLArray
-	   FROM
-	   		room r
-	   		INNER JOIN room_picture rp ON r.room_id = rp.room_id 
-	   WHERE
-	   		r.room_id  = #{room_id}
-   		AND
-   			rp.status = 'active'
-		
-	</select>
- 
+
+<select id="getReviewDetail" resultType="org.workat.workat_project.partner.entity.PartnerReviewDTO">
+SELECT
+    rv.res_id, 
+    rs.res_name, 
+    rs.check_in, 
+    rs.check_out, 
+    rv.content,
+    rv.rating,
+    rv.created_date,
+    rv.modified_date,
+    p.place_nm, 
+    r.room_name, 
+    rv.reply_exist,
+    reply.reply_content,
+    COALESCE(GROUP_CONCAT(rp.picture_source), 'null') AS pictureURLArray
+FROM
+    review rv
+INNER JOIN
+    reservation rs ON rv.res_id = rs.res_id
+INNER JOIN
+    place p ON p.place_id = rs.place_id
+INNER JOIN
+    room r ON r.room_id = rs.room_id
+LEFT JOIN
+    review_picture rp ON rv.review_id = rp.review_id AND rp.status = 'active'
+LEFT JOIN
+    reply ON rv.review_id = reply.review_id
+WHERE
+    rv.review_id = #{review_id}
+GROUP BY
+    rv.res_id, rs.res_name, rs.check_in, rs.check_out, rv.content,
+    rv.rating, rv.created_date, rv.modified_date, p.place_nm,
+    r.room_name, rv.reply_exist, reply.reply_content
+</select>
+
+ <!-- 
 	<update id="updateRoom"
 		parameterType="org.workat.workat_project.partner.entity.PartnerRoomDTO">
 	UPDATE
@@ -103,28 +118,28 @@ AND
         SELECT 1 FROM room_picture WHERE picture_source = #{picture_source} AND room_id = #{room_id}
     );
 </insert>
-
-<update id="deleteRoom">
+ -->
+<update id="deleteReview">
 		UPDATE 
-			room
+			review
 		SET 
 			status = 'inactive'
 		WHERE 
-			room_id = #{room_id}
+			review_id = #{review_id}
 	</update>
 
-	<update id="deleteRoompic">
+	<update id="deleteReviewpic">
 		UPDATE 
-			room_picture
+			review_picture
 		SET 
 			status = 'inactive'
 		WHERE
-			room_id = #{room_id}
+			review_id = #{review_id}
 	</update> 
 
 
 
-
+<!-- 
 
 	<insert id="insertRoom"
 		parameterType="org.workat.workat_project.partner.entity.PartnerRoomDTO"
@@ -168,8 +183,7 @@ AND
 				status
 		)
 		VALUES(#{picture_source}, #{room_id}, 'static_origin_name','active');
-	</insert> -->
-
-	
+	</insert> 
+  -->
   
 </mapper>

@@ -10,15 +10,15 @@ import java.util.Map;
 @Mapper
 public interface PartnerReviewMapper {
 	List<PartnerReviewDTO> getReviewList();
-//	PartnerRoomDTO getRoomDetail(int room_id);
+	PartnerReviewDTO getReviewDetail(int review_id);
 //	
 //	Integer updateRoom(PartnerRoomDTO request);
 //	void allInactive(PartnerRoomDTO request);
 //	void inactiveRoom(Map<String, Object>  params);
 //	void updateRoompic(Map<String, Object> params);
 //	
-//	Integer deleteRoom(int room_id);
-//	Integer deleteRoompic(int room_id);
+	Integer deleteReview(int review_id);
+	Integer deleteReviewpic(int review_id);
 //
 //	Integer insertRoom(PartnerRoomDTO request);
 //	Integer insertRoompic(Map<String, Object>  params);

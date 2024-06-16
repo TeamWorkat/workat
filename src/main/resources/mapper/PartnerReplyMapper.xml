@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.workat.workat_project.partner.repository.PartnerReplyMapper">
+<!--  <delete id="deleteReply">
+DELETE FROM 
+	reply
+WHERE
+	reply
+			
+</delete> -->
+	
+<insert id="insertReply" parameterType="org.workat.workat_project.partner.entity.PartnerReplyDTO">
+    INSERT INTO 
+        reply (review_id, res_id, reply_content, status)
+    VALUES
+        (#{review_id}, #{res_id}, #{reply_content}, #{status})
+</insert>
+
+<update id="updateReplyexist" parameterType="org.workat.workat_project.partner.entity.PartnerReplyDTO">
+    UPDATE
+        review
+    SET 
+        reply_exist = 'Y'
+    WHERE
+        review_id = #{review_id}
+</update>
+<update id="updateReplyExistN" parameterType="int">
+UPDATE
+   review
+SET 
+   reply_exist = 'N'
+WHERE
+   review_id = #{review_id}
+</update>
+
+<delete id="deleteReply" parameterType="int">
+DELETE FROM 
+   reply
+WHERE
+   review_id = #{review_id}
+</delete>
+
+</mapper>
