@@ -105,7 +105,7 @@ export default {
       // }
     },
     clickSignupButton() {
-      this.$router.push({ name: 'SignupForm' });
+      this.$router.push({ name: 'SignupPage' });
     },
     clickLogoutButton() {
       store.commit('clearAccount');

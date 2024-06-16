@@ -5,7 +5,7 @@ import PlaceDetail from '@/views/PlaceDetail.vue';
 import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
-import SignupForm from "@/views/SignupForm.vue";
+import SignupPage from "@/views/SignupPage.vue";
 import ReservationCheck from "@/views/ReservationCheck.vue";
 import PartnerHome from "@/views/PartnerHome.vue"
 import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
@@ -85,8 +85,8 @@ const routes = [
     },
     {
         path: '/signup',
-        name: 'SignupForm',
-        component: SignupForm
+        name: 'SignupPage',
+        component: SignupPage
     },
     {
         path: '/login',
