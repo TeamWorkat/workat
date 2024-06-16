@@ -54,6 +54,7 @@
         SELECT rating, COUNT(*) AS count
         FROM review
         WHERE place_id = #{placeId}
+        and status = "active"
         GROUP BY rating;
     </select>
 

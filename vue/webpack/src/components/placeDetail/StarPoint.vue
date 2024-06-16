@@ -5,9 +5,14 @@
       <img class="star" v-if="index <= starAvg" src='/img/별점.png' alt="Full Star" style="width: 50px; height: 50px;">
       <img v-else src='/img/빈별점.png' alt="Empty Star" style="width: 50px; height: 50px;">
     </div>
-      <h3>{{starAvg}}</h3>
+      <h3 style="margin-left: 120px; margin-top: 20px;">{{starAvg}}점</h3>
     </div>
-    <div class="col-md-6 star-point-bar">
+
+    <div class="col-md-1">
+      <div class="vertical-line"></div>
+    </div>
+
+    <div class="col-md-3 star-point-bar" >
       <StarPointBar :starPoints="props.starPoints"/>
     </div>
   </div>
@@ -36,5 +41,11 @@ const starAvg = ref(props.rating ? props.rating : 0)
 <style scoped>
 .star-rating{
   margin-top: 40px;
+}
+.vertical-line {
+  width: 2px; /* Adjust width as needed */
+  background-color: #dbd8d8; /* Adjust color as needed */
+  height: 100%; /* Adjust height as needed */
+  margin: auto; /* Center the line */
 }
 </style>

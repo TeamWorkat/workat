@@ -60,7 +60,10 @@
           <label for="review">여행후기:</label>
           <textarea id="review" v-model="review" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
         </div>
-        <button @click="uploadFiles" style="margin-top: 20px;">등록</button>
+        <div>
+        <button class="btn btn-primary" @click="uploadFiles">등록</button>
+        <button class="btn btn-primary"  style="margin-left: 10px;">취소</button>
+        </div>
       </div>
     </div>
   </template>
@@ -254,6 +257,14 @@
     padding: 5px;
     border-radius: 6px;
   }
+  button {
+  background-color: #FFCC5E;
+  border: none;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}
   .file-preview-container {
     display: flex;
     gap: 10px;

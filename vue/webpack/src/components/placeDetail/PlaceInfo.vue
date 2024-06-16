@@ -1,12 +1,14 @@
 <template>
     <div class="place-details">
       <div class="place-info">
-        <div v-if="placePictureSources.length > 0" class="room-info">
+        <h2><strong>{{ placeInfo.place_nm }}</strong></h2>
+        <p>체크인:{{ formatDate(placeInfo.place_in) }} | 체크아웃:{{ formatDate(placeInfo.place_out) }}</p>
+        <div v-if="placePictureSources.length > 0" class="room-info" style="margin-top: 50px;">
         <PictureSlide :pictureList="placePictureSources" />
-      </div>
-        <p><strong>주소:</strong> {{ placeInfo.place_addr }}</p>
-        <p><strong>전화번호:</strong> {{ placeInfo.place_tel }}</p>
-        <p><strong>소개글:</strong></p>
+      <br>
+      </div>  
+        <p><strong>연락처:</strong> {{ placeInfo.place_tel }}</p>
+        <p><strong>소개:</strong></p>
         <p> {{ placeInfo.place_content }}</p>
       </div>
     </div>
@@ -39,7 +41,6 @@
   <style>
   .place-details {
     padding: 20px;
-    background-color: #f5f5f5;
     border-radius: 10px;
   }
   

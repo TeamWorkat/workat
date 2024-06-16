@@ -21,14 +21,14 @@
             <tr v-for="(item) in displayItem" :key="item.res_id" @click="touchUpInsideTableCell(item.res_id)">
               <td>{{ item.res_id }}</td>
               <td>{{ item.place_nm }}</td>
-              <td>{{ item.startDate }}</td>
-              <td>{{ item.endDate }}</td>
+              <td>{{ formatDate(item.startDate) }}</td>
+              <td>{{ formatDate(item.endDate) }}</td>
               <td>{{ item.res_cancel_yn }}</td>
               <td>{{ item.room_name }}</td>
               <td>{{ item.res_people_num }}</td>
               <td>{{ item.res_name }}</td>
               <td>{{ item.amount }}</td>
-              <td>{{ item.createdAt }}</td>
+              <td>{{ formatDate(item.createdAt) }}</td>
             </tr>
           </tbody>
         </table>
@@ -76,6 +76,19 @@ const fetchReservations = async () => {
 
 const touchUpInsideTableCell = (resId) => {
   router.push({ name: 'ReservationDetail', params: { reservation_id: resId } });
+};
+
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  
+  // 원하는 포맷 형식으로 변환
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+  
+  return formattedDate;
 };
 
 const goToPage = (page) => {

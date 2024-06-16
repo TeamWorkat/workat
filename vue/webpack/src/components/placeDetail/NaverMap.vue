@@ -12,7 +12,7 @@ const mapOptions = {
 
 <template>
   <naver-map
-    style="width: 100%; height: 400px"
+    style="width: 100%; height: 400px;"
     :map-options="mapOptions"
   >
     <naver-marker
