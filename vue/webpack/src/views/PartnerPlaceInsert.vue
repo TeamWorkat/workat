@@ -26,8 +26,14 @@
       </div>
       <p>
         주소:
-        <input v-model="place_addr" placeholder="ex) 경기도 신곡로36" />
       </p>
+      <p>
+          <input type="text" v-model="postcode" placeholder="우편번호"><input type="button" @click="execDaumPostcode()" value="우편번호 찾기"><br>
+
+        </p>
+        <p>
+          <input  v-model="place_addr" type="text" id="address"  placeholder="ex) 경기도 신곡로36"><br>
+        </p>
       <p>
         소개글:
         <textarea v-model="place_content" placeholder="add multiple lines">
@@ -112,7 +118,8 @@ export default {
       ],
       selectedLocation: '',
       parsingLocation: '',
-
+      postcode: "",
+      address: "",
 
       picturefileURL: reactive([]),
       pictureArray: reactive([]),
@@ -169,6 +176,19 @@ export default {
 
      
     },
+    execDaumPostcode() {
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          if (data.userSelectedType === "R") {
+            this.place_addr = data.roadAddress;
+          } else {
+            this.place_addr = data.jibunAddress;
+          }
+          this.postcode = data.zonecode;
+        },
+      }).open();
+    },
+  },
 
     async submitFiles() {
       
@@ -272,8 +292,7 @@ export default {
       // 시간과 분을 콜론으로 연결합니다.
       return `${formattedHours}:${formattedMinutes}`
     },
-  },
-}
+  }
 </script>
 
 <style scoped>
