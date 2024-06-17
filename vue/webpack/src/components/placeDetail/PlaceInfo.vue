@@ -38,7 +38,8 @@
 
   </script>
   
-  <style>
+  <style scoped>
+  
   .place-details {
     padding: 20px;
     border-radius: 10px;
@@ -67,5 +68,7 @@
   .place-info p {
     margin: 5px 0;
   }
+
+  
   </style>
   

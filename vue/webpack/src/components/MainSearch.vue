@@ -275,11 +275,11 @@ body {
   font-family: sans-serif;
   background-repeat: no-repeat;
 }
-
 .wrap {
   display: flex;
   justify-content: center;
   position: relative;
+  height: 100px; /* 예시로 높이를 100px로 설정 */
 }
 
 .bar {
@@ -289,7 +289,7 @@ body {
   width: 900px;
   background: white;
   box-shadow: 0 0 5px hsl(0, 0%, 78%);
-  height: 60px;
+  height: 80px; /* 예시로 높이를 80px로 설정 */
   border-radius: 100vw;
   font-size: 0.8rem;
 }
@@ -304,7 +304,7 @@ body {
 .check-in,
 .guests {
   width: 22%;
-  height: 55px;
+  height: 80px; /* bar의 높이와 동일하게 설정 */
 }
 
 .localBtn:hover,
@@ -313,7 +313,6 @@ body {
   background: #ffdd00;
   color: white;
 }
-
 
 .guests {
   position: relative;

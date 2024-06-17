@@ -21,6 +21,7 @@
               v-for="(item, index) in state.items"
               :key="item.place_id"
               @click="touchUpInsideTableCell(item.place_id)"
+              class="table-row"
             >
               <th scope="row">{{ index + 1 }}</th>
               <td>{{ item.place_nm }}</td>
@@ -33,11 +34,12 @@
             </tr>
           </tbody>
         </table>
-        <button @click="insertPlaceTouchUpInside">추가</button>
+        <button @click="insertPlaceTouchUpInside" class="btn btn-primary">추가</button>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import SideBar from '@/views/SideBar.vue'
 import axios from '@/axios';
@@ -82,4 +84,48 @@ export default {
   },
 }
 </script>
-<style></style>
+
+<style scoped>
+.place_list_tableview {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  margin-bottom: 20px;
+}
+
+.table th {
+  background-color: #869ecc;
+  color: white;
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+.table-row {
+  transition: background-color 0.3s ease;
+}
+
+.btn {
+  background-color: #869ecc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #869ecc;
+}
+</style>

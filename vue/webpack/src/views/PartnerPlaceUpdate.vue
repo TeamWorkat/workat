@@ -1,19 +1,18 @@
 <template>
   <div class="d-flex">
     <SideBar />
-    <div class="flex-grow-1 p-3">
+    <div class="flex-grow-1 p-3 place-update-container">
       <div v-if="items">
         <p>
-          숙소명:
+          <label>숙소명:</label>
           <input v-model="items.place_nm" placeholder="ex) 홍길동 호텔" />
         </p>
         <p>
-          전화번호:
+          <label>전화번호:</label>
           <input v-model="items.place_tel" placeholder="ex) 028279037" />
         </p>
         <div>
-          카테고리:
-
+          <label>카테고리:</label>
           <select v-model="selectedCategory" @change="updateCategory">
             <option
               v-for="category in categories"
@@ -26,12 +25,12 @@
           <p>선택된 카테고리: {{ selectedCategory }}</p>
         </div>
         <p>
-          주소:
+          <label>주소:</label>
           <input v-model="items.place_addr" placeholder="ex) 경기도 신곡로36" />
         </p>
 
         <p>
-          소개글:
+          <label>소개글:</label>
           <textarea
             v-model="items.place_content"
             placeholder="add multiple lines"
@@ -40,8 +39,7 @@
         </p>
 
         <div>
-          time: {{ time }}
-
+          <label>시간:</label>
           <VueDatePicker
             v-model="time"
             time-picker
@@ -49,13 +47,12 @@
             range
             placeholder="Select Time"
           />
+          <p>체크인: {{ checkin }}</p>
+          <p>체크아웃: {{ checkout }}</p>
         </div>
 
-        <p>체크인: {{ checkin }}</p>
-        <p>체크아웃: {{ checkout }}</p>
         <div>
-          지역:
-
+          <label>지역:</label>
           <select v-model="selectedLocation" @change="updateLocation">
             <option
               v-for="loaction in loactions"
@@ -65,32 +62,32 @@
               {{ loaction }}
             </option>
           </select>
-          <p>선택된 카테고리: {{ selectedLocation }}</p>
+          <p>선택된 지역: {{ selectedLocation }}</p>
         </div>
 
         <div>
           <p>사진:</p>
-          <div
-            v-for="(item, index) in picturefileURL"
-            :key="item"
-            class="image-container"
-          >
-            <span
-              class="img"
-              :style="{ backgroundImage: `url(${item})` }"
-            ></span>
-            <button class="delete-button" @click="removeItem(index)">-</button>
+          <div class="image-gallery">
+            <div
+              v-for="(item, index) in picturefileURL"
+              :key="item"
+              class="image-container"
+            >
+              <span
+                class="img"
+                :style="{ backgroundImage: `url(${item})` }"
+              ></span>
+              <button class="delete-button" @click="removeItem(index)">-</button>
+            </div>
           </div>
           <input type="file" multiple @change="handleFileUpload" />
-          <button @click="submitFiles">수정</button>
+          <button class="btn-submit" @click="submitFiles">수정</button>
         </div>
-        <!-- <div>
-          <button @click="updatePlaceTouchUpInside">수정</button>
-        </div> -->
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import axios from '@/axios';
 import SideBar from '@/views/SideBar.vue'
@@ -303,28 +300,92 @@ export default {
 </script>
 
 <style scoped>
+.place-update-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+p {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-submit {
+  background-color: #869ecc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background-color: #869ecc;
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .img {
   display: inline-block;
-  width: 150px; /* 또는 적절한 값으로 변경 */
-  height: 150px; /* 또는 적절한 값으로 변경 */
+  width: 150px;
+  height: 150px;
   background-size: cover;
   background-position: center;
   border-radius: 20%;
+  border: 2px solid #dee2e6;
 }
 
 .image-container {
   position: relative;
   display: inline-block;
-  margin: 10px;
 }
 
 .delete-button {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -10px;
+  right: -10px;
   background-color: red;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

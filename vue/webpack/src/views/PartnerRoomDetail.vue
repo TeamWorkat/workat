@@ -2,29 +2,28 @@
   <div class="d-flex">
     <SideBar />
     <div class="flex-grow-1 p-3">
-      <div v-if="items">
-        <p>객실명: {{ items.room_name }}</p>
-        <p>총 객실수 : {{ items.room_qnt }} 개</p> 
-        <p>1박당 요금: {{ parseFloat(items.room_price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }).replace('₩', '') + '원'}}</p>
-        <p>객실 설명: {{ items.room_content }}</p>
-        <p>최대 인원: {{ items.max_people + '명' }}</p>
-        <p>최소 인원: {{ items.min_people + '명'}}</p>
-        <p>1인당 추가요금: {{ parseFloat(items.add_price).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }).replace('₩', '') + '원'}}</p>
-        <p>노출여부: {{ items.status }}</p>
-
-
-        <p>사진:</p>
-        <div
-          v-for="(item, index) in items.picture_sources"
-          :key="index"
-          class="image-container"
-        >
-          <span class="img" :style="{ backgroundImage: `url(${item})` }"></span>
+      <div v-if="items" class="place-detail">
+        <h3>{{ items.room_name }}</h3>
+        <div class="detail-section">
+          <p><strong>총 객실수:</strong> {{ items.room_qnt }} 개</p>
+          <p><strong>1박당 요금:</strong> {{ formatCurrency(items.room_price) }}</p>
+          <p><strong>객실 설명:</strong> {{ items.room_content }}</p>
+          <p><strong>최대 인원:</strong> {{ items.max_people }} 명</p>
+          <p><strong>최소 인원:</strong> {{ items.min_people }} 명</p>
+          <p><strong>1인당 추가요금:</strong> {{ formatCurrency(items.add_price) }}</p>
+          <p><strong>노출여부:</strong> {{ items.status }}</p>
         </div>
 
-        <div>
-          <button @click="updatePlaceTouchUpInside">수정</button>
-          <button @click="deletePlaceTouchUpInside">삭제</button>
+        <div class="image-section">
+          <p><strong>사진:</strong></p>
+          <div v-for="(item, index) in items.picture_sources" :key="index" class="image-container">
+            <div class="img" :style="{ backgroundImage: 'url(' + item + ')' }"></div>
+          </div>
+        </div>
+
+        <div class="button-section">
+          <button class="btn btn-primary" @click="updatePlaceTouchUpInside">수정</button>
+          <button class="btn btn-danger" @click="deletePlaceTouchUpInside">삭제</button>
         </div>
       </div>
     </div>
@@ -44,7 +43,6 @@ export default {
   data() {
     return {
       items: null,
-      // pictureSources: []
     }
   },
 
@@ -68,7 +66,6 @@ export default {
         })
         .then((res) => {
           this.items = res.data
-          console.log(res.data)
         })
         .catch((err) => {
           console.error(err)
@@ -96,23 +93,51 @@ export default {
           console.error(err)
         })
     },
+    formatCurrency(value) {
+      return parseFloat(value).toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }).replace('₩', '') + '원';
+    },
   },
 }
 </script>
 
 <style scoped>
-.img {
-  display: inline-block;
-  width: 150px; /* 또는 적절한 값으로 변경 */
-  height: 150px; /* 또는 적절한 값으로 변경 */
-  background-size: cover;
-  background-position: center;
-  border-radius: 20%;
+.place-detail {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail-section {
+  margin-bottom: 20px;
+}
+
+.detail-section p {
+  margin: 5px 0;
+}
+
+.image-section {
+  margin-bottom: 20px;
 }
 
 .image-container {
-  position: relative;
   display: inline-block;
-  margin: 10px;
+  margin-right: 10px;
+}
+
+.img {
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+}
+
+.button-section {
+  margin-top: 20px;
+}
+
+.button-section button {
+  margin-right: 10px;
 }
 </style>

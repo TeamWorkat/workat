@@ -2,23 +2,24 @@
   <div class="d-flex">
     <SideBar />
     <div class="flex-grow-1 p-3">
-      <div v-if="items">
-        <p>예약번호: {{ items.res_id }}</p>
-        <p>예약자명: {{ items.res_name }}</p>
-        <p>전화번호: {{ items.user_tel }}</p>
-        <p>취소여부: {{ items.res_cancel_yn }}</p>
-        <p>예약날짜(체크인): {{ items.check_in }}</p>
-        <p>예약날짜(체크아웃): {{ items.check_out }}</p>
-        <p>요청사항: {{ items.res_message }}</p>
-        <p>상품: {{ items.room_name }}</p>
-        <p>상품: {{ items.paymentKey }}</p>
-        <button @click="cancelReserveTouchUpInside"> 예약 취소 </button>
+      <div v-if="items" class="reservation-details">
+        <p><strong>예약번호:</strong> {{ items.res_id }}</p>
+        <p><strong>예약자명:</strong> {{ items.res_name }}</p>
+        <p><strong>전화번호:</strong> {{ items.user_tel }}</p>
+        <p><strong>취소여부:</strong> {{ items.res_cancel_yn }}</p>
+        <p><strong>예약날짜(체크인):</strong> {{ items.check_in }}</p>
+        <p><strong>예약날짜(체크아웃):</strong> {{ items.check_out }}</p>
+        <p><strong>요청사항:</strong> {{ items.res_message }}</p>
+        <p><strong>상품:</strong> {{ items.room_name }}</p>
+        <p><strong>결제 키:</strong> {{ items.paymentKey }}</p>
+        <button class="cancel-button" @click="cancelReserveTouchUpInside">예약 취소</button>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import axios from 'axios'
+import axios from '@/axios'
 import SideBar from '@/views/SideBar.vue'
 
 export default {
@@ -49,7 +50,6 @@ export default {
         .get('/api/partner/reserveDetail', {
           params: {
             res_id: res_id,
-            
           },
         })
         .then((res) => {
@@ -61,8 +61,6 @@ export default {
           console.error(err)
         })
     },
-    
-    
     cancelReserveTouchUpInside(){
       axios
       .post('/api/payment/toss/cancel',null,{
@@ -81,8 +79,44 @@ export default {
         console.log(err)
       })
     }
-    
   },
 }
 </script>
-<style></style>
+
+<style scoped>
+.reservation-details {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.reservation-details p {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.reservation-details strong {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.cancel-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+</style>

@@ -19,14 +19,11 @@
           @input="fetchData(0)"
           placeholder="예약자 이름"
         />
-
-        
       </div>
 
       <table class="table table-hover">
         <thead>
           <tr>
-            <!-- <th scope="col">#</th> -->
             <th scope="col">예약번호</th>
             <th scope="col">예약자명</th>
             <th scope="col">전화번호</th>
@@ -43,7 +40,6 @@
             :key="item.res_id"
             @click="touchUpInsideTableCell(item.res_id)"
           >
-            <!-- <th scope="row">{{ index + 1 }}</th> -->
             <td>{{ item.res_id }}</td>
             <td>{{ item.res_name }}</td>
             <td>{{ item.user_tel }}</td>
@@ -56,23 +52,23 @@
         </tbody>
       </table>
       <div class="pagination">
-      <button @click="fetchData(currentPage - 1)" :disabled="currentPage === 0">
-        이전
-      </button>
-      <button
-        @click="fetchData(currentPage + 1)"
-        :disabled="currentPage >= totalPage - 1"
-      >
-        다음
-      </button>
+        <button @click="fetchData(currentPage - 1)" :disabled="currentPage === 0">
+          이전
+        </button>
+        <button
+          @click="fetchData(currentPage + 1)"
+          :disabled="currentPage >= totalPage - 1"
+        >
+          다음
+        </button>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import SideBar from '@/views/SideBar.vue'
 import axios from '@/axios'
-// import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -86,7 +82,6 @@ export default {
       searchQuery: '',
       currentPage: 0,
       pageSize: 10,
-      // hasMore: true,
       selectedPageCount: 10,
       pageCounts: [10, 20, 30, 50],
       totalPage: 0,
@@ -130,7 +125,6 @@ export default {
     }
 
     return {
-      //  state,
       touchUpInsideTableCell,
     }
   },
@@ -141,20 +135,61 @@ export default {
 .place_list_tableview {
   display: flex;
   align-items: center;
-
+  margin-bottom: 20px;
 }
 
-.button-container {
-  margin-left: auto;
+.place_list_tableview select,
+.place_list_tableview input {
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
 }
 
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 10px; /* 필요에 따라 간격 조정 */
+  margin-top: 20px;
 }
 
 .pagination button {
-  margin: 0 5px; /* 버튼 간격 조정 */
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
 }
 </style>
