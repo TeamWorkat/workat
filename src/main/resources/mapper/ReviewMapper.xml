@@ -89,34 +89,5 @@
             review_id = #{reviewId}
     </select>
 
-    <select id="getReviewByIdAndReservation" resultType="org.workat.workat_project.review.entity.ReviewVO">
-        select
-            *
-        from
-            review
-        where
-            user_id = #{userId}
-        and
-            res_id = #{reservationId}
-    </select>
-
-    <select id="getUserReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
-        select
-            *
-        from review
-        where
-            review_id = #{reviewId}
-    </select>
-
-    <select id="getReviewByIdAndReservation" resultType="org.workat.workat_project.review.entity.ReviewVO">
-        select
-            *
-        from
-            review
-        where
-            user_id = #{userId}
-        and
-            res_id = #{reservationId}
-    </select>
 
 </mapper>

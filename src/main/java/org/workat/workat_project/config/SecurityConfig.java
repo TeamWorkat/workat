@@ -48,9 +48,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/place/**", "/signup/**", "/login/**", "/logout/**", "/user/**", "/review/**", "/payment/**","/reserve/**").permitAll()
-                        .requestMatchers("/partner/**").hasAuthority("ROLE_PARTNER")
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/admin/**","/partner/**", "/place/**", "/signup/**", "/login/**", "/logout/**", "/user/**", "/review/**", "/payment/**","/reserve/**").permitAll()
+                        .requestMatchers("/partners/**").hasAuthority("ROLE_PARTNER")
+                        .requestMatchers("/admins/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin.disable())
                 .addFilterBefore(jwtFilter, LoginFilter.class)

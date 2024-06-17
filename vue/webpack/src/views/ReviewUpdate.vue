@@ -78,9 +78,7 @@
   const items = ref(null);
   const route = useRoute();
   const isDragged = ref(false)
-  const rating = ref(0)
   const reviewId = computed(() => route.params.review_id);
-  const review = ref('')
   const reviewVO = computed(() => items.value?.reviewVO || {});
   const placeName = computed(()=>items.value?.place_nm || null);
   const check_in = computed(()=>items.value?.check_in || null);

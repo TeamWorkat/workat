@@ -63,17 +63,17 @@ public class PlaceServiceImpl implements PlaceService {
     public List<PlaceListDTO> getMainViewPlaceList(String name) {
         List<PlaceListDTO> returnList = new ArrayList<>();
     	List<PlaceListDTO> dtos = placeMapper.getMainViewPlaceList();
-    	for (PlaceListDTO dto :  dtos) {
-    		dto.setPicture_sources(dto.getPicString().split(","));
-    	}
+        for (PlaceListDTO dto : dtos) {
+            dto.setPicture_sources(dto.getPicString().split(","));
+        }
         if (name != null) {
-                   UserVO userVO = userMapper.findUserByEmail(name);
-                   for (PlaceListDTO placeListDTO : dtos) {
-                       WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(), placeListDTO.getPlace_id());
-                       if (wishVO != null) {
-                           placeListDTO.setLiked(wishVO.getLiked());
-                       }
-                       returnList.add(placeListDTO);
+            UserVO userVO = userMapper.findUserByEmail(name);
+            for (PlaceListDTO placeListDTO : dtos) {
+                WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(), placeListDTO.getPlace_id());
+                if (wishVO != null) {
+                    placeListDTO.setLiked(wishVO.getLiked());
+                }
+                returnList.add(placeListDTO);
                    }
                    return returnList;
                    }else{

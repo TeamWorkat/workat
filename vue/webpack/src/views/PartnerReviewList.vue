@@ -46,7 +46,7 @@
 <script>
 import SideBar from '@/views/SideBar.vue'
 import { reactive } from 'vue'
-import axios from 'axios'
+import axios from '@/axios'
 import { useRouter } from 'vue-router'
 
 export default {
