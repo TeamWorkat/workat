@@ -17,7 +17,6 @@ import org.workat.workat_project.partner.repository.PartnerPlaceMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class PartnerPlaceServiceImpl implements PartnerPlaceService {
 	private final PartnerPlaceMapper placeMapper;
 
 	private static final Logger logger = LoggerFactory.getLogger(PartnerPlaceServiceImpl.class);
-	
+
 	@Override
 	public List<PartnerPlaceVO> getPlaceList() {
 		return placeMapper.getPlaceList();
@@ -39,43 +38,26 @@ public class PartnerPlaceServiceImpl implements PartnerPlaceService {
 		partnerDTO.setPicture_sources(picture_sources);
 		return partnerDTO;
 	}
-	
+
 	@Transactional
 	@Override
 	public Integer updatePlace(PartnerPlaceDTO request) {
 		logger.debug("aaa");
 
 		placeMapper.updatePlace(request);
-		
+
 		placeMapper.allInactive(request);
-		
-		
-    for (String pic : request.getPicture_sources()) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("picture_source", pic);
-        System.out.println(pic);
-        params.put("place_id", request.getPlace_id());
-        placeMapper.updatePlacepic(params);    
-        placeMapper.inactivePlace(params);
-        
-    }
-//    for (String pic : request.getPicture_sources()) {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("picture_source", pic);
-//        System.out.println(pic);
-//        params.put("place_id", request.getPlace_id());
-//        placeMapper.updatePlacepic(params);    
-//        
-//    }
-    
-    
 
-//		placeMapper.inactivePlace(request);
+		for (String pic : request.getPicture_sources()) {
+			Map<String, Object> params = new HashMap<>();
+			params.put("picture_source", pic);
+			System.out.println(pic);
+			params.put("place_id", request.getPlace_id());
+			placeMapper.updatePlacepic(params);
+			placeMapper.inactivePlace(params);
 
-		
-//		placeMapper.updatePlacepic(request);
-		
-		
+		}
+
 		return 1;
 	}
 
@@ -88,12 +70,26 @@ public class PartnerPlaceServiceImpl implements PartnerPlaceService {
 	}
 
 	@Override
+	public Integer deletePlacepic(int placeid) {
+		return 0;
+	}
+
+	@Transactional
+	@Override
 	public Integer insertPlace(PartnerPlaceDTO request) {
-		int insertCount = 0;
-		insertCount += placeMapper.insertPlace(request);
-		
+
+		placeMapper.insertPlace(request);
+
 		System.out.println(request.getPlace_id());
-		insertCount += placeMapper.insertPlacepic(request);
-		return insertCount == 2 ? 1: 0;
+		
+		
+		for (String pic : request.getPicture_sources()) {
+			Map<String, Object> params = new HashMap<>();
+			params.put("picture_source", pic);
+			System.out.println(pic);
+			params.put("place_id", request.getPlace_id());
+			placeMapper.insertPlacepic(params);		
+		}
+		return 1;
 	}
 }

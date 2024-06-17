@@ -12,6 +12,6 @@ public interface PartnerPlaceService {
 	PartnerPlaceDTO getPlaceDetail(int placeid);
 	Integer updatePlace(PartnerPlaceDTO request);
 	Integer deletePlace(int placeid);
-//	Integer deletePlacepic(int placeid);
+	Integer deletePlacepic(int placeid);
 	Integer insertPlace(PartnerPlaceDTO request);
 }

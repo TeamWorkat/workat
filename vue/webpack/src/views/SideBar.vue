@@ -33,7 +33,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="/partner/roomList" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#table"></use>
           </svg>
@@ -41,7 +41,7 @@
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-white">
+        <a href="/partner/reviewList" class="nav-link text-white">
           <svg class="bi pe-none me-2" width="16" height="30">
             <use xlink:href="#grid"></use>
           </svg>

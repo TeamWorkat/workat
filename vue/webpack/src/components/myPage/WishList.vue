@@ -28,6 +28,7 @@ const fetchReviews = async () => {
   await axios.get(`/api/wish/list`)
       .then(res => {
         items.value = res.data;
+        console.log(items.value)
       })
       .catch(error => {
         console.error("There was an error fetching the place details:", error);

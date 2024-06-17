@@ -43,4 +43,42 @@
         where res_id = #{reservationId}
     </select>
 
+    <select id="findByOrderId" resultType="ReservationVO">
+        select r.*
+        from reservation r
+                 join
+             payment p
+             on
+                 r.res_id = p.res_id
+        where p.payment_id = #{orderId}
+    </select>
+    <select id="findReservationByUserId" resultType="ReservationListDTO">
+        SELECT r.res_id,
+               p.place_nm,
+               p.place_in,
+               p.place_out,
+               r.res_cancel_yn,
+               ro.room_name,
+               r.check_in,
+               r.check_out,
+               r.res_people_num,
+               r.res_name,
+               py.amount,
+               py.createdAt
+        FROM reservation r
+                 INNER JOIN
+             place p ON r.place_id = p.place_id
+                 INNER JOIN
+             room ro ON r.room_id = ro.room_id
+                 LEFT JOIN
+             payment py ON r.res_id = py.res_id
+        WHERE r.user_id = #{userId}
+          AND r.res_id in
+              (select res_id
+               from payment
+               where
+                   paymentKey is not null)
+
+    </select>
+
 </mapper>

@@ -10,9 +10,9 @@
     @update:modelValue="updateDate"
   >
   
-    <template #dp-input>
+    <!-- <template #dp-input>
       <input type="text" :value="formattedDate"  class="custom-input"/>
-    </template>
+    </template> -->
   </VueDatePicker>
 
 </template>

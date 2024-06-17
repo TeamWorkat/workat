@@ -1,7 +1,6 @@
 package org.workat.workat_project.picture.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +20,5 @@ public interface PictureMapper {
     void deleteReviewPicture(int reviewId);
 
     void updateUserReviewSourceOne(int reviewId);
+
 }

@@ -87,6 +87,7 @@
   const goBack = () => {
     router.go(-1); // 뒤로 가기
   }
+
   const computedRating = computed(() => {
   return items.value && items.value.reviewVO ? items.value.reviewVO.rating : 0;
 });
@@ -186,7 +187,7 @@
       console.log('Files uploaded successfully:', response.data)
       router.push({ name: 'ReviewDetail', params: { review_id: reviewId } });    } catch (error) {
       console.error('Error uploading files:', error)
-    } 
+    }
   }
 
   const formatDate = (dateString) => {

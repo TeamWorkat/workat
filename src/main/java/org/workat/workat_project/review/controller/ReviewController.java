@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.workat.workat_project.aws.service.AwsService;
 import org.workat.workat_project.picture.repository.PictureMapper;
 import org.workat.workat_project.review.entity.ReviewInsertDTO;
 import org.workat.workat_project.review.entity.ReviewListDTO;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequestMapping("/review")
 public class ReviewController {
     private final ReviewService reviewService;
-    private final AwsService awsService;
     private final PictureMapper pictureMapper;
 
     @GetMapping("/list")

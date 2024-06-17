@@ -15,5 +15,5 @@ public class WishListDTO {
     private int place_id;
     private String place_nm;
     private String liked;
-    private List<String> picture_source;
+    private String[] picture_sources;
 }

@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.workat.workat_project.review.entity.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface ReviewMapper {

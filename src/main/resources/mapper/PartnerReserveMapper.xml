@@ -24,7 +24,7 @@
 		 	on r.room_id = room.room_id   
 			left join `user` u 
 			on r.user_id = u.user_id 
-		where p.user_id  = '1'
+		where p.user_id  = '133'
 	</select>
 
 	<select id="getReserveDetail"
@@ -48,7 +48,7 @@
 			left join `user` u 
 			on r.user_id = u.user_id 
 		where
-			 p.user_id  = '1'
+			 p.user_id  = '133'
 		and
 			r.res_id = #{res_id}
 	</select>
@@ -72,7 +72,7 @@
 			left join `user` u 
 			on r.user_id = u.user_id 
 		where
-			 p.user_id  = '1'
+			 p.user_id  = '133'
 		limit #{limit}
 		offset #{offset}
 
@@ -98,7 +98,7 @@
 			left join `user` u 
 			on r.user_id = u.user_id 
 		where 
-			p.user_id  = '1'
+			p.user_id  = '133'
 		AND 
 			r.res_name like concat('%', #{search} , '%')
 		limit #{limit}
@@ -117,7 +117,7 @@
 			left join `user` u 
 			on r.user_id = u.user_id 
 		where 
-			p.user_id  = '1'
+			p.user_id  = '133'
 
 </select>
 
@@ -133,91 +133,12 @@
 			left join `user` u 
 			on r.user_id = u.user_id 
 		where 
-			p.user_id  = '1'
+			p.user_id  = '133'
 		AND 
 			r.res_name like concat('%', #{search} , '%')
 
 </select>
-	<!-- <update id="updatePlace"
-		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-		UPDATE 
-			place
-		SET 
-			place_nm = #{place_nm}
-			, place_addr = #{place_addr}
-			, place_tel = #{place_tel}
-			, place_content = #{place_content}
-			, place_in = #{place_in}
-			, place_out = #{place_out}
-			, loc_id = CASE
-				WHEN #{loc_nm} = '서울' THEN 1
-				WHEN #{loc_nm} = '경기도' THEN 2
-				WHEN #{loc_nm} = '강원도' THEN 3
-				WHEN #{loc_nm} = '경상도' THEN 4
-				WHEN #{loc_nm} = '전라도' THEN 5
-				WHEN #{loc_nm} = '충청도' THEN 6
-				WHEN #{loc_nm} = '제주도' THEN 7
-				ELSE 8 END
-		WHERE 
-			place_id = #{place_id}
-	</update>
- -->
-	<!-- <update id="updatePlacepic"
-		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-		UPDATE place_picture
-		SET picture_source = #{picture_source}
-		WHERE place_id = #{place_id}
-	</update>
-
-	<insert id="insertPlace"
-		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO"
-		useGeneratedKeys="true" keyColumn="place_id" keyProperty="place_id">
-		INSERT INTO place (
-			place_nm,
-			category,
-			place_addr,
-			place_tel,
-			place_content,
-			place_in,
-			place_out,
-			status,
-			loc_id,
-			user_id
-		) VALUES (
-			#{place_nm},
-			#{category},
-			#{place_addr},
-			#{place_tel},
-			#{place_content},
-			#{place_in},
-			#{place_out},
-			#{status},
-			#{loc_nm},
-			'1'
-		);
-	</insert>
-
-	<insert id="insertPlacepic"
-		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
-		INSERT INTO place_picture (
-		picture_source,
-		place_id,
-		status
-		)
-		VALUES(#{picture_source}, #{place_id}, #{status});
-	</insert>
-
-	<update id="deletePlace">
-		UPDATE place
-		SET status = 'inactive'
-		WHERE place_id = #{place_id}
-	</update>
-
-	<update id="deletePlacepic">
-		UPDATE place_picture
-		SET status = 'inactive'
-		WHERE place_id = #{place_id}
-	</update>  -->
+	
 
 
 </mapper>

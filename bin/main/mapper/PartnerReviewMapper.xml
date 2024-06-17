@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="org.workat.workat_project.partner.repository.PartnerReviewMapper">
+	<select id="getReviewList"
+		resultType="org.workat.workat_project.partner.entity.PartnerReviewDTO">
+SELECT 
+	rv.review_id,
+    rv.res_id, 
+    rs.res_name, 
+    rs.check_in, 
+    rs.check_out, 
+    p.place_nm, 
+    r.room_name, 
+    rv.reply_exist,
+    rv.status
+FROM
+    review rv
+INNER JOIN
+    reservation rs ON rv.res_id = rs.res_id
+INNER JOIN
+    place p ON p.place_id = rs.place_id
+INNER JOIN
+    room r ON r.room_id = rs.room_id
+INNER JOIN
+    user u ON p.user_id = u.user_id
+WHERE 
+    p.status = 'active' 
+    AND u.user_id = '133';
+
+	</select>
+
+<select id="getReviewDetail" resultType="org.workat.workat_project.partner.entity.PartnerReviewDTO">
+SELECT
+    rv.res_id, 
+    rs.res_name, 
+    rs.check_in, 
+    rs.check_out, 
+    rv.content,
+    rv.rating,
+    rv.created_date,
+    rv.modified_date,
+    p.place_nm, 
+    r.room_name, 
+    rv.reply_exist,
+    reply.reply_content,
+    COALESCE(GROUP_CONCAT(rp.picture_source), 'null') AS pictureURLArray
+FROM
+    review rv
+INNER JOIN
+    reservation rs ON rv.res_id = rs.res_id
+INNER JOIN
+    place p ON p.place_id = rs.place_id
+INNER JOIN
+    room r ON r.room_id = rs.room_id
+LEFT JOIN
+    review_picture rp ON rv.review_id = rp.review_id AND rp.status = 'active'
+LEFT JOIN
+    reply ON rv.review_id = reply.review_id
+WHERE
+    rv.review_id = #{review_id}
+GROUP BY
+    rv.res_id, rs.res_name, rs.check_in, rs.check_out, rv.content,
+    rv.rating, rv.created_date, rv.modified_date, p.place_nm,
+    r.room_name, rv.reply_exist, reply.reply_content
+</select>
+
+ <!-- 
+	<update id="updateRoom"
+		parameterType="org.workat.workat_project.partner.entity.PartnerRoomDTO">
+	UPDATE
+		room 
+	SET
+		room_name = #{room_name}
+		, room_qnt = #{room_qnt}
+		, room_price = #{room_price}
+		, room_content = #{room_content}
+		, max_people = #{max_people}
+		, min_people = #{min_people}
+		, add_price = #{add_price}
+		, status = #{status}
+	WHERE
+		room_id = #{room_id};
+	</update>
+
+
+<update id="allInactive" parameterType="org.workat.workat_project.partner.entity.PartnerRoomDTO">
+	UPDATE 
+		room_picture 
+	SET 
+		status = 'inactive'
+	WHERE
+		room_id = #{room_id}
+</update>
+
+
+
+<update id="inactiveRoom" parameterType="map">
+UPDATE
+	room_picture
+SET 
+	status = 'active'
+WHERE
+	room_id = #{room_id}
+AND
+	picture_source = #{picture_source};
+</update>
+
+<insert id="updateRoompic" parameterType="map">
+     INSERT INTO
+		room_picture (picture_source, picture_origin_name, status, room_id)
+    SELECT
+        #{picture_source}, 'static_origin_name', 'inactive', #{room_id}
+    FROM DUAL
+    WHERE NOT EXISTS (
+        SELECT 1 FROM room_picture WHERE picture_source = #{picture_source} AND room_id = #{room_id}
+    );
+</insert>
+ -->
+<update id="deleteReview">
+		UPDATE 
+			review
+		SET 
+			status = 'inactive'
+		WHERE 
+			review_id = #{review_id}
+	</update>
+
+	<update id="deleteReviewpic">
+		UPDATE 
+			review_picture
+		SET 
+			status = 'inactive'
+		WHERE
+			review_id = #{review_id}
+	</update> 
+
+
+
+<!-- 
+
+	<insert id="insertRoom"
+		parameterType="org.workat.workat_project.partner.entity.PartnerRoomDTO"
+		useGeneratedKeys="true" keyColumn="room_id" keyProperty="room_id">
+		INSERT INTO
+		room (
+			room_qnt,
+			room_name,
+			room_price,
+			room_content,
+			sold_num,
+			max_people,
+			picture_id,
+			place_id,
+			add_price,
+			min_people,
+			status
+			
+		) VALUES (
+			#{room_qnt},
+			#{room_name},
+			#{room_price},
+			#{room_content},
+			#{sold_num},
+			#{max_people},
+			#{picture_id},
+			#{place_id},
+			#{add_price},
+			#{min_people},
+			#{status}
+		);
+	</insert>
+
+	<insert id="insertRoompic"
+		parameterType="org.workat.workat_project.partner.entity.PartnerPlaceDTO">
+		INSERT INTO 
+			room_picture (
+				picture_source,
+				room_id,
+				picture_origin_name,
+				status
+		)
+		VALUES(#{picture_source}, #{room_id}, 'static_origin_name','active');
+	</insert> 
+  -->
+  
+</mapper>

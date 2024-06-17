@@ -64,6 +64,8 @@ import GuestModal from '@/components/GuestModal.vue'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
 
+
+
 export default {
   name: 'MainSearch',
   components: {
@@ -97,14 +99,6 @@ export default {
       console.log('여기')
       popState.value = true;
     }
-
-    // const changePopState =  async () => {
-    //   popState.value = !popState.value
-    //   if (popState.value) {
-    //     await nextTick()
-    //     setModalPosition()
-    //   }
-    // }
 
     const toggleDropdown = async () => {
       isDropdownOpen.value = !isDropdownOpen.value
@@ -319,9 +313,6 @@ body {
   background: #ffdd00;
   color: white;
 }
-
-
-
 
 
 .guests {

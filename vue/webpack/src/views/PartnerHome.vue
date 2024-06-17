@@ -2,6 +2,7 @@
   <div class="d-flex">
     <SideBar />
     <div class="flex-grow-1 p-3">
+      <h1> 공지사항 </h1>
       
     </div>
   </div>
