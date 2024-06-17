@@ -5,9 +5,8 @@ import PlaceDetail from '@/views/PlaceDetail.vue';
 import UserDetail from "@/views/UserDetail.vue";
 import UserDelete from "@/views/UserDelete.vue";
 import UserUpdate from "@/views/UserUpdate.vue";
-import SignupForm from "@/views/SignupForm.vue";
+import SignupPage from "@/views/SignupPage.vue";
 import ReservationCheck from "@/views/ReservationCheck.vue";
-import LoginForm from "@/views/LoginForm.vue";
 import PartnerHome from "@/views/PartnerHome.vue"
 import PartnerPlaceList from "@/views/PartnerPlaceList.vue"
 import PartnerPlaceInsert from "@/views/PartnerPlaceInsert.vue"
@@ -21,14 +20,17 @@ import WishList from '@/components/myPage/WishList.vue'
 import PartnerReserveList from "@/views/PartnerReserveList.vue"
 import PartnerRoomList from "@/views/PartnerRoomList.vue"
 import PartnerReserveDetail from "@/views/PartnerReserveDetail.vue"
-import ReviewInsert from '@/views/ReviewInsert.vue'
-import ReviewDetail from '@/views/ReviewDetail'
-import ReviewUpdate from '@/views/ReviewUpdate.vue'
 import PartnerRoomDetail from '@/views/PartnerRoomDetail.vue'
 import PartnerRoomUpdate from '@/views/PartnerRoomUpdate.vue'
 import PartnerRoomInsert from '@/views/PartnerRoomInsert.vue'
 import PartnerReviewList from "@/views/PartnerReviewList.vue"
 import PartnerReviewDetail from "@/views/PartnerReviewDetail.vue"
+import ReviewInsert from '@/views/ReviewInsert.vue'
+import ReviewDetail from '@/views/ReviewDetail'
+import ReviewUpdate from '@/views/ReviewUpdate.vue';
+import LoginPage from "@/views/LoginPage.vue";
+import UserLogin from "@/components/UserLogin.vue";
+import PartnerLogin from "@/components/PartnerLogin.vue";
 
 
 const routes = [
@@ -44,7 +46,7 @@ const routes = [
         component: PlaceDetail
     },
     {
-        path: '/admin',
+        path: '/admin/list',
         name: 'UserList',
         component: UserList
     },
@@ -75,8 +77,7 @@ const routes = [
     {
         path: '/user/detail',
         name: 'UserDetail',
-        component: UserDetail,
-        props: route => ({ user_id: route.query.user_id })
+        component: UserDetail
     },
     {
         path: '/user/delete',
@@ -90,18 +91,28 @@ const routes = [
     },
     {
         path: '/signup',
-        name: 'SignupForm',
-        component: SignupForm
+        name: 'SignupPage',
+        component: SignupPage
     },
     {
         path: '/login',
-        name: 'LoginForm',
-        component: LoginForm
+        name: 'LoginPage',
+        component: LoginPage
+    },
+    {
+        path: '/login/user',
+        name: 'UserLogin',
+        component: UserLogin
+    },
+    {
+        path: '/login/partner',
+        name: 'PartnerLogin',
+        component: PartnerLogin
     },
     {
         path: '/reservation/check',
         name: 'ReservationCheck',
-        component: ReservationCheck,
+        component: ReservationCheck
     },
     {
         path: '/partner/home',
@@ -134,19 +145,27 @@ const routes = [
         children: [
           {
             path: 'resList',
-            component: ReservationList,
+            component: ReservationList
           },
           {
             path: 'reviewList',
-            component: ReviewList,
+            component: ReviewList
           },
           {
             path: 'wishList',
-            component: WishList,
+            component: WishList
           },
           {
             path: 'user/detail',
-            component: UserDetail,
+            component: UserDetail
+        },
+        {
+            path: 'user/update',
+            component: UserUpdate
+        },
+        {
+            path: 'user/delete',
+            component: UserDelete
         }
         ],
       },
@@ -169,7 +188,7 @@ const routes = [
     {
         path: '/partner/roomList',
         name: 'PartnerRoomList',
-        component: PartnerRoomList  
+        component: PartnerRoomList
     },
     {
         path: '/review/insertForm/:reservation_id',
@@ -190,28 +209,28 @@ const routes = [
     {
         path: '/partner/roomDetail/:room_id',
         name: 'PartnerRoomDetail',
-        component: PartnerRoomDetail  
+        component: PartnerRoomDetail
     },
     {
         path: '/partner/roomUpdate/:room_id',
         name: 'PartnerRoomUpdate',
-        component: PartnerRoomUpdate  
+        component: PartnerRoomUpdate
     },
     {
         path: '/partner/roomInsert',
         name: 'PartnerRoomInsert',
-        component: PartnerRoomInsert  
+        component: PartnerRoomInsert
     },
 
     {
         path: '/partner/reviewList',
         name: 'PartnerReviewList',
-        component: PartnerReviewList  
+        component: PartnerReviewList
     },
     {
         path: '/partner/reviewDetail/:review_id',
         name: 'PartnerReviewDetail',
-        component: PartnerReviewDetail  
+        component: PartnerReviewDetail
     },
 ];
 

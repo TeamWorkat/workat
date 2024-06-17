@@ -3,12 +3,11 @@
     <img src="/img/work_at_icon.png" class="login-image">
     <div class="login-container">
       <h3>Login</h3><br/>
-
-      <input id="email" v-model="user_email" type="email" placeholder="email" required>
-      <input id="password" v-model="user_pwd" type="password" placeholder="password" required>
+      <input type="email" class="form-control" id="floatingInput" placeholder="email" required v-model="state.form.user_email">
+      <input type="password" class="form-control" placeholder="password" required v-model="state.form.user_pwd">
       <a href="#" class="forgot-password">forgot password?</a>
       <br/>
-      <button @click="login" :disabled="loading">Login</button><br/>
+      <button @click="submit()" :disabled="loading">Login</button><br/>
       <p>or you can sign in <a href="">here</a></p>
       <p v-if="error" class="error">{{ error }}</p>
     </div>
@@ -16,47 +15,48 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/axios';
+import store from "@/scripts/store";
+import router from "@/router";
+import { reactive, ref } from "vue";
 
 export default {
-  name: 'LoginForm',
-  data() {
-    return {
-      user_email: '',
-      user_pwd: '',
-      loading: false,
-      error: null
-    };
-  },
-  methods: {
-    async login() {
-      this.loading = true;
-      this.error = null;
-      console.log('Login attempt:', this.user_email, this.user_pwd);
-      try {
-        const response = await axios.post('/api/login', {
-          user_email: this.user_email,
-          user_pwd: this.user_pwd
-        });
+  setup() {
+    const state = reactive({
+      form: {
+        user_email: '',
+        user_pwd: ''
+      }
+    });
+    const loading = ref(false);
+    const error = ref(null);
 
-        if (response.status === 200 && response.data) {
-          this.$router.push('/');
-        } else {
-          this.error = 'Login failed. Please check your email and password.';
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 401) {
-          this.error = 'Login failed. Please check your email and password.';
-        } else {
-          this.error = 'An error occurred. Please try again later.';
-        }
-        console.error('Error during login:', error);
+    const submit = async () => {
+      loading.value = true;
+      error.value = null;
+
+      try {
+        const res = await axios.post("/api/login", state.form);
+        const token = res.data.token;
+        const user_id = res.data.user_id;
+        store.commit('setAccount', user_id);
+        store.commit('setToken', token);
+        sessionStorage.setItem("user_id", user_id);
+        sessionStorage.setItem("token", token);
+        router.push({ path: "/" });
+        console.log(res.data);
+        window.alert("Welcome!");
+      } catch (err) {
+        console.error("Login error:", err);
+        error.value = "Invalid email or password.";
+        window.alert("Invalid email or password. Please check again.");
       } finally {
-        this.loading = false;
+        loading.value = false;
       }
     }
-  }
 
+    return { state, loading, error, submit };
+  }
 };
 </script>
 

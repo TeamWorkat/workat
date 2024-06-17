@@ -20,7 +20,7 @@ import MainSearch from '@/components/MainSearch.vue'
 import UserCard from '@/components/UserCard.vue'
 import { useRoute } from 'vue-router'
 
-import axios from 'axios'
+import axios from '@/axios';
 import { reactive } from 'vue'
 import { watch } from 'vue'
 

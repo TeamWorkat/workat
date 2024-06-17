@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/axios.js';
 
 export default {
   name: 'UserDetail',
@@ -34,19 +34,17 @@ export default {
   methods: {
     async fetchUserDetail() {
       try {
-        this.user_id = this.$route.query.user_id;
-        console.log("Fetching detail for user_id:", this.user_id);
-        const response = await axios.get(`/api/user/detail?user_id=${this.user_id}`);
+        const response = await axios.get(`/api/user/detail`);
         this.user = response.data;
       } catch (error) {
         console.error('Error fetching user detail:', error);
       }
     },
     clickEditButton() {
-      this.$router.push({name: 'UserUpdate', query: {user_id: this.user_id}});
+      this.$router.push({path: '/mypage/user/update'});
     },
     clickDeleteButton() {
-      this.$router.push({name: 'UserDelete', query: {user_id: this.user_id}});
+      this.$router.push({path: '/mypage/user/delete'});
     }
   }
 };

@@ -14,16 +14,12 @@ import org.workat.workat_project.review.entity.ReviewListDTO;
 import org.workat.workat_project.review.entity.ReviewResDTO;
 import org.workat.workat_project.review.entity.ReviewVO;
 import org.workat.workat_project.review.repository.ReviewMapper;
-import org.workat.workat_project.room.entity.RoomResDTO;
-import org.workat.workat_project.room.entity.RoomVO;
-import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -90,5 +86,32 @@ public class ReviewServiceImpl implements ReviewService {
         reviewResDTO.setCheck_in(reservationMapper.selectReservationById(reviewVO.getRes_id()).getCheck_in());
         reviewResDTO.setCheck_out(reservationMapper.selectReservationById(reviewVO.getRes_id()).getCheck_out());
         return reviewResDTO;
+    }
+
+    @Override
+    public ReviewInsertDTO updateUserReview(String name, ReviewInsertDTO reviewDTO) {
+        if(reviewDTO.getSrc() != null && !reviewDTO.getSrc().isEmpty()){
+            Map<String, Object> paramMap = new HashMap<>();
+                   paramMap.put("reviewId", reviewDTO.getReview_id());
+                   paramMap.put("src", reviewDTO.getSrc());
+            pictureMapper.updateUserReviewSource(paramMap);
+        }else{
+            pictureMapper.updateUserReviewSourceOne(reviewDTO.getReview_id());
+        }
+        if(reviewDTO.getFiles() != null){
+        for (MultipartFile file : reviewDTO.getFiles()) {
+                    String uploadUrl = awsService.uploadFile(file, "review");
+                    String fileSource = awsService.getFileUrl(uploadUrl);
+                    String fileName = file.getOriginalFilename();
+                    pictureMapper.insertUserReviewPicture(fileName,fileSource,reviewDTO.getReview_id());
+                }
+        }
+        reviewMapper.updateReviewInfo(reviewDTO);
+        return reviewDTO;
+    }
+
+    @Override
+    public void deleteUserReview(int reviewId) {
+        reviewMapper.deleteUserReview(reviewId);
     }
 }

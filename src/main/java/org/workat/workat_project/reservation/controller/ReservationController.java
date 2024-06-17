@@ -2,6 +2,7 @@ package org.workat.workat_project.reservation.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.workat.workat_project.payment.entity.PaymentDTO;
@@ -11,7 +12,6 @@ import org.workat.workat_project.reservation.entity.ReservationVO;
 import org.workat.workat_project.reservation.entity.ReserveInfoRequestDTO;
 import org.workat.workat_project.reservation.service.ReservationService;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -24,8 +24,8 @@ public class ReservationController {
 
     @ResponseBody
     @PostMapping("/saveInfo")
-    public ResponseEntity<PaymentDTO> saveReservationInfo(@RequestBody ReservationVO reserveInfo, Principal principal) {
-        ReservationVO savedReservationInfo = reservationService.saveReservationInfo(reserveInfo, "user1@example.com");
+    public ResponseEntity<PaymentDTO> saveReservationInfo(@RequestBody ReservationVO reserveInfo, Authentication principal) {
+        ReservationVO savedReservationInfo = reservationService.saveReservationInfo(reserveInfo, principal.getName());
         return ResponseEntity.ok(paymentService.preparePayment(savedReservationInfo));
     }
 
@@ -38,8 +38,7 @@ public class ReservationController {
 
     @GetMapping("/list")
     @ResponseBody
-    public ResponseEntity<List<ReservationListDTO>> getReservations(Principal principal) {
-        System.err.println("온다");
-        return ResponseEntity.ok(reservationService.userReservationList("user1@example.com"));
+    public ResponseEntity<List<ReservationListDTO>> getReservations(Authentication principal) {
+        return ResponseEntity.ok(reservationService.userReservationList(principal.getName()));
     }
 }

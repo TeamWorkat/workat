@@ -5,24 +5,27 @@
 <mapper namespace="org.workat.workat_project.reservation.repository.ReservationMapper">
 
     <insert id="insertTempReservation" parameterType="ReservationVO" useGeneratedKeys="true" keyProperty="res_id">
-        INSERT INTO reservation (res_price,
-                                 res_name,
-                                 check_in,
-                                 check_out,
-                                 res_people_num,
-                                 place_id,
-                                 user_id,
-                                 room_id,
-                                 res_message)
-        VALUES (#{res_price},
-                #{res_name},
-                #{check_in},
-                #{check_out},
-                #{res_people_num},
-                #{place_id},
-                #{user_id},
-                #{room_id},
-                #{res_message})
+        INSERT INTO reservation (
+               res_price,
+               res_name,
+               check_in,
+               check_out,
+               res_people_num,
+               place_id,
+               user_id,
+               room_id,
+               res_message
+           ) VALUES (
+               #{res_price},
+               #{res_name},
+               #{check_in},
+               #{check_out},
+               #{res_people_num},
+               #{place_id},
+               #{user_id},
+               #{room_id},
+               #{res_message}
+           )
     </insert>
 
     <delete id="deleteReservationNotPaid">

@@ -84,7 +84,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from '@/axios';
 import SideBar from '@/views/SideBar.vue'
 import { reactive } from 'vue'
 

@@ -15,4 +15,6 @@ public interface ReservationMapper {
     ReservationVO findByOrderId(String orderId);
 
     List<ReservationListDTO> findReservationByUserId(int userId);
+
+    List<ReservationVO> getReservationVOList(int roomId);
 }

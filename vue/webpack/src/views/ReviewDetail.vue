@@ -4,13 +4,13 @@
   </div>
   <hr class="long-divider">
   <div class="reservation-container">
-    <div class="room-picture-container">
+    <div class="col-md-6 room-picture-container" style="margin-left: 200px;">
       <div v-if="reviewPictureList.length > 0" class="room-info">
         <PictureSlide :pictureList="reviewPictureList" />
       </div>
     </div>
 
-    <div id="app" class="col-md-5 review" style="background-color: #f2f2f2; padding: 20px; border-radius: 5px;">
+    <div id="app" class="col-md-4 review" style="background-color: #f2f2f2; padding: 20px; border-radius: 5px; margin-right: 200px; border: 1px black;">
   <div class="form-group review-group">
     <div class="form-group">
       <h4>{{ placeName }}</h4>
@@ -31,24 +31,20 @@
     <label for="review">여행후기:</label>
     <textarea id="review" :value="reviewVO.content" rows="4" readonly style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
   </div>
-  <div class="reservation-form">  
-      <button @click="updateReview">수정</button>
-      <button>삭제</button>
-      <button>목록</button>
+  <div v-if="Object.keys(replyVO).length !== 0">
+    <div><strong>사장님 답변:</strong> {{ replyVO.reply_content }}</div>
+    <div><strong>등록일:</strong> {{ formatDate(replyVO.created_date) }}</div>
+  </div>
+  <div v-else>
+    <p>*등록된 답변이 없습니다.</p>
+  </div>
+  <div>  
+      <button class="btn btn-primary" @click="updateReview">수정</button>
+      <button class="btn btn-primary" @click="reviewDelete(reviewVO.review_id)" style="margin-left: 10px;">삭제</button>
+      <button class="btn btn-primary" @click="goBackList" style="margin-left: 10px;">목록</button>
     </div>
   
 </div>
-  </div>
-  <div v-if="Object.keys(replyVO).length !== 0">
-    <div><strong>Review ID:</strong> {{ replyVO.review_id }}</div>
-    <div><strong>Reservation ID:</strong> {{ replyVO.res_id }}</div>
-    <div><strong>Reply Content:</strong> {{ replyVO.reply_content }}</div>
-    <div><strong>Created Date:</strong> {{ formatDate(replyVO.created_date) }}</div>
-    <div><strong>Modified Date:</strong> {{ formatDate(replyVO.modified_date) }}</div>
-    <div><strong>Status:</strong> {{ replyVO.status }}</div>
-  </div>
-  <div v-else>
-    <p>No reply data available.</p>
   </div>
   
   </template>
@@ -56,7 +52,7 @@
     <script setup>
     import { ref, computed, watch, onMounted } from 'vue';
     import { useRoute } from 'vue-router';
-    import axios from 'axios';
+    import axios from '@/axios';
     import router from "@/router/index.js"
     import PictureSlide from '@/components/myPage/PictureSlide.vue';
     
@@ -70,7 +66,9 @@
     const check_in = computed(()=>items.value?.check_in || null);
     const check_out = computed(()=>items.value?.check_out || null);
 
-
+    const goBackList = () => {
+    router.push({ path: '/mypage/reviewList'});
+  };
 
     const showReasonInput = ref(false);
     const cancellationReason = ref('');
@@ -79,6 +77,17 @@
       await axios.get(`/api/review/detail?review_id=${reviewId}`)
         .then(res => {
           items.value = res.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the review details:", error);
+        });
+    };
+
+    const reviewDelete = async (reviewId) => {
+      await axios.get(`/api/review/delete?review_id=${reviewId}`)
+        .then(res => {
+          if(res != null)
+          router.push({ path: '/mypage/reviewList' });
         })
         .catch(error => {
           console.error("There was an error fetching the review details:", error);
@@ -197,6 +206,15 @@
   p {
   margin: 0;
   }
+
+  button {
+  background-color: #FFCC5E;
+  border: none;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}
   
   .cancel-button {
   background-color: #c0c0bb;

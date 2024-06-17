@@ -1,14 +1,14 @@
 <template>
     <div class="place-details">
       <div class="place-info">
-        <h2>{{ placeInfo.place_nm }}</h2>
+        <h2><strong>{{ placeInfo.place_nm }}</strong></h2>
         <p>체크인:{{ formatDate(placeInfo.place_in) }} | 체크아웃:{{ formatDate(placeInfo.place_out) }}</p>
-        <div v-for="(placePictureSource, idx) in placePictureSources" :key="idx" class="place-image-container">
-          <img :src="placePictureSource" class="place-image" />  
-        </div>    
-        <p><strong>주소:</strong> {{ placeInfo.place_addr }}</p>
-        <p><strong>전화번호:</strong> {{ placeInfo.place_tel }}</p>
-        <p><strong>소개글:</strong></p>
+        <div v-if="placePictureSources.length > 0" class="room-info" style="margin-top: 50px;">
+        <PictureSlide :pictureList="placePictureSources" />
+      <br>
+      </div>  
+        <p><strong>연락처:</strong> {{ placeInfo.place_tel }}</p>
+        <p><strong>소개:</strong></p>
         <p> {{ placeInfo.place_content }}</p>
       </div>
     </div>
@@ -16,7 +16,7 @@
   
   <script>
   import { format } from 'date-fns';
-
+  import PictureSlide from '../myPage/PictureSlide.vue';
   export default {
   props: {
     placePictureSources: {
@@ -28,6 +28,7 @@
       required: true
     }
   },
+  components: {PictureSlide},
   methods: {
     formatDate(date) {
       return format(new Date(date), 'HH:mm');
@@ -40,7 +41,6 @@
   <style>
   .place-details {
     padding: 20px;
-    background-color: #f5f5f5;
     border-radius: 10px;
   }
   

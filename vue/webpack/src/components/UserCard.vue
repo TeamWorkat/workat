@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/axios';
 import PictureSlide from './myPage/PictureSlide.vue';
 
 export default {
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.item.liked || false
+      isFavorite: this.item.liked === "Y" || false
     };
   },
   methods: {
@@ -61,8 +61,9 @@ export default {
 .card .img {
   display: inline-block;
   width: 100%;
-  height: 250px; /* 원하는 높이로 설정 */
-  overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
+  height: 250px;
+  background-size: cover;
+  background-position: center;
 }
 
 .card .card-body .price {

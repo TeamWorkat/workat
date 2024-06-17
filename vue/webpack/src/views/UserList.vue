@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/axios';
 
 export default {
   name: 'UserList',
@@ -51,7 +51,7 @@ export default {
   methods: {
     async fetchUsers() {
       try {
-        const response = await axios.get('/api/admin/users');
+        const response = await axios.get('/api/admin/list');
         this.users = response.data;
       } catch (error) {
         console.error('Error fetching users:', error);

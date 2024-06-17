@@ -1,7 +1,5 @@
 package org.workat.workat_project.place.entity;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +15,5 @@ public class PlaceListDTO {
 	private String place_nm;
 	private String picString;
 	private String[] picture_sources;
+	private String liked;
 }

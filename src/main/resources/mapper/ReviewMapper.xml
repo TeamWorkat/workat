@@ -19,11 +19,29 @@
                 )
     </insert>
 
+    <update id="updateReviewInfo" parameterType="org.workat.workat_project.review.entity.ReviewInsertDTO">
+        UPDATE review
+        SET
+            content = #{content},
+            rating = #{rating}
+        WHERE
+            review_id = #{review_id}
+    </update>
+    <delete id="deleteUserReview">
+        update
+        review
+        set
+            status = "inactive"
+        where
+            review_id = #{reviewId}
+    </delete>
 
     <select id="getReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
-        select *
+        select
+            *
         from review
         where place_id = #{placeId}
+        and status = "active"
     </select>
 
     <select id="getReply" resultType="org.workat.workat_project.review.entity.ReplyVO">
@@ -36,6 +54,7 @@
         SELECT rating, COUNT(*) AS count
         FROM review
         WHERE place_id = #{placeId}
+        and status = "active"
         GROUP BY rating;
     </select>
 
@@ -57,7 +76,28 @@
         JOIN
           place p ON r.place_id = p.place_id
         WHERE
-         u.user_email = #{mail};
+         u.user_email = #{mail}
+        AND
+            r.status = "active";
+    </select>
+
+    <select id="getUserReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">
+        select
+            *
+        from review
+        where
+            review_id = #{reviewId}
+    </select>
+
+    <select id="getReviewByIdAndReservation" resultType="org.workat.workat_project.review.entity.ReviewVO">
+        select
+            *
+        from
+            review
+        where
+            user_id = #{userId}
+        and
+            res_id = #{reservationId}
     </select>
 
     <select id="getUserReviewInfo" resultType="org.workat.workat_project.review.entity.ReviewVO">

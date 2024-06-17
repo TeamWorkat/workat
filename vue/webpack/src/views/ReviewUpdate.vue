@@ -16,7 +16,7 @@
           <div class="file-upload" :class="{ dragged: isDragged }">
             <div v-if="reviewPictureList.length" class="file-preview-container">
               <div class="file-preview">
-                <img :src="reviewPictureList[reviewPictureList.length - 1]" class="file-preview-image"/>
+                <img :src="typeof reviewPictureList[reviewPictureList.length - 1] === 'string' ? reviewPictureList[reviewPictureList.length - 1] : reviewPictureList[reviewPictureList.length - 1].src" class="file-preview-image"/>
               </div>
             </div>
             <div v-else>
@@ -28,7 +28,7 @@
         <div class="file-upload-list">
           <div class="file-upload-list__item" v-for="(file, index) in reviewPictureList" :key="index">
             <div class="file-upload-list__item__data">
-              <img class="file-upload-list__item__data-thumbnail" :src="file" />
+              <img class="file-upload-list__item__data-thumbnail" :src="typeof file === 'string' ? file : file.src" />
               <div class="file-upload-list__item__data-name">
                 {{ file.name }}
               </div>
@@ -59,12 +59,11 @@
   </div>  
   <div class="form-group review-group" style="margin-top: 20px;">
     <label for="review">여행후기:</label>
-    <textarea id="review" :value="reviewVO.content" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
+    <textarea id="review" v-model="reviewVO.content" rows="4" style="width: 100%; border: 2; border-radius: 5px; padding: 10px;" placeholder="고객님의 소중한 여행리뷰를 입력해주세요~"></textarea>
   </div>
   <div class="reservation-form">  
     <button @click="uploadFiles" style="margin-top: 20px;">수정</button>
-      <button>삭제</button>
-      <button>목록</button>
+    <button @click="goBack">취소</button>
     </div></div></div>
   </template>
 
@@ -72,7 +71,7 @@
   
   <script setup>
   import { ref, computed, onMounted } from 'vue'
-  import axios from 'axios'
+  import axios from '@/axios'
   import { useRoute } from 'vue-router';
   import router from "@/router/index.js"
 
@@ -87,6 +86,9 @@
   const check_in = computed(()=>items.value?.check_in || null);
   const check_out = computed(()=>items.value?.check_out || null);
   const reviewPictureList = computed(()=>items.value?.review_picture_source || {} );
+  const goBack = () => {
+    router.go(-1); // 뒤로 가기
+  }
 
   const computedRating = computed(() => {
   return items.value && items.value.reviewVO ? items.value.reviewVO.rating : 0;
@@ -104,7 +106,9 @@
 
 
   const setRating = (index) => {
-    rating.value = index
+    if (items.value && items.value.reviewVO) {
+        items.value.reviewVO.rating = index;
+      }
   }
   
   const onClick = () => {
@@ -160,15 +164,21 @@
   const uploadFiles = async () => {
     let formData = new FormData()
     reviewPictureList.value.forEach(file => {
+    if (file instanceof File) {
       formData.append('files', file)
-    })
+    }else{
+      formData.append('src',file)
+    }
+  })
     formData.append('res_id', reviewVO.value.res_id);
-    formData.append('rating', rating.value);
-    formData.append('content', review.value);
+    formData.append('rating', items.value.reviewVO.rating);
+    formData.append('content', reviewVO.value.content);
     formData.append('place_id', reviewVO.value.place_id);
+    formData.append('review_id', reviewVO.value.review_id);
+
     console.log(formData)
     try {
-      let response = await axios.post('/api/review/insert', formData, {
+      let response = await axios.post('/api/review/update', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

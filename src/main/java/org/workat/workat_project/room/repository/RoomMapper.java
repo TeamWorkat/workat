@@ -14,4 +14,12 @@ public interface RoomMapper {
     List<LocalDate> getReservedDate(int roomId);
 
     void updateSoldNum(RoomVO roomVO);
+
+    RoomVO getRoomInfoByPlaceAndRoom(int placeId, int roomId);
+
+    List<RoomVO> getAllRoomInfo();
+
+    void insertUnavailableDate(int roomId, LocalDate key);
+
+    void deleteUnavailableDate(int roomId, LocalDate key);
 }

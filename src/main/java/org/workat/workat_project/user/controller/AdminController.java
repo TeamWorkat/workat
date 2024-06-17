@@ -20,7 +20,7 @@ public class AdminController {
 
     private final UserServiceImpl userServiceImpl;
 
-    @GetMapping("/users")
+    @GetMapping("/list")
     public ResponseEntity<List<UserListDTO>> getUserList() {
         return ResponseEntity.ok(userServiceImpl.getList());
 

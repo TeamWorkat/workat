@@ -23,7 +23,7 @@
 
       <div class="check-in">
         <p>일정</p>
-        
+        <UserCalendar @update-date="handleDateUpdate"> </UserCalendar>
       </div>
 
       <div class="guests" @click="pushModal">
@@ -52,15 +52,14 @@
       </button>
     </div>
     
-  </div>  
-  <UserCalendar @update-date="handleDateUpdate"/>
+  </div>
   
 </template>
 
 <script>
 import { ref, onMounted, nextTick } from 'vue'
 import UserCalendar from '@/components/UserCalendar.vue'
-import axios from 'axios'
+import axios from '@/axios'
 import GuestModal from '@/components/GuestModal.vue'
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'

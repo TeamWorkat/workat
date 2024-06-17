@@ -64,6 +64,7 @@ const roomPictureList = computed(() => {return props.selectedRoom ? props.select
 const router = useRouter();
 
 const bak = computed(() => {
+  console.log(disabledDates);
   if (date.value && date.value.length === 2) {
     const [startDate, endDate] = date.value;
     if (startDate instanceof Date && endDate instanceof Date) {
@@ -132,7 +133,7 @@ function reserve() {
 .reservation-form {
   max-width: 400px;
   margin: 0 auto;
-  background-color: #fff5cc; /* Soft yellow background */
+  background-color: #ffffff; /* Soft yellow background */
   padding: 20px;
   border: 2px solid #ffd700; /* Gold border */
   border-radius: 15px;

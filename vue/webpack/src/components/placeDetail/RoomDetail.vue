@@ -16,7 +16,7 @@
           <p><strong>가격:</strong> {{ room.roomVO.room_price }}원</p>
           <p><strong>수용인원:</strong> {{ room.roomVO.max_people }}명</p>
           <p><strong>설명:</strong> {{ room.roomVO.room_content }}</p>
-          <button @click="selectRoom(room.roomVO.room_id)">선택하기</button>
+          <button button class="btn btn-primary" @click="selectRoom(room.roomVO.room_id)">선택하기</button>
         </div>
       </div>
     </div>
@@ -106,7 +106,7 @@ export default {
 }
 
 .room-item.selected {
-  border: 2px solid #007bff;
+  border: 2px solid #FFCC5E;
 }
 
 .room-images img {
@@ -118,4 +118,14 @@ export default {
 .reservation-calendar {
   margin-top: 20px;
 }
+
+button {
+  background-color: #FFCC5E;
+  border: none;
+  color: black;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
 </style>
