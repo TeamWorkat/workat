@@ -18,30 +18,34 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/place")
 public class PlaceController {
 
-	private final PlaceService placeService;
+    private final PlaceService placeService;
 
-	@GetMapping("/items")
-	public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList(Authentication auth) {
-		String username = null;
-		if (auth != null) {
-			username = auth.getName();
-		}
-		return ResponseEntity.ok(placeService.getMainViewPlaceList(username));
-	}
+    @GetMapping("/items")
+    public ResponseEntity<List<PlaceListDTO>> getMainViewPlaceList(Authentication auth) {
+        String username = null;
+        if (auth != null) {
+            username = auth.getName();
+        }
+        return ResponseEntity.ok(placeService.getMainViewPlaceList(username));
+    }
 
-	@GetMapping("/placeDetail")
-	public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name = "place_id") int placeId) {
-		return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
-	}
+    @GetMapping("/placeDetail")
+    public ResponseEntity<PlaceDetailDTO> getPlaceDetail(@RequestParam(name = "place_id") int placeId) {
+        return ResponseEntity.ok(placeService.getPlaceDetail(placeId));
+    }
 
-	@PostMapping("/search")
-	public ResponseEntity<List<PlaceListDTO>> getSearchPlaceList(@RequestBody SearchVO request) {
-		return ResponseEntity.ok(placeService.getSearchPlaceList(request));
-	}
+    @PostMapping("/search")
+    public ResponseEntity<List<PlaceListDTO>> getSearchPlaceList(@RequestBody SearchVO request) {
+        return ResponseEntity.ok(placeService.getSearchPlaceList(request));
+    }
 
-	@GetMapping("/category")
-	public ResponseEntity<List<PlaceListDTO>> getCategoryViewPlaceList(@RequestParam(name = "category") String category) {
-		return ResponseEntity.ok(placeService.getCategoryViewPlaceList(category));
-	}
+    @GetMapping("/category")
+    public ResponseEntity<List<PlaceListDTO>> getCategoryViewPlaceList(@RequestParam(name = "category") String category, Authentication auth) {
+        String username = null;
+        if (auth != null) {
+            username = auth.getName();
+        }
+        return ResponseEntity.ok(placeService.getCategoryViewPlaceList(category, username));
+    }
 
 }
