@@ -36,15 +36,20 @@ export default {
       try {
         const response = await axios.get(`/api/user/detail`);
         this.user = response.data;
+        this.user_id = response.data.user_id;
       } catch (error) {
         console.error('Error fetching user detail:', error);
       }
     },
     clickEditButton() {
-      this.$router.push({path: '/mypage/user/update'});
+      this.$router.push({ path: `/mypage/user/update` });
     },
     clickDeleteButton() {
-      this.$router.push({path: '/mypage/user/delete'});
+      if (this.user_id) {
+        this.$router.push({ path: `/mypage/user/delete` });
+      } else {
+        console.error('User ID is not available.');
+      }
     }
   }
 };

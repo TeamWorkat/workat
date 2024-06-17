@@ -35,7 +35,9 @@ export default {
       user_id: null
     };
   },
-  
+  mounted() {
+    this.user_id = this.$route.params.user_id;
+  },
   methods: {
     async checkPassword() {
       try {
@@ -55,7 +57,11 @@ export default {
     },
     async confirmDelete() {
       try {
-        await axios.delete(`/api/user/delete`);
+        await axios.post(`/api/user/delete`, {
+          user_id: this.user_id,
+          user_pwd: this.rawPassword
+        });
+
         alert('계정이 성공적으로 삭제되었습니다.');
         store.commit('clearAccount');
         sessionStorage.removeItem("user_id");
