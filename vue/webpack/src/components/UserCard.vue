@@ -14,11 +14,9 @@
     </div>
   </div>
 </template>
-
 <script>
-import axios from '@/axios';
+import axios from 'axios';
 import PictureSlide from './myPage/PictureSlide.vue';
-
 export default {
   name: "UserCard",
   props: {
@@ -29,7 +27,7 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.item.liked === "Y" || false
+      isFavorite: this.item.liked || false
     };
   },
   methods: {
@@ -56,20 +54,16 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .card .img {
   display: inline-block;
   width: 100%;
-  height: 250px;
-  background-size: cover;
-  background-position: center;
+  height: 250px; /* 원하는 높이로 설정 */
+  overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
 }
-
 .card .card-body .price {
   text-decoration: line-through;
 }
-
 /* 하트 모양 */
 .heart {
   display: inline-block;
@@ -80,7 +74,6 @@ export default {
   background-repeat: no-repeat;
   cursor: pointer;
 }
-
 /* 찜된 상태의 하트 색상 변경 */
 .heart.is-favorite {
   filter: invert(54%) sepia(88%) saturate(3677%) hue-rotate(338deg) brightness(94%) contrast(88%);

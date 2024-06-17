@@ -15,11 +15,8 @@ public interface PartnerPlaceMapper {
 	Integer updatePlace(PartnerPlaceDTO request);
 	
 	void allInactive(PartnerPlaceDTO request);
-//	Integer updatePlacepic(PartnerPlaceDTO request);
-	
-//	void inactivePlace(PartnerPlaceDTO request);
+
 	void inactivePlace(Map<String, Object>  params);
-//	void updatePlacepic(PartnerPlaceDTO request);
 	
 	void updatePlacepic(Map<String, Object> params);
 	

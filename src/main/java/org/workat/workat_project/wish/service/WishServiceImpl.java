@@ -10,6 +10,7 @@ import org.workat.workat_project.wish.entity.WishVO;
 import org.workat.workat_project.wish.repository.WishMapper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -23,10 +24,13 @@ public class WishServiceImpl implements WishService {
     @Override
     public List<WishListDTO> userWishList(String name, String category) {
         List<WishListDTO> list = new ArrayList<>();
-        UserVO userVO = userMapper.findUserByEmail(name);
-        List<WishListDTO> wishListDTO = wishMapper.getUserWishPlace(userVO.getUser_id(), category);
+            UserVO userVO = userMapper.findUserByEmail(name);
+            List<WishListDTO> wishListDTO = wishMapper.getUserWishPlace(userVO.getUser_id(), category);
         for (WishListDTO wishListDTOWithOutPicture : wishListDTO) {
-            wishListDTOWithOutPicture.setPicture_source(pictureMapper.getPlacePictureSources(wishListDTOWithOutPicture.getPlace_id()));
+            List<String> wishPictureList = pictureMapper.getPlacePictureSources(wishListDTOWithOutPicture.getPlace_id());
+            String[] stream = wishPictureList.toArray(String[]::new);
+            System.err.println(Arrays.toString(stream));
+            wishListDTOWithOutPicture.setPicture_sources(stream);
             list.add(wishListDTOWithOutPicture);
         }
         return list;
