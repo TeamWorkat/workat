@@ -1,5 +1,7 @@
 spring:
   application.name: workat_project
+  jwt.secret: tdthmjdsrredkhnjddstrwjkndscddkmnsrdeluoadhygjhkdfvcdvf
+  jwt.expiration: 86400
 
   datasource:
     url: ${DATA_SOURCE_URL}
@@ -18,6 +20,8 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
 
 naver:
+  client-id: ${NAVER_CLIENT}
+  client-secret: ${NAVER_SECRET_CLIENT}
 
 
 payment:

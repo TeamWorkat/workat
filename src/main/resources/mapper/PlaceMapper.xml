@@ -18,6 +18,8 @@
 	    	p.place_id = pp.place_id
 		where
 			p.status = 'active'
+		AND
+			pp.status = 'active'
 		 AND
 		 	p.place_id = pp.place_id
 		 GROUP BY
@@ -48,9 +50,16 @@
 	    room r ON p.place_id = r.place_id
 	WHERE
 	    p.status = 'active'
-	    AND (#{location} = 0 OR p.loc_id = #{location})
-	    AND (#{category} = 'All' OR p.category = #{category})
-	    AND #{guests} BETWEEN r.min_people AND r.max_people
+	    AND 
+	    	(#{location} = 0 OR p.loc_id = #{location})
+	    AND 
+	    	(#{category} = 'All' OR p.category = #{category})
+	    AND 
+	    	#{guests} BETWEEN r.min_people AND r.max_people
+	    AND 
+	    	p.status = 'active'
+		AND
+			pp.status = 'active'
 	    AND NOT EXISTS (
 	        SELECT 1
 	        FROM unavailable_date ud
@@ -77,6 +86,8 @@
 	WHERE
 	    p.status = 'active'
 	    AND p.category = #{category}
+	    AND
+			pp.status = 'active'
 	GROUP BY
 	    p.place_id, p.place_nm;
    </select>

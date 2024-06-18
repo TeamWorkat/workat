@@ -15,7 +15,7 @@
             user
         WHERE
             user_email = #{email}
-    </select>        
+    </select>
 
     <select id="getUserDetail" resultType="UserVO">
         SELECT *
@@ -54,12 +54,14 @@
             user_email,
             user_pwd,
             user_nm,
-            user_tel
+            user_tel,
+            role
             ) VALUES (
                   #{user_email},
                   #{user_pwd},
                   #{user_nm},
-                  #{user_tel}
+                  #{user_tel},
+                      #{role}
             )
     </insert>
 

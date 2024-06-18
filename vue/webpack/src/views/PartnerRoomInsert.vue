@@ -1,63 +1,61 @@
 <template>
-  <div class="d-flex">
+  <div class="vacation-container">
     <SideBar />
-    <div class="flex-grow-1 p-3">
+    <div class="main-content">
       
-        <p>
+        <p class="input-group">
           객실명:
-          <input v-model="room_name" placeholder="ex) 디럭스" />
+          <input v-model="room_name" placeholder="ex) 디럭스" class="input-field" />
         </p>
-        <p>
+        <p class="input-group">
           객실수:
-          <input v-model="room_qnt" placeholder="ex) 1" /> 개
+          <input v-model="room_qnt" placeholder="ex) 1" class="input-field" />
         </p>
-        <div>
+        <div class="input-group">
           1박당 요금:
-          <input v-model="room_price" placeholder="ex) 90000" /> 원
+          <input v-model="room_price" placeholder="ex) 90000" class="input-field" />
         </div>
 
-        <p>
+        <p class="input-group">
           객실 설명:
           <textarea
             v-model="room_content"
             placeholder="2~3명 커플이나 가족이 함께 하기 좋습니다."
-          >
-          </textarea>
+            class="input-field"
+          ></textarea>
         </p>
 
-        <p>
+        <p class="input-group">
           최대 인원:
-          <input v-model="max_people" placeholder="ex) 10" /> 명
+          <input v-model="max_people" placeholder="ex) 10" class="input-field" />
         </p>
 
-        <p>
+        <p class="input-group">
           최소 인원:
-          <input v-model="min_people" placeholder="ex) 1" /> 명
+          <input v-model="min_people" placeholder="ex) 1" class="input-field" />
         </p>
 
-        <p>
+        <p class="input-group">
           1인당 추가요금:
-          <input v-model="add_price" placeholder="ex) 10000" />
+          <input v-model="add_price" placeholder="ex) 10000" class="input-field" />
         </p>
 
-        <div>
-        숙소명:
+        <div class="input-group">
+          숙소명:
+          <select v-model="selectedPlace" class="input-field">
+            <option
+              v-for="place_name in placeNameList"
+              :key="place_name"
+              :value="place_name"
+            >
+              {{ place_name }}
+            </option>
+          </select>
+        </div>
+        <p class="input-group">선택된 카테고리: {{ selectedPlace }}</p>
+        <p class="input-group">선택된 숙소 ID: {{ selectedPlaceID }}</p>
 
-        <!-- <select v-model="selectedLocation" @change="updateLoaction"> -->
-        <select v-model="selectedPlace">
-          <option
-            v-for="place_name in placeNameList"
-            :key="place_name"
-            :value="place_name"
-          >
-            {{ place_name }}
-          </option>
-        </select>
-        <p>선택된 카테고리: {{ selectedPlace }}</p>
-        <p>선택된 숙소 ID: {{ selectedPlaceID }}</p>
-      </div>
-
-        <p>사진:</p>
+        <p class="input-group">사진:</p>
         <div
           v-for="(item, index) in picturefileURL"
           :key="item"
@@ -66,13 +64,14 @@
           <span class="img" :style="{ backgroundImage: `url(${item})` }"></span>
           <button class="delete-button" @click="removeItem(index)">-</button>
         </div>
-        <input type="file" multiple @change="handleFileUpload" />
-        <button @click="submitFiles">추가</button>
+        <input type="file" multiple @change="handleFileUpload" class="file-input" />
+        <button @click="submitFiles" class="submit-btn">추가</button>
       </div>
     </div>
 </template>
+
 <script>
-import axios from 'axios'
+import axios from '@/axios'
 import SideBar from '@/views/SideBar.vue'
 import { reactive} from 'vue'
 
@@ -126,15 +125,11 @@ export default {
               this.placeIDList.push(datalist.place_id);
           });
 
-          
-
         })
         .catch(error => {
-          console.error("There was an error fetching the place details:", error);
+          console.error("숙소 정보를 가져오는 중 에러 발생:", error);
         });
     },
-
-
 
     handleFileUpload(event) {
       const files = Array.from(event.target.files)
@@ -148,65 +143,48 @@ export default {
           reader.readAsDataURL(file)
           this.pictureArray.push(file)
         })
-        console.log(this.picturefileURL, 'URLRLRLRLRLRLRLRLRL')
         if (this.insertFileNum != 0) {
           this.pictureArray.splice(-this.insertFileNum, this.insertFileNum)
         }
 
-        console.log(this.pictureArray, 'array')
         this.insertFileNum = files.length
-        console.log(this.insertFileNum, '개수')
       } else {
         alert('사진은 3개까지 업로드 가능합니다.')
-        console.log(this.picturefileURL)
       }
     },
 
     async submitFiles() {
       if (this.pictureArray.length === 0 || !this.fileFolder) {
-        alert('Please select files and enter a folder name.')
+        alert('사진을 선택하고 폴더 이름을 입력하세요.')
         return
       }
 
       const formData = new FormData()
       this.pictureArray.forEach((file) => {
-        // if (typeof file === 'string' && file.startsWith('data:image/')) {
         if (file instanceof File) {
           formData.append('files', file)
         }
       })
       formData.append('fileFolder', this.fileFolder)
 
-      const files = formData.getAll('files')
-      if (files.length === 0) {
-        console.log('추가한 업로드 파일이 없음')
+      try {
+        const response = await axios.post('/api/test/aws', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        response.data.forEach((url) => {
+          this.picturefileURL.push(url)
+        })
+        this.picturefileURL = this.picturefileURL.filter((url) =>
+          url.startsWith('https://workatbucket.s3.amazonaws.com/room/')
+        )
         this.insertRoomTouchUpInside()
-      } else {
-        try {
-          const response = await axios.post('/api/test/aws', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          })
-          console.log('Files uploaded successfully:', response.data)
-
-          response.data.forEach((url) => {
-            this.picturefileURL.push(url)
-          })
-          console.log(this.picturefileURL)
-          this.picturefileURL = this.picturefileURL.filter((url) =>
-            url.startsWith('https://workatbucket.s3.amazonaws.com/room/')
-          )
-          this.insertRoomTouchUpInside()
-          console.log(this.picturefileURL, '결과 URL')
-        } catch (error) {
-          console.error('Error uploading files:', error)
-        }
-        console.log('Files added to FormData:', files)
+      } catch (error) {
+        console.error('파일 업로드 실패:', error)
       }
     },
 
-    
     insertRoomTouchUpInside() {
       axios
         .post('/api/partner/roomInsert', {
@@ -223,51 +201,111 @@ export default {
           picture_sources: this.picturefileURL,
           place_id: this.selectedPlaceID
         })
-        .then((res) => {
+        .then(() => {
           alert('추가되었습니다.')
           window.location.href = 'http://localhost:8090/partner/roomList'
-          console.log(res)
         })
         .catch((err) => {
-          alert('실패했습니다.' + err)
-          console.log(err)
+          alert('추가 실패: ' + err)
+          console.error(err)
         })
     },
 
     removeItem(index) {
       this.picturefileURL.splice(index, 1)
       this.pictureArray.splice(index, 1)
-      console.log(this.picturefileURL)
     },
 
-    
   },
 }
 </script>
 
 <style scoped>
+.vacation-container {
+  display: flex;
+  background-color: #f8fafc; /* 배경색 */
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #ffffff; /* 배경색 */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: calc(100% - 24px); /* 24px는 padding 12px씩 */
+  padding: 12px;
+  border: 1px solid #d9e1e1; /* 테두리 */
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+textarea.input-field {
+  height: 120px; /* 텍스트 에어리어 높이 */
+  resize: vertical; /* 수직 리사이즈 */
+}
+
 .img {
-  display: inline-block;
-  width: 150px; /* 또는 적절한 값으로 변경 */
-  height: 150px; /* 또는 적절한 값으로 변경 */
+  display: block;
+  width: 150px;
+  height: 150px;
   background-size: cover;
   background-position: center;
-  border-radius: 20%;
+  border-radius: 10px; /* 이미지 둥글게 */
 }
 
 .image-container {
   position: relative;
   display: inline-block;
-  margin: 10px;
+  margin-right: 10px;
 }
 
 .delete-button {
   position: absolute;
-  top: 0;
-  right: 0;
-  background-color: red;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  background-color: #ff6666; /* 삭제 버튼 배경색 */
   color: white;
   border: none;
+  border-radius: 50%; /* 삭제 버튼 둥글게 */
   cursor: pointer;
 }
+
+.file-input {
+  margin-top: 10px;
+}
+.submit-btn {
+    background-color: #869ecc; /* 추가 버튼 배경색 */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px; /* 버튼 둥글게 */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+  }
+
+  .submit-btn:hover {
+    background-color: #547dc9; /* 마우스 오버 배경색 */
+  }
+
+  /* Responsiveness */
+  @media (max-width: 768px) {
+    .vacation-container {
+      flex-direction: column; /* 모바일에서 세로로 배열 */
+    }
+
+    .main-content {
+      margin-top: 20px;
+    }
+  }
 </style>

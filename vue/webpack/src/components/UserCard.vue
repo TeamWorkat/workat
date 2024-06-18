@@ -7,7 +7,10 @@
       <p class="card-text">{{ item.place_nm }}</p>
       <div class="d-flex justify-content-between align-items-center">
         <small class="text-muted">설명</small>
-        <button @click.stop="toggleFavorite" class="btn btn-sm btn-outline-secondary">
+        <button
+          @click.stop="toggleFavorite"
+          class="btn btn-sm btn-outline-secondary"
+        >
           <span class="heart" :class="{ 'is-favorite': isFavorite }"></span>
         </button>
       </div>
@@ -18,12 +21,12 @@
 import axios from '@/axios';
 import PictureSlide from './myPage/PictureSlide.vue';
 export default {
-  name: "UserCard",
+  name: 'UserCard',
   props: {
-    item: Object
+    item: Object,
   },
   components: {
-    PictureSlide
+    PictureSlide,
   },
   data() {
     return {
@@ -32,27 +35,27 @@ export default {
   },
   methods: {
     goDetailPage(placeId) {
-      this.$router.push({ name: 'PlaceDetail', params: { placeId } });
+      this.$router.push({ name: 'PlaceDetail', params: { placeId } })
     },
     async toggleFavorite() {
-      this.isFavorite = !this.isFavorite;
-      const newFavoriteStatus = this.isFavorite;
-      const statusToSend = newFavoriteStatus ? 'Y' : 'N';
-      console.log(this.item.place_id);
-      console.log(statusToSend);
+      this.isFavorite = !this.isFavorite
+      const newFavoriteStatus = this.isFavorite
+      const statusToSend = newFavoriteStatus ? 'Y' : 'N'
+      console.log(this.item.place_id)
+      console.log(statusToSend)
       try {
         const response = await axios.post('/api/wish/update', {
           place_id: this.item.place_id,
-          liked: statusToSend
-        });
-        console.log('좋아요 상태 업데이트:', response.data);
-        this.isFavorite = newFavoriteStatus;
+          liked: statusToSend,
+        })
+        console.log('좋아요 상태 업데이트:', response.data)
+        this.isFavorite = newFavoriteStatus
       } catch (error) {
-        console.error('좋아요 상태 업데이트 실패:', error);
+        console.error('좋아요 상태 업데이트 실패:', error)
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style scoped>
 .card .img {
@@ -76,6 +79,7 @@ export default {
 }
 /* 찜된 상태의 하트 색상 변경 */
 .heart.is-favorite {
-  filter: invert(54%) sepia(88%) saturate(3677%) hue-rotate(338deg) brightness(94%) contrast(88%);
+  filter: invert(54%) sepia(88%) saturate(3677%) hue-rotate(338deg)
+    brightness(94%) contrast(88%);
 }
 </style>

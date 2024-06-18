@@ -32,12 +32,12 @@
               <td>{{ item.room_name }}</td>
               <td>{{ item.reply_exist }}</td>
               <td>
-              <span v-if="item.status === 'active'">안숨김</span>
-              <span v-else>숨김</span></td>
-            </tr> 
+                <span v-if="item.status === 'active'">안숨김</span>
+                <span v-else>숨김</span>
+              </td>
+            </tr>
           </tbody>
         </table>
-
       </div>
     </div>
   </div>
@@ -54,16 +54,12 @@ export default {
   components: {
     SideBar,
   },
-  methods: {
-    
-  },
+  methods: {},
   setup() {
-    // 숙소 추가 버튼 클릭
     const state = reactive({
       items: [],
     })
 
-  
     axios.get('/api/partner/reviewlist').then((res) => {
       console.log(res.data)
       state.items = res.data
@@ -78,16 +74,76 @@ export default {
         },
       })
     }
-    
-    return{
+
+    return {
       state,
       touchUpInsideTableCell,
-    
     }
   },
 }
 </script>
 
 <style scoped>
+.place_list_tableview {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+}
+
+.table thead th {
+  background-color: #f8f9fa;
+  color: #343a40;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody tr {
+  background-color: #fff;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+.table tbody td {
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
+}
+
+.table tbody th {
+  padding: 10px;
+  font-weight: 400;
+  color: #495057;
+  border-top: 1px solid #dee2e6;
+}
+
+.table tbody td span {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.table tbody td span:nth-child(1) {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.table tbody td span:nth-child(2) {
+  background-color: #dc3545;
+  color: #fff;
+}
 </style>

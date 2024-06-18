@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
 button {
-  background-color: #436DBE;
+  background-color: #869ecc;
   border: none;
   color: black;
   cursor: pointer;
@@ -73,6 +73,6 @@ button {
 
 .header-border {
   width: 100%;
-  border-bottom: 1px solid #000;
+  border-bottom: 10px solid #000;
 }
 </style>

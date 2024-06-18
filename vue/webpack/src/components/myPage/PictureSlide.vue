@@ -2,7 +2,7 @@
   <Carousel>
     <Slide v-for="(imageUrl, index) in props.pictureList" :key="index">
       <div class="carousel__item">
-        <img :src="imageUrl" alt="Room Image" class="room-image">
+        <img :src="imageUrl" alt="Room Image" class="room-image" />
       </div>
     </Slide>
 
@@ -16,32 +16,30 @@
 <script setup>
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-import { defineProps } from "vue";
+import { defineProps } from 'vue'
 const props = defineProps({
-  pictureList: Array
-});
-
+  pictureList: Array,
+})
 </script>
 
 <style>
 .carousel__item {
-  min-height: 200px;
-  height: 100%;
+  height: 250px; /* 높이를 고정 */
   width: 100%;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 설정 */
 }
 
 .carousel__item img {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
   object-fit: cover; /* 이미지가 컨테이너에 맞게 조정되도록 설정 */
 }
 
- 
 .carousel__prev {
   background-color: rgba(254, 220, 0, 0.576); /* 원하는 배경색으로 변경 */
   color: #fff; /* 버튼 텍스트 색상 설정 */
@@ -67,5 +65,4 @@ const props = defineProps({
 .carousel__next:hover {
   background-color: #ffdd00; /* 호버 상태에서 배경색 변경 */
 }
-
 </style>

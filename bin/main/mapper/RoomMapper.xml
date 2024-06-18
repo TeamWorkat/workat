@@ -13,6 +13,23 @@
             room_id = #{room_id}
     </update>
 
+    <delete id="deleteUnavailableDate">
+        delete
+        from
+            unavailable_date
+        where
+            room_id = #{roomId}
+        and
+            reserved_date = #{key}
+    </delete>
+
+    <insert id="insertUnavailableDate">
+        insert into unavailable_date
+        (room_id, reserved_date)
+        values
+            (#{roomId}, #{key})
+    </insert>
+
     <select id="getRoomInfo" resultType="RoomVO">
         select
             *
@@ -28,6 +45,28 @@
         from unavailable_date
         where
             room_id = #{roomId}
+    </select>
+
+    <select id="getRoomInfoByPlaceAndRoom" resultType="org.workat.workat_project.room.entity.RoomVO">
+        select
+            *
+        from
+            room
+        where
+            place_id = #{placeId}
+        and
+            room_id = #{roomId}
+    </select>
+
+    <select id="getAllRoomInfo" resultType="org.workat.workat_project.room.entity.RoomVO">
+        SELECT *
+        FROM room r
+        WHERE r.status = 'active'
+        AND EXISTS (
+            SELECT 1
+            FROM reservation res
+            WHERE res.room_id = r.room_id
+        )
     </select>
 
 

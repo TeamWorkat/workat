@@ -10,9 +10,9 @@
     @update:modelValue="updateDate"
   >
   
-    <!-- <template #dp-input>
+    <template #dp-input>
       <input type="text" :value="formattedDate"  class="custom-input"/>
-    </template> -->
+    </template>
   </VueDatePicker>
 
 </template>
@@ -104,5 +104,15 @@ export default {
 .dp__input_wrap{
   width: 100%; /* 원하는 너비로 변경 */
   height: 100%; /* 원하는 높이로 변경 */
+}
+
+.dp__icon,
+.dp__clear_icon,
+.dp__input_icons {
+  display: none;
+}
+
+.custom-input{
+  border: none;
 }
 </style>
