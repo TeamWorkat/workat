@@ -6,9 +6,13 @@
         <div class="content-wrapper">
           <div class="content-left">
             <p class="card-text"><strong>{{ review.reviewVO.user_id }}</strong></p>
-            <p class="card-text">내용: {{review.reviewVO.content }}</p>
-            <p class="card-text">별점: {{  review.reviewVO.rating }}</p>
-            <p class="card-text">작성일: {{ review.reviewVO.created_date }}</p>
+            <p class="card-text">{{review.reviewVO.content }}</p>
+            <p class="card-text"><img src="/img/별점.png" style="width: 20px; height: 20px;">&nbsp;{{  review.reviewVO.rating }}</p>
+            <p class="card-text">{{ formatDate(review.reviewVO.created_date) }}</p>
+        <div v-if="review.replyVO" class="reply-item">
+          <p class="reply-content"><strong>└</strong> {{ review.replyVO.reply_content }}</p>
+          <p class="reply-date"><strong>작성일:</strong> {{ formatDate(review.replyVO.created_date) }}</p>
+        </div>
           </div>
           <div class="content-right">
             <div v-if="review.review_picture_source.length > 0" class="review-images">
@@ -19,11 +23,6 @@
       </div>
     </div>
   </div>
-        <!-- 답글이 있다면 표시 -->
-        <div v-if="review.replyVO" class="reply-item">
-          <p class="reply-content"><strong>댓글:</strong> {{ review.replyVO.reply_content }}</p>
-          <p class="reply-date"><strong>작성일:</strong> {{ review.replyVO.created_date }}</p>
-        </div>
       </div>
   </template>
   
@@ -38,6 +37,16 @@
     },
     components:{
       PictureSlide
+    },
+    methods:{
+      formatDate (dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+},
     }
   };
   </script>
@@ -47,8 +56,8 @@
   .reply-item {
     margin-top: 15px;
     padding: 10px;
-    border-left: 4px solid #007bff; /* 왼쪽에 파란색 경계선 추가 */
-    background-color: #f1f1f1; /* 연한 회색 배경 */
+    border-left: 4px #ffdd00; /* 왼쪽에 파란색 경계선 추가 */
+    background-color: #e6e6e6; /* 연한 회색 배경 */
     border-radius: 5px; /* 모서리 둥글게 */
   }
   
@@ -73,9 +82,8 @@
 }
 
 .card-border {
-  border: 1px solid #ccc;
+  border-top: 1px solid #ccc;
   width: 100%; /* 추가 */
-  border-radius: 15px; 
   margin-right: 10px; 
   flex: 1; 
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
