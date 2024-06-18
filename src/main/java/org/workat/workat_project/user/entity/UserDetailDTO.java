@@ -18,6 +18,7 @@ public class UserDetailDTO {
     private String user_nm;
     private String user_tel;
     private String role;
+    private String status;
     private LocalDateTime created_date;
     private LocalDateTime modified_date;
 }

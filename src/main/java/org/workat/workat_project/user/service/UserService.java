@@ -14,4 +14,5 @@ public interface UserService {
     void deleteUser(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);
     void createUser(UserDetailDTO userDetailDTO);
+    boolean isEmailAlreadyExists(String user_email);
 }
