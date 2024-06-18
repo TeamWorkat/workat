@@ -41,11 +41,9 @@ export default {
     };
   },
   mounted() {
-    // 컴포넌트가 마운트된 후 자동으로 슬라이드 시작
     this.startSlideShow();
   },
   beforeUnmount() {
-    // 컴포넌트가 언마운트되기 전 clearInterval로 타이머 제거
     clearInterval(this.intervalId);
   },
   methods: {
@@ -56,10 +54,9 @@ export default {
       this.currentIndex = (this.currentIndex + 1) % this.slides.length;
     },
     startSlideShow() {
-      // 3초마다 다음 슬라이드로 넘어가는 타이머 설정
       this.intervalId = setInterval(() => {
         this.nextSlide();
-      }, 5000); // 3초(3000밀리초)마다 실행
+      }, 5000);
     },
     goToSlide(index) {
       this.currentIndex = index;
@@ -71,7 +68,7 @@ export default {
 <style scoped>
 .banner-container {
   position: relative;
-  width: 80%;
+  width: 60%;
   height: 250px;
   overflow: hidden;
   margin: 0 auto;
