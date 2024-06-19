@@ -1,14 +1,21 @@
 <template>
-
-  <form @submit.prevent="signup">
-    <input v-model="user.user_email" type="email" required placeholder="이메일">
-    <input v-model="user_pwd" type="password" required placeholder="비밀번호">
-    <input v-model="confirmPassword" type="password" required placeholder="비밀번호 확인">
-    <input v-model="user.user_nm" type="text" required placeholder="이름">
-    <input v-model="user.user_tel" type="text" required placeholder="전화번호">
-    <button type="submit">회원 가입</button>
-  </form>
-
+  <div class="signup-container">
+    <form @submit.prevent="signup">
+      <input
+          v-model="user.user_email"
+          @change="checkEmailExists"
+          type="email"
+          required
+          placeholder="이메일"
+      >
+      <span v-if="emailExists" class="error">이미 사용 중인 이메일입니다.</span>
+      <input v-model="user_pwd" type="password" required placeholder="비밀번호">
+      <input v-model="confirmPassword" type="password" required placeholder="비밀번호 확인">
+      <input v-model="user.user_nm" type="text" required placeholder="이름">
+      <input v-model="user.user_tel" type="text" required placeholder="전화번호">
+      <button type="submit" :disabled="emailExists">회원 가입</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -25,13 +32,30 @@ export default {
         role: 'USER'
       },
       user_pwd: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      emailExists: false
     };
   },
   methods: {
+    async checkEmailExists() {
+      try {
+        const response = await axios.post('/api/check-email', {
+          user_email: this.user.user_email
+        });
+        this.emailExists = response.data;
+      } catch (error) {
+        console.error('Error checking email:', error);
+        this.emailExists = false;
+      }
+    },
     async signup() {
       if (this.user_pwd !== this.confirmPassword) {
         alert('비밀번호가 일치하지 않습니다.');
+        return;
+      }
+
+      if (this.emailExists) {
+        alert('이미 사용 중인 이메일입니다.');
         return;
       }
 
@@ -51,6 +75,12 @@ export default {
 </script>
 
 <style scoped>
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .signup-container input {
   display: block;
   width: 300px;
@@ -68,5 +98,11 @@ button[type="submit"] {
   cursor: pointer;
   border-radius: 4px;
   margin-top: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 </style>

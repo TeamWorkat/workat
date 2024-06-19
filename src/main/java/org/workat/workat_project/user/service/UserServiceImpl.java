@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(int user_id) {
-        userMapper.deleteById(user_id);
+        userMapper.deleteUser(user_id);
     }
     @Override
     public void updateUser(UserDetailDTO userDetailDTO) {
@@ -74,6 +74,11 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new RuntimeException("User not found");
         }
+    }
+
+    @Override
+    public boolean isEmailAlreadyExists(String user_email) {
+        return userMapper.checkEmail(user_email);
     }
 
     private UserDetailDTO convertToUserDetailDTO(UserVO userVO) {
