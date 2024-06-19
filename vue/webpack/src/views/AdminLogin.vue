@@ -1,15 +1,16 @@
 <template>
   <div class="login-page">
-    <img src="/img/work_at_icon.png" class="login-image">
-    <div class="login-container">
-      <h3>Login</h3><br/>
-      <input type="email" class="form-control" id="floatingInput" placeholder="email" required v-model="state.form.user_email">
-      <input type="password" class="form-control" placeholder="password" required v-model="state.form.user_pwd">
-      <a href="#" class="forgot-password">forgot password?</a>
-      <br/>
-      <button @click="submit()" :disabled="loading">Login</button><br/>
-      <p>or you can sign in <a href="">here</a></p>
-      <p v-if="error" class="error">{{ error }}</p>
+    <div class="login-content">
+      <img src="/img/workat_admin_icon.png" class="login-image">
+      <div class="login-container">
+        <h3>Login</h3><br/>
+        <input type="email" class="form-control" id="floatingInput" placeholder="email" required v-model="state.form.user_email">
+        <input type="password" class="form-control" placeholder="password" required v-model="state.form.user_pwd">
+        <br/>
+        <button @click="submit()" :disabled="loading">Login</button><br/>
+        <p>or you can sign in <a href="">here</a></p>
+        <p v-if="error" class="error">{{ error }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -26,7 +27,7 @@ export default {
       form: {
         user_email: '',
         user_pwd: '',
-        role: 'PARTNER'
+        role: 'ADMIN'
       }
     });
     const loading = ref(false);
@@ -44,7 +45,7 @@ export default {
         store.commit('setToken', token);
         sessionStorage.setItem("user_id", user_id);
         sessionStorage.setItem("token", token);
-        router.push({ path: "/partner/home" });
+        router.push({ path: "/admin/list" });
         console.log(res.data);
         window.alert("Welcome!");
       } catch (err) {
@@ -63,17 +64,23 @@ export default {
 
 <style scoped>
 .login-page {
-  display: flex;
+  padding-top: 60px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   height: 100vh;
-  padding-top: 20px;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-image {
   max-width: 25%;
   height: auto;
   object-fit: cover;
+  margin-bottom: 20px;
 }
 
 .login-container {
@@ -83,9 +90,8 @@ export default {
   align-items: center;
   width: 540px;
   height: 480px;
-  margin: 0 20px;
   padding: 20px;
-  background-color: #BFCEEC;
+  background-color: #FFF3DA;
   position: relative;
 }
 
@@ -98,17 +104,9 @@ export default {
   border-radius: 4px;
 }
 
-.forgot-password {
-  position: relative;
-  bottom: 10px;
-  right: 0;
-  color: #888;
-  font-style: italic;
-}
-
 button {
   padding: 10px 20px;
-  background-color: #436DBE;
+  background-color: #FFCC5E;
   border: none;
   color: black;
   cursor: pointer;

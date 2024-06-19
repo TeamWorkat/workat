@@ -6,55 +6,56 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.workat.workat_project.user.entity.CustomUserDetails;
 import org.workat.workat_project.user.entity.UserVO;
+import org.workat.workat_project.user.repository.UserMapper;
+import org.workat.workat_project.user.service.CustomUserDetailsService;
+import org.workat.workat_project.user.service.UserService;
+
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class JWTFilter extends OncePerRequestFilter {
-    private final JWTUtil jwtUtil;
 
-    public JWTFilter(JWTUtil jwtUtil) {
+    private final JWTUtil jwtUtil;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final UserMapper userMapper;
+
+    public JWTFilter(JWTUtil jwtUtil, CustomUserDetailsService customUserDetailsService, UserMapper userMapper) {
         this.jwtUtil = jwtUtil;
+        this.customUserDetailsService = customUserDetailsService;
+        this.userMapper = userMapper;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
-        System.out.println("Authorization header: " + authorization);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        String token = jwtUtil.resolveToken(request);
+        System.out.println("JWT 필터******** JWT Token: " + token);
 
-        if (authorization == null || !authorization.startsWith("Bearer ")) {
-            System.out.println("Authorization header is null or does not start with 'Bearer '");
-            filterChain.doFilter(request, response);
-            return;
-        }
+        if (token != null && jwtUtil.validateToken(token)) {
+            String username = jwtUtil.getUsername(token);
+            System.out.println("JWT 필터******** Username from token: " + username);
 
-        String token = authorization.split(" ")[1];
+            UserVO userVO = userMapper.findUserByEmail(username);
+            System.out.println("JWT 필터******** UserVO from DB: " + userVO);
 
-        try {
-            if (jwtUtil.isExpired(token)) {
-                System.out.println("Token is expired");
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Token is expired");
-                return;
+            if (userVO == null) {
+                throw new UsernameNotFoundException("JWT 필터******** User not found with email: " + username);
             }
 
-            String user_email = jwtUtil.getUsername(token);
-            String role = jwtUtil.getRole(token);
+            String role = "ROLE_" + userVO.getRole();
+            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
 
-            UserVO userVO = new UserVO();
-            userVO.setUser_email(user_email);
-            userVO.setRole(role);
-            CustomUserDetails customUserDetails = new CustomUserDetails(userVO);
+            CustomUserDetails customUserDetails = new CustomUserDetails(userVO.getUser_email(), userVO.getUser_pwd(), authorities);
 
-            System.out.println("USER ROLE: " + role);
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (Exception e) {
-            System.out.println("Token validation error: " + e.getMessage());
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid token");
-            return;
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         filterChain.doFilter(request, response);
