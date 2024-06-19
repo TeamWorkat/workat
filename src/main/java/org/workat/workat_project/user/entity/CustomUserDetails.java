@@ -1,32 +1,33 @@
 package org.workat.workat_project.user.entity;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
-import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
+    private String username;
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    private final UserVO user;
-
-    public CustomUserDetails(UserVO user) {
-        this.user = user;
+    public CustomUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getUser_pwd();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return user.getUser_email();
+        return username;
     }
 
     @Override
@@ -49,7 +50,4 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 
-    public UserVO getUser() {
-        return user;
-    }
 }

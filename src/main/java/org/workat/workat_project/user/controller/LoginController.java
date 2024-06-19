@@ -25,8 +25,8 @@ public class LoginController {
     @PostMapping("/check-email")
     public ResponseEntity<Boolean> checkEmail(@RequestBody Map<String, String> request) {
         String user_email = request.get("user_email");
-        System.out.println(user_email);
-        boolean exists = userServiceImpl.isEmailAlreadyExists(user_email);
+        String role = request.get("role");
+        boolean exists = userServiceImpl.isEmailAlreadyExists(user_email, role);
         return ResponseEntity.ok(exists);
     }
 
@@ -38,11 +38,11 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<?> userLogin(@RequestBody Map<String, String> params, HttpServletResponse res) {
-        UserVO user = userServiceImpl.findUserByEmail(params.get("user_email"));
+        UserVO user = userServiceImpl.checkLoginInfo(params.get("user_email"), params.get("role"));
 
-        if (user != null && userServiceImpl.checkPassword(params.get("user_pwd"),user.getUser_email())) {
+        if (user != null && userServiceImpl.checkPassword(params.get("user_pwd"), user.getUser_email())) {
+            System.out.println("Controller 비밀번호"+params.get("user_pwd"));
             String token = jwtUtil.createJwt(user.getUser_email(), user.getRole(), 86400000L);
-
             Cookie cookie = new Cookie("token", token);
             cookie.setHttpOnly(true);
             cookie.setPath("/");

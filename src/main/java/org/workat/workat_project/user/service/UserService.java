@@ -9,10 +9,10 @@ import java.util.List;
 public interface UserService {
     List<UserListDTO> getList();
     UserDetailDTO getUserDetail(String user_id);
-    UserVO findUserByEmail(String user_email);
     boolean checkPassword(String user_pwd, String user_email);
+    UserVO checkLoginInfo(String user_id, String role);
     void deleteUser(int user_id);
     void updateUser(UserDetailDTO userDetailDTO);
     void createUser(UserDetailDTO userDetailDTO);
-    boolean isEmailAlreadyExists(String user_email);
+    boolean isEmailAlreadyExists(String user_email, String role);
 }

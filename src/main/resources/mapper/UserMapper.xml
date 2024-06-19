@@ -14,7 +14,7 @@
         FROM
             user
         WHERE
-            user_email = #{email}
+            user_email = #{user_email}
     </select>
 
     <select id="getUserDetail" resultType="UserVO">
@@ -67,8 +67,19 @@
     </insert>
 
     <select id="checkEmail" resultType="boolean">
-        SELECT COUNT(*) > 0
+        SELECT
+            COUNT(*) > 0
+        FROM
+            user
+        WHERE
+            user_email = #{user_email}
+          AND role = #{role}
+    </select>
+
+    <select id="checkLoginInfo" resultType="UserVO">
+        SELECT *
         FROM user
         WHERE user_email = #{user_email}
+          AND role = #{role}
     </select>
 </mapper>
