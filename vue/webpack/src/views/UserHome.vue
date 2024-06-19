@@ -1,10 +1,20 @@
 <template>
   <div>
     <MainSearch />
-    <SwiperBanner /> <!-- 배너 추가 -->
+    <div v-if="route.meta.type === 'home'">
+    <PopularPlace />
+    <SwiperBanner /> 
+  </div>
     <div class="user_home">
-      <div class="album py-5 bg-body-tertiary">
+      <div class="album py-3 ">
         <div class="container">
+         <div>
+          <div v-if="route.meta.type === 'home'">
+          <div class="allplace_title">
+          <h2>전체 숙소</h2>
+        </div>
+        </div>
+        </div>
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col" v-for="(item, idx) in state.items" :key="idx">
               <UserCard :item="item" />
@@ -20,6 +30,7 @@
 import MainSearch from '@/components/MainSearch.vue';
 import UserCard from '@/components/UserCard.vue';
 import SwiperBanner from '@/components/SwiperBanner.vue'; // SwiperBanner 컴포넌트 추가
+import PopularPlace from '@/components/PopularPlace.vue';
 import { useRoute } from 'vue-router';
 
 import axios from '@/axios';
@@ -29,6 +40,7 @@ export default {
   components: {
     MainSearch,
     UserCard,
+    PopularPlace,
     SwiperBanner, // SwiperBanner 컴포넌트 추가
   },
 
@@ -83,11 +95,19 @@ export default {
       updateItemsBasedOnRoute();
     });
 
-    return { state };
+    return { state, route };
   },
 };
 </script>
 
 <style scoped>
 /* 스타일을 여기에 추가하세요 */
+.py-3 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+.allplace_title{
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
 </style>

@@ -100,7 +100,9 @@ export default {
   width: 100%; /* 원하는 너비로 변경 */
   height: 100%; /* 원하는 높이로 변경 */
   /* 추가적으로 필요한 스타일 지정 */
+  padding: 0px !important;
 }
+
 .dp__input_wrap{
   width: 100%; /* 원하는 너비로 변경 */
   height: 100%; /* 원하는 높이로 변경 */

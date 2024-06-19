@@ -6,7 +6,7 @@
     <div class="card-body">
       <p class="card-text">{{ item.place_nm }}</p>
       <div class="d-flex justify-content-between align-items-center">
-        <small class="text-muted">설명</small>
+        <small class="text-muted">{{truncatedContent}}</small>
         <button
           @click.stop="toggleFavorite"
           class="btn btn-sm btn-outline-secondary"
@@ -32,6 +32,16 @@ export default {
     return {
       isFavorite: this.item.liked || false,
     }
+  },  
+  computed: {
+    truncatedContent() {
+      const content = this.item.place_content;
+      const lines = content.split('\n');
+      if (lines.length > 2) {
+        return lines.slice(0, 2).join('\n') + '...';
+      }
+      return content;
+    },
   },
   methods: {
     goDetailPage(placeId) {
@@ -82,4 +92,5 @@ export default {
   filter: invert(54%) sepia(88%) saturate(3677%) hue-rotate(338deg)
     brightness(94%) contrast(88%);
 }
+
 </style>
