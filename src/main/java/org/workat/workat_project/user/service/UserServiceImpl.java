@@ -1,6 +1,7 @@
 package org.workat.workat_project.user.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.workat.workat_project.user.entity.UserDetailDTO;
@@ -9,6 +10,7 @@ import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -48,13 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO findUserByEmail(String user_email) {
-        return userMapper.findUserByEmail(user_email);
-    }
-
-    @Override
     public boolean checkPassword(String rawPassword, String user_email) {
+        System.out.println("******* 서비스 단 user_email *******"+user_email);
         UserVO user = userMapper.findUserByEmail(user_email);
+        System.out.println("******* 서비스 단 user *******"+user);
+        System.out.println("******* 서비스 단 check pwd *******"+user.getUser_pwd());
         if (user != null) {
             String storedPassword = user.getUser_pwd();
             if (!isPasswordEncoded(storedPassword)) {
@@ -77,8 +77,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isEmailAlreadyExists(String user_email) {
-        return userMapper.checkEmail(user_email);
+    public UserVO checkLoginInfo(String user_email, String role) {
+        log.debug("Checking login info for user_email: {}, role: {}", user_email, role);
+        return userMapper.checkLoginInfo(user_email, role);
+    }
+
+    @Override
+    public boolean isEmailAlreadyExists(String user_email, String role) {
+        return userMapper.checkEmail(user_email, role);
     }
 
     private UserDetailDTO convertToUserDetailDTO(UserVO userVO) {

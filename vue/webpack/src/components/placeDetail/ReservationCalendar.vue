@@ -162,7 +162,7 @@ input[type="number"] {
 button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #ffd700; /* Gold background */
+  background-color: #FFCC5E; /* Gold background */
   color: #333; /* Dark text */
   border: none;
   border-radius: 5px;
@@ -171,7 +171,7 @@ button {
 }
 
 button:hover {
-  background-color: #ffcc00; /* Darker gold on hover */
+  background-color: #FFCC5E; /* Darker gold on hover */
 }
 
 p {
@@ -184,4 +184,5 @@ p.total {
   font-weight: bold;
   font-size: 18px;
 }
+
 </style>

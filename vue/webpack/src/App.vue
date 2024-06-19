@@ -11,12 +11,14 @@ import UserHeader from './components/UserHeader.vue';
 import PartnerHeader from './components/PartnerHeader.vue';
 import UserFooter from './components/UserFooter.vue';
 import store from "@/scripts/store";
+import AdminHeader from "@/components/AdminHeader.vue";
 
 export default {
   name: 'App',
   components: {
     UserHeader,
     PartnerHeader,
+    AdminHeader,
     UserFooter
   },
   data() {
@@ -33,7 +35,12 @@ export default {
     this.$router.beforeEach((to, from, next) => {
       if (to.path.startsWith('/partner')) {
         this.headerComponent = 'PartnerHeader';
-      } else {
+      } else if(to.path.startsWith('/admin')){
+        this.headerComponent = 'AdminHeader'
+      } else if(to.path.startsWith('/login/admin')){
+        this.headerComponent = null;
+      }
+      else {
         this.headerComponent = 'UserHeader';
       }
       next();

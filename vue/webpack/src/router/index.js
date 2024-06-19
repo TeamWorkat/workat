@@ -31,6 +31,7 @@ import ReviewUpdate from '@/views/ReviewUpdate.vue';
 import LoginPage from "@/views/LoginPage.vue";
 import UserLogin from "@/components/UserLogin.vue";
 import PartnerLogin from "@/components/PartnerLogin.vue";
+import AdminLogin from "@/views/AdminLogin.vue";
 
 
 const routes = [
@@ -49,6 +50,11 @@ const routes = [
         path: '/admin/list',
         name: 'UserList',
         component: UserList
+    },
+    {
+        path: '/login/admin',
+        name: 'AdminLogin',
+        component: AdminLogin
     },
     {
         path: '/hotel',

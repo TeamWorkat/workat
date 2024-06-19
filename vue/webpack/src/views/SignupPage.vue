@@ -2,7 +2,7 @@
   <div class="signup-page">
     <div class="signup-content">
       <div class="signup-image">
-        <img src="/img/work_at_icon.png" alt="Signup Image">
+        <img src="/img/Signup.gif" alt="Signup Image">
       </div>
       <div class="signup-container" :style="{ backgroundColor: selectedAccountType === 'user' ? '#FFF3DA' : '#BFCEEC' }">
         <h4>회원 가입</h4><br/>
@@ -45,7 +45,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
+  height: 200vh;
   padding-top: 20px;
 }
 
@@ -70,7 +70,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 540px;
+  max-width: 600px;
   padding: 20px;
   margin-left: 20px;
 }

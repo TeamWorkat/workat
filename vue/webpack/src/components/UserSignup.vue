@@ -40,7 +40,8 @@ export default {
     async checkEmailExists() {
       try {
         const response = await axios.post('/api/check-email', {
-          user_email: this.user.user_email
+          user_email: this.user.user_email,
+          role: this.user.role
         });
         this.emailExists = response.data;
       } catch (error) {

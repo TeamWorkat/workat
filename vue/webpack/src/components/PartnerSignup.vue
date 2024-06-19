@@ -40,7 +40,8 @@ export default {
     async checkEmailExists() {
       try {
         const response = await axios.post('/api/check-email', {
-          user_email: this.user.user_email
+          user_email: this.user.user_email,
+          role: this.user.role
         });
         this.emailExists = response.data;
       } catch (error) {
@@ -75,6 +76,12 @@ export default {
 </script>
 
 <style scoped>
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .signup-container input {
   display: block;
   width: 300px;
@@ -92,5 +99,11 @@ button[type="submit"] {
   cursor: pointer;
   border-radius: 4px;
   margin-top: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 </style>
