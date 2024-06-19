@@ -16,45 +16,6 @@
           />
         </a>
       </div>
-
-      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <div
-            href="/hotel"
-            class="nav-link px-2"
-            :class="{ active: activeMenu === 'hotel' }"
-            @click="setActiveMenu('hotel')"
-        >호텔</div>
-        <div
-            href="/stay"
-            class="nav-link px-2"
-            :class="{ active: activeMenu === 'stay' }"
-            @click="setActiveMenu('stay')"
-        >스테이</div>
-        <div
-            href="/camping"
-            class="nav-link px-2"
-            :class="{ active: activeMenu === 'camping' }"
-            @click="setActiveMenu('camping')"
-        >캠핑</div>
-      </ul>
-
-      <div class="col-md-3 text-end">
-        <button
-            type="button"
-            class="btn btn-outline-primary me-2"
-            v-if="!token"
-            @click="clickSigninButton"
-        >
-          Sign In
-        </button>
-        <button
-            type="button"
-            class="btn btn-primary"
-            v-else
-            @click="clickMypageButton"
-        >
-          My Page
-        </button>
         <button
             type="button"
             class="btn btn-primary"
@@ -73,7 +34,6 @@
         >
           Log Out
         </button>
-      </div>
     </header>
   </div>
 </template>
@@ -82,24 +42,14 @@
 import store from "@/scripts/store";
 
 export default {
-  name: 'UserHeader',
+  name: 'AdminHeader',
   data() {
     return {
       activeMenu: null,
-      token: store.state.account.token || null, // Vuex store에서 토큰 가져오기
+      token: store.state.account.token || null,
     }
   },
   methods: {
-    setActiveMenu(menu) {
-      this.activeMenu = menu;
-      this.$router.push({ path: "/" + menu })
-    },
-    clickSigninButton() {
-      this.$router.push({ name: 'LoginPage' });
-    },
-    clickMypageButton() {
-      this.$router.push({ path: '/mypage/resList'});
-    },
     clickSignupButton() {
       this.$router.push({ name: 'SignupPage' });
     },
