@@ -2,7 +2,6 @@
   <div class="banner-container">
     <div class="banner-slide" v-for="(slide, index) in slides" :key="index" :class="{ active: currentIndex === index }">
       <img :src="slide.image" :alt="'Slide ' + (index + 1)" class="slide-image" />
-      
     </div>
     <div class="pagination">
       <span
@@ -68,8 +67,8 @@ export default {
 <style scoped>
 .banner-container {
   position: relative;
-  width: 60%;
-  height: 250px;
+  width: 68%;
+  height: 300px;
   overflow: hidden;
   margin: 0 auto;
   border-radius: 10px;

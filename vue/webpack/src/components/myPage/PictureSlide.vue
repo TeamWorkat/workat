@@ -8,13 +8,13 @@
 
     <template #addons>
       <Navigation />
-      <Pagination />
+      <!-- <Pagination /> -->
     </template>
   </Carousel>
 </template>
 
 <script setup>
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
+import { Carousel, Navigation,  Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { defineProps } from 'vue'
 const props = defineProps({
@@ -44,7 +44,7 @@ const props = defineProps({
   background-color: rgba(254, 220, 0, 0.576); /* 원하는 배경색으로 변경 */
   color: #fff; /* 버튼 텍스트 색상 설정 */
   border: none; /* 테두리 제거 */
-  padding: 5px 5px; /* 적절한 패딩 설정 */
+  padding: 1% 1%;
   border-radius: 10px; /* 둥근 테두리 설정 */
   cursor: pointer; /* 마우스 커서 설정 */
 }
@@ -57,7 +57,7 @@ const props = defineProps({
   background-color: rgba(254, 220, 0, 0.576); /* 원하는 배경색으로 변경 */
   color: #fff; /* 버튼 텍스트 색상 설정 */
   border: none; /* 테두리 제거 */
-  padding: 5px 5px; /* 적절한 패딩 설정 */
+  padding: 1% 1%; /* 적절한 패딩 설정 */
   border-radius: 10px; /* 둥근 테두리 설정 */
   cursor: pointer; /* 마우스 커서 설정 */
 }

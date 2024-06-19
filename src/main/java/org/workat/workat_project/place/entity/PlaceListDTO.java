@@ -13,6 +13,7 @@ public class PlaceListDTO {
 	private int place_id;
 	private String picture_source;
 	private String place_nm;
+	private String place_content;
 	private String picString;
 	private String[] picture_sources;
 	private String liked;

@@ -30,7 +30,7 @@
           </div>
 
           <div>
-            <button @click="deletePeviewTouchUpInside">삭제</button>
+            <button class="delete-button" @click="deletePeviewTouchUpInside">삭제</button>
           </div>
         </div>
         
@@ -38,13 +38,16 @@
           <div v-if="items.reply_exist === 'N'" class="comment-container">
             <p>리뷰에 댓글을 작성하세요</p>
             <textarea v-model="reply_comment"></textarea>
-            <br />
-            <button @click="insertReplyTouchUpInside">댓글 작성</button>
+            <div class="button-container">
+              <button class="submit-button" @click="insertReplyTouchUpInside">댓글 작성</button>
+            </div>
           </div>
           <div v-else class="comment-container">
             <p>작성한 댓글:</p>
             <p>{{ items.reply_content }}</p>
-            <button class="delete-button" @click="deleteReplyTouchUpInside">댓글 삭제</button>
+            <div class="button-container">
+              <button class="delete-button" @click="deleteReplyTouchUpInside">댓글 삭제</button>
+            </div>
           </div>
         </div>
       </div>
@@ -151,11 +154,12 @@ export default {
 <style scoped>
 .img {
   display: inline-block;
-  width: 150px; /* 또는 적절한 값으로 변경 */
-  height: 150px; /* 또는 적절한 값으로 변경 */
+  width: 150px; 
+  height: 150px;
   background-size: cover;
   background-position: center;
-  border-radius: 20%;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .image-container {
@@ -165,34 +169,63 @@ export default {
 }
 
 .comment-container {
-  position: relative; /* 상대 위치를 기준으로 절대 위치 요소를 설정할 수 있도록 설정 */
+  position: relative;
   border: 1px solid #ccc;
-  padding: 10px;
-  height: 50vh; /* 높이를 화면의 절반으로 설정 */
-  width: 33vw; /* 너비를 화면의 3분의 1로 설정 */
-  box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기로 설정 */
+  padding: 15px;
+  height: 50vh;
+  width: 33vw;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 textarea {
-  width: 100%; /* textarea의 너비를 100%로 설정하여 부모 요소에 맞게 설정 */
-  height: calc(100% - 30px); /* 높이를 100%로 설정하되, 버튼 높이 만큼 뺀 크기로 설정 */
-  resize: vertical; /* textarea의 크기를 수직으로만 조절할 수 있도록 설정 */
-  margin-bottom: 10px; /* 아래 여백 설정 */
+  flex-grow: 1;
+  resize: vertical;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.delete-button {
-  position: absolute; /* 절대 위치를 설정하여 부모 요소를 기준으로 위치를 설정 */
-  bottom: 10px; /* 부모 요소의 아래에서 10px 위로 위치 */
-  right: 10px; /* 부모 요소의 오른쪽에서 10px 왼쪽으로 위치 */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-button, .submit-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover, .submit-button:hover {
+  background-color: #e43d3d;
 }
 
 .left-content {
-  flex: 1; /* 왼쪽 콘텐츠를 화면의 절반으로 설정 */
-  padding-right: 10px; /* 오른쪽 여백 설정 */
+  flex: 1;
+  padding-right: 10px;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .right-content {
-  flex: 1; /* 오른쪽 콘텐츠를 화면의 절반으로 설정 */
-  padding-left: 10px; /* 왼쪽 여백 설정 */
+  flex: 1;
+  padding-left: 10px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+p {
+  margin: 5px 0;
 }
 </style>

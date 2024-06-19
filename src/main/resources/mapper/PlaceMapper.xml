@@ -9,6 +9,7 @@
 		SELECT
 			p.place_id
 			, p.place_nm
+			, p.place_content
 			, GROUP_CONCAT(pp.picture_source) AS picString
 		FROM
 			place p
@@ -41,6 +42,7 @@
 	SELECT
 	    p.place_id,
 	    p.place_nm,
+	    p.place_content,
 	    GROUP_CONCAT(pp.picture_source) AS picString
 	FROM
 	    place p
@@ -76,6 +78,7 @@
 	SELECT
 	    p.place_id,
 	    p.place_nm,
+	    p.place_content,
 	    GROUP_CONCAT(pp.picture_source) AS picString
 	FROM
 	    place p
