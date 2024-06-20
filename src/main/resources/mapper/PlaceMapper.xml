@@ -10,13 +10,19 @@
 			p.place_id
 			, p.place_nm
 			, p.place_content
-			, GROUP_CONCAT(pp.picture_source) AS picString
+			, GROUP_CONCAT(pp.picture_source) AS picString,
+			ROUND(AVG(r.rating), 1) AS starScore,
+	    	(SELECT COUNT(*) FROM review r2 WHERE r2.place_id = p.place_id AND r2.status = 'active') AS reviewCount
 		FROM
 			place p
 		JOIN
 		    place_picture pp
 		ON
 	    	p.place_id = pp.place_id
+    	JOIN
+		    review r
+		ON
+	    	p.place_id = r.place_id
 		where
 			p.status = 'active'
 		AND
@@ -43,13 +49,17 @@
 	    p.place_id,
 	    p.place_nm,
 	    p.place_content,
-	    GROUP_CONCAT(pp.picture_source) AS picString
+	    GROUP_CONCAT(pp.picture_source) AS picString,
+	    ROUND(AVG(rv.rating), 1) AS starScore,
+    	(SELECT COUNT(*) FROM review r2 WHERE r2.place_id = p.place_id AND r2.status = 'active') AS reviewCount
 	FROM
 	    place p
 	JOIN
 	    place_picture pp ON p.place_id = pp.place_id
 	JOIN
 	    room r ON p.place_id = r.place_id
+    JOIN
+	    review rv ON p.place_id = rv.place_id
 	WHERE
 	    p.status = 'active'
 	    AND 
@@ -79,13 +89,19 @@
 	    p.place_id,
 	    p.place_nm,
 	    p.place_content,
-	    GROUP_CONCAT(pp.picture_source) AS picString
+	    GROUP_CONCAT(pp.picture_source) AS picString,
+	    ROUND(AVG(r.rating), 1) AS starScore,
+    	(SELECT COUNT(*) FROM review r2 WHERE r2.place_id = p.place_id AND r2.status = 'active') AS reviewCount
 	FROM
 	    place p
 	JOIN
 	    place_picture pp
 	ON
 	    p.place_id = pp.place_id
+    JOIN
+	    review r
+	ON
+	    p.place_id = r.place_id 
 	WHERE
 	    p.status = 'active'
 	    AND p.category = #{category}
@@ -93,6 +109,36 @@
 			pp.status = 'active'
 	GROUP BY
 	    p.place_id, p.place_nm;
+   </select>
+   
+   
+   <select id="getPopularPlaceList"
+		resultType="org.workat.workat_project.place.entity.PlaceListDTO">
+	SELECT
+	    p.place_id,
+	    p.place_nm,
+	    p.place_content,
+	    GROUP_CONCAT(pp.picture_source) AS picString, 
+	    ROUND(AVG(r.rating), 1) AS starScore,
+	    (SELECT COUNT(*) FROM review r2 WHERE r2.place_id = p.place_id AND r2.status = 'active') AS reviewCount
+	FROM
+	    place p
+	JOIN
+	    place_picture pp
+	ON
+	    p.place_id = pp.place_id
+	JOIN
+	    review r
+	ON 
+	    p.place_id = r.place_id
+	WHERE
+	    p.status = 'active'
+	    AND p.category = #{category}
+	    AND pp.status = 'active'
+	GROUP BY
+	    p.place_id, p.place_nm;
+
+
    </select>
 
 

@@ -18,14 +18,14 @@
             :key="category"
             :value="category"
           >
-            {{ category }}
           </option>
         </select>
-        <p>선택된 카테고리: {{ selectedCategory }}</p>
       </div>
+      <p></p>
       <p>
         <label>주소:</label>
-        <input v-model="place_addr" placeholder="ex) 경기도 신곡로36" />
+      
+        <AddressFind @update-place_addr="updateAddr1"></AddressFind>
       </p>
       <p>
         <label>소개글:</label>
@@ -34,7 +34,7 @@
       </p>
 
       <div>
-        <label>시간:</label>
+        <label>체크인, 체크아웃 (순서대로):</label>
         <VueDatePicker
           v-model="time"
           time-picker
@@ -43,9 +43,8 @@
           placeholder="Select Time"
         />
       </div>
+      <br/>
 
-      <p>체크인: {{ checkin }}</p>
-      <p>체크아웃: {{ checkout }}</p>
       <div>
         <label>지역:</label>
         <select v-model="selectedLocation">
@@ -57,9 +56,9 @@
             {{ loaction }}
           </option>
         </select>
-        <p>선택된 지역: {{ selectedLocation }}</p>
+        
       </div>
-
+<br/>
       <div>
         <p>사진 (최소 1장이상, 최대 3장이하)</p>
         <div class="image-gallery">
@@ -86,11 +85,13 @@
 import axios from '@/axios';
 import SideBar from '@/views/SideBar.vue'
 import { reactive } from 'vue'
+import AddressFind from '@/components/AddressFind.vue'
 
 export default {
   name: 'PartnerPlaceInsert',
   components: {
     SideBar,
+    AddressFind
   },
   data() {
     return {
@@ -111,6 +112,7 @@ export default {
       ],
       selectedLocation: '',
       parsingLocation: '',
+      place_addr: '',
 
       picturefileURL: reactive([]),
       pictureArray: reactive([]),
@@ -124,6 +126,10 @@ export default {
   computed: {},
   created() {},
   methods: {
+
+    updateAddr1(newAddr) {
+      this.place_addr = newAddr;
+    },
     convertTimeStringToObject(timeString) {
       const [hours, minutes] = timeString.split(':').map(Number)
       return {

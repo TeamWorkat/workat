@@ -92,7 +92,6 @@ public class PlaceServiceImpl implements PlaceService {
             UserVO userVO = userMapper.findUserByEmail(name);
             for (PlaceListDTO placeListDTO : dtos) {
                 WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(), placeListDTO.getPlace_id());
-                System.err.println(wishVO.getLiked());
                 if (wishVO != null) {
                     placeListDTO.setLiked(wishVO.getLiked());
                 }
@@ -161,6 +160,8 @@ public class PlaceServiceImpl implements PlaceService {
             }
             return placeDetailDTO;
         }
+        
+        
 
         public double calculateRating (List < ReviewResDTO > reviewList) {
             int totalRating = 0;
@@ -185,4 +186,13 @@ public class PlaceServiceImpl implements PlaceService {
 
             return rating;
         }
+
+		@Override
+		public List<PlaceListDTO> getPopularPlaceList(String category) {
+			List<PlaceListDTO> dtos = placeMapper.getMainViewPlaceList();
+	        for (PlaceListDTO dto : dtos) {
+	            dto.setPicture_sources(dto.getPicString().split(","));
+	        }
+			return dtos ;
+		}
     }

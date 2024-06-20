@@ -14,7 +14,7 @@
         FROM
             user
         WHERE
-            user_email = #{email}
+            user_email = #{user_email}
     </select>
 
     <select id="getUserDetail" resultType="UserVO">
@@ -29,10 +29,11 @@
         WHERE user_id = #{user_id};
     </select>
 
-    <delete id="deleteById">
-        DELETE FROM user
-               WHERE user_id = #{user_id};
-    </delete>
+    <update id="deleteUser">
+        UPDATE user
+        SET status = 'inactive'
+        WHERE user_id = #{user_id}
+    </update>
 
     <update id="updateUser" parameterType="UserDetailDTO">
         UPDATE user
@@ -65,4 +66,20 @@
             )
     </insert>
 
+    <select id="checkEmail" resultType="boolean">
+        SELECT
+            COUNT(*) > 0
+        FROM
+            user
+        WHERE
+            user_email = #{user_email}
+          AND role = #{role}
+    </select>
+
+    <select id="checkLoginInfo" resultType="UserVO">
+        SELECT *
+        FROM user
+        WHERE user_email = #{user_email}
+          AND role = #{role}
+    </select>
 </mapper>

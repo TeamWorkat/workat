@@ -2,8 +2,10 @@
   <div>
     <MainSearch />
     <div v-if="route.meta.type === 'home'">
-    <PopularPlace />
+    <div class="banner_popularPlace">
     <SwiperBanner /> 
+    <PopularPlace />
+  </div>
   </div>
     <div class="user_home">
       <div class="album py-3 ">
@@ -109,5 +111,8 @@ export default {
 .allplace_title{
   padding-bottom: 30px;
   padding-top: 30px;
+}
+.banner_popularPlace{
+  padding-top:55px;
 }
 </style>

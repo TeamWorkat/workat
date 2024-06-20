@@ -4,7 +4,12 @@
       <PictureSlide :pictureList="item.picture_sources" @click.stop />
     </span>
     <div class="card-body">
-      <p class="card-text">{{ item.place_nm }}</p>
+      <div class = "card-title">
+      
+        {{ item.place_nm }} 
+      <img src='/img/별점.png' alt="Empty Star" style="width: 5%; height: 5%;">
+        {{ item.starScore }} ({{ item.reviewCount }})
+      </div>
       <div class="d-flex justify-content-between align-items-center">
         <small class="text-muted">{{truncatedContent}}</small>
         <button

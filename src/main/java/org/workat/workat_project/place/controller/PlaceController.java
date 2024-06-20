@@ -47,5 +47,10 @@ public class PlaceController {
         }
         return ResponseEntity.ok(placeService.getCategoryViewPlaceList(category, username));
     }
+    
+    @GetMapping("/popularPlace")
+    public ResponseEntity<List<PlaceListDTO>> getPopularPlaceList(@RequestParam(name = "category") String category) {
+        return ResponseEntity.ok(placeService.getPopularPlaceList(category));
+    }
 
 }
