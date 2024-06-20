@@ -11,10 +11,10 @@
         {{ item.starScore }} ({{ item.reviewCount }})
       </div>
       <div class="d-flex justify-content-between align-items-center">
-        <small class="text-muted">{{truncatedContent}}</small>
+        <h5 class="text-muted"><strong>200,000&#92;</strong></h5>
         <button
           @click.stop="toggleFavorite"
-          class="btn btn-sm btn-outline-secondary"
+          class="btn btn-sm btn-outline-secondary border-0"
         >
           <span class="heart" :class="{ 'is-favorite': isFavorite }"></span>
         </button>
@@ -35,18 +35,9 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.item.liked === "Y" || false
+      isFavorite: this.item.liked === "Y" || false,
+      content: this.item.place_content || null
     };
-  },  
-  computed: {
-    truncatedContent() {
-      const content = this.item.place_content;
-      const lines = content.split('\n');
-      if (lines.length > 2) {
-        return lines.slice(0, 2).join('\n') + '...';
-      }
-      return content;
-    },
   },
   methods: {
     goDetailPage(placeId) {
@@ -85,8 +76,8 @@ export default {
 /* 하트 모양 */
 .heart {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ccc"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
