@@ -16,5 +16,7 @@ public interface PlaceService {
 	List<PlaceListDTO> getSearchPlaceList(SearchVO request);
 	
 	List<PlaceListDTO> getCategoryViewPlaceList(String category, String username);
+	
+	List<PlaceListDTO> getPopularPlaceList(String category);
 
 }

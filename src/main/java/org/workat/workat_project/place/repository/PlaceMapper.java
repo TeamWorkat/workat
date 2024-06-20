@@ -19,4 +19,6 @@ public interface PlaceMapper {
     List<PlaceListDTO> getSearchPlaceList(SearchVO request);
     
     List<PlaceListDTO> getCategoryViewPlaceList(String category);
+    
+    List<PlaceListDTO> getPopularPlaceList(String category);
 }

@@ -126,7 +126,7 @@
 			#{place_out},
 			#{status},
 			#{loc_nm},
-			'1'
+			'133'
 		);
 	</insert>
 

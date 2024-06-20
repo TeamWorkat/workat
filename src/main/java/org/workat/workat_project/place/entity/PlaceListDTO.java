@@ -17,4 +17,7 @@ public class PlaceListDTO {
 	private String picString;
 	private String[] picture_sources;
 	private String liked;
+	private String starScore;
+	private String reviewCount;
+	
 }
