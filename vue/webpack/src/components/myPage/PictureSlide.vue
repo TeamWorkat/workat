@@ -41,7 +41,7 @@ const props = defineProps({
 }
 
 .carousel__prev {
-  background-color: rgba(254, 220, 0, 0.576); /* 원하는 배경색으로 변경 */
+  background-color: rgba(254, 220, 0, 0.576);
   color: #fff; /* 버튼 텍스트 색상 설정 */
   border: none; /* 테두리 제거 */
   padding: 1% 1%;
