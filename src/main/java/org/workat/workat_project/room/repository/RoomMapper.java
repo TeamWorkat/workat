@@ -22,4 +22,6 @@ public interface RoomMapper {
     void insertUnavailableDate(int roomId, LocalDate key);
 
     void deleteUnavailableDate(int roomId, LocalDate key);
+
+    String getRowPrice(int placeId);
 }

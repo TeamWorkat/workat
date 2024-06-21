@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import org.workat.workat_project.review.entity.ReviewResDTO;
 import org.workat.workat_project.review.repository.ReviewMapper;
 import org.workat.workat_project.review.service.ReviewService;
+import org.workat.workat_project.room.repository.RoomMapper;
 import org.workat.workat_project.room.service.RoomService;
 import org.workat.workat_project.user.entity.UserVO;
 import org.workat.workat_project.user.repository.UserMapper;
@@ -48,6 +48,7 @@ public class PlaceServiceImpl implements PlaceService {
     private final ReviewMapper reviewMapper;
     private final WishMapper wishMapper;
     private final UserMapper userMapper;
+    private final RoomMapper roomMapper;
 
     @Override
 
@@ -65,11 +66,25 @@ public class PlaceServiceImpl implements PlaceService {
         List<PlaceListDTO> dtos = placeMapper.getMainViewPlaceList();
         for (PlaceListDTO dto : dtos) {
             dto.setPicture_sources(dto.getPicString().split(","));
+            String rowPrice = roomMapper.getRowPrice(dto.getPlace_id());
+            if(rowPrice != null){
+                double doubleValue = Double.parseDouble(rowPrice);
+                dto.setRowPrice((int) doubleValue);
+            }else{
+                dto.setRowPrice(0);
+            }
         }
         if (name != null) {
             UserVO userVO = userMapper.findUserByEmail(name);
             for (PlaceListDTO placeListDTO : dtos) {
                 WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(), placeListDTO.getPlace_id());
+                String rowPrice = roomMapper.getRowPrice(placeListDTO.getPlace_id());
+                if(rowPrice != null){
+                    double doubleValue = Double.parseDouble(rowPrice);
+                    placeListDTO.setRowPrice((int) doubleValue);
+                }else{
+                    placeListDTO.setRowPrice(0);
+                }
                 if (wishVO != null) {
                     placeListDTO.setLiked(wishVO.getLiked());
                 }
@@ -87,11 +102,25 @@ public class PlaceServiceImpl implements PlaceService {
         List<PlaceListDTO> dtos = placeMapper.getCategoryViewPlaceList(category);
         for (PlaceListDTO dto : dtos) {
             dto.setPicture_sources(dto.getPicString().split(","));
+            String rowPrice = roomMapper.getRowPrice(dto.getPlace_id());
+                        if(rowPrice != null){
+                            double doubleValue = Double.parseDouble(rowPrice);
+                            dto.setRowPrice((int) doubleValue);
+                        }else{
+                            dto.setRowPrice(0);
+                        }
         }
         if (name != null) {
             UserVO userVO = userMapper.findUserByEmail(name);
             for (PlaceListDTO placeListDTO : dtos) {
                 WishVO wishVO = wishMapper.getUserWish(userVO.getUser_id(), placeListDTO.getPlace_id());
+                String rowPrice = roomMapper.getRowPrice(placeListDTO.getPlace_id());
+                                if(rowPrice != null){
+                                    double doubleValue = Double.parseDouble(rowPrice);
+                                    placeListDTO.setRowPrice((int) doubleValue);
+                                }else{
+                                    placeListDTO.setRowPrice(0);
+                                }
                 if (wishVO != null) {
                     placeListDTO.setLiked(wishVO.getLiked());
                 }

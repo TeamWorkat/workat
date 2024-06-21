@@ -19,5 +19,6 @@ public class PlaceListDTO {
 	private String liked;
 	private String starScore;
 	private String reviewCount;
+	private int rowPrice;
 	
 }

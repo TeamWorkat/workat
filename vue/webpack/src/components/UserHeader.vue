@@ -134,18 +134,16 @@ button {
   border-radius: 4px;
   margin-top: 10px;
 }
+
 .nav-link.active {
   border-bottom: 2px solid #FFCC5E;
   font-weight: bold;
 }
 
 .nav-link {
+  font-family: 'Arial', sans-serif;
   color: black;
   cursor: pointer;
 }
 
-.nav-link:hover {
-  color: black;
-  cursor: pointer;
-}
 </style>

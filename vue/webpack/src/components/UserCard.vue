@@ -13,7 +13,7 @@
 </div>
       </div>
       <div class="d-flex justify-content-between align-items-center">
-        <h5 class="text-muted"><strong>200,000&#92;</strong></h5>
+        <h5 class="text-muted"><span class="small-text">최저가</span><strong>{{ formatNumber(item.rowPrice) }}&#92;~</strong></h5>
         <button
           @click.stop="toggleFavorite"
           class="btn btn-sm btn-outline-secondary border-0"
@@ -69,6 +69,13 @@ export default {
         console.error('좋아요 상태 업데이트 실패:', error)
       }
     },
+    formatNumber(price) {
+    // price가 숫자인지 확인하고, 숫자라면 쉼표로 포맷
+    if (typeof price === 'number') {
+      return price.toLocaleString();
+    }
+    return price; // 숫자가 아니면 그대로 반환
+  }
   },
 }
 </script>
@@ -98,4 +105,9 @@ export default {
     brightness(94%) contrast(88%);
 }
 
+.small-text {
+    font-size: 0.75rem; /* 글씨 크기 조정 */
+    color: gray; /* 글씨 색상 */
+    display: block; /* 블록으로 설정하여 줄 바꿈 */
+  }
 </style>
