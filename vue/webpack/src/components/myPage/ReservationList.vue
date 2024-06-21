@@ -23,8 +23,10 @@
               <td>{{ item.place_nm }}</td>
               <td>{{ formatDate(item.startDate) }}</td>
               <td>{{ formatDate(item.endDate) }}</td>
-              <td>{{ item.res_cancel_yn }}</td>
-              <td>{{ item.room_name }}</td>
+              <td>
+  <span v-if="item.res_cancel_yn === 'Y'">취소</span>
+  <span v-else>정상</span>
+</td>              <td>{{ item.room_name }}</td>
               <td>{{ item.res_people_num }}</td>
               <td>{{ item.res_name }}</td>
               <td>{{ item.amount }}</td>

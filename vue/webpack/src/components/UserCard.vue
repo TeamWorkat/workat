@@ -6,9 +6,11 @@
     <div class="card-body">
       <div class = "card-title">
       
-        {{ item.place_nm }} 
-      <img src='/img/별점.png' alt="Empty Star" style="width: 5%; height: 5%;">
-        {{ item.starScore }} ({{ item.reviewCount }})
+        <strong>{{ item.place_nm }} </strong>
+        <div v-if="item.starScore && item.reviewCount">
+  <img src="/img/별점.png" alt="Empty Star" style="width: 5%; height: 5%;">
+  {{ item.starScore }} ({{ item.reviewCount }})
+</div>
       </div>
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="text-muted"><strong>200,000&#92;</strong></h5>
