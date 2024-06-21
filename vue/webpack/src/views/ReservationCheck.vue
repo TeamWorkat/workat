@@ -49,8 +49,7 @@
         <label for="request">요청사항:</label>
         <textarea id="request" v-model="request" rows="4" placeholder="예약과 관련된 요청사항을 입력해주세요."></textarea>
       </div>
-  
-        <button @click="payment">결제하기</button>
+        <button @click="payment" class="btn btn-primary">결제하기</button>
       </div>
     </div>
   </template>
@@ -222,7 +221,16 @@ margin-right: 30px;
   p {
     margin: 0;
   }
-
+  button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #FFCC5E; /* Gold background */
+  color: #333; /* Dark text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   
 .long-divider {
   margin-left: 20px;

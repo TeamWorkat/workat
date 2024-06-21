@@ -9,9 +9,9 @@
             class="d-inline-flex link-body-emphasis text-decoration-none"
         >
           <img
-              src="/img/work_at_icon.png"
+              src="/img/workat_admin_icon.png"
               alt="Bootstrap"
-              width="100px"
+              width="200px"
               height="80px"
           />
         </a>
@@ -23,7 +23,8 @@
             class="nav-link px-2"
             :class="{ active: activeMenu === 'hotel' }"
             @click="setActiveMenu('hotel')"
-        >호텔</div>
+        >
+        호텔</div>
         <div
             href="/stay"
             class="nav-link px-2"
@@ -134,6 +135,17 @@ button {
   margin-top: 10px;
 }
 .nav-link.active {
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #FFCC5E;
+  font-weight: bold;
+}
+
+.nav-link {
+  color: black;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: black;
+  cursor: pointer;
 }
 </style>
