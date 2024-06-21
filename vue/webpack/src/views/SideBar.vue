@@ -11,7 +11,7 @@
       <svg class="bi pe-none me-2" width="40" height="32">
         <use xlink:href="#bootstrap"></use>
       </svg>
-      <span class="fs-4">김아무개님</span>
+      <span class="fs-4">박경덕님</span>
     </a>
     <hr />
 

@@ -76,7 +76,7 @@ export default {
       items: [],
       currentPage: 1,
       itemsPerPage: 5,
-      activeTab: 'hotel',
+      activeTab: "hotel",
       cache: {}, // 각 카테고리 데이터를 저장하는 캐시 객체
     })
 
@@ -86,7 +86,7 @@ export default {
         state.items = state.cache[category]
       } else {
         axios
-          .get('/api/place/popularPlace', {
+          .get("/api/place/category", {
             params: {
               category: category,
             },
@@ -133,14 +133,14 @@ export default {
       }
       intervalId = setInterval(() => {
         switch (state.activeTab) {
-          case 'hotel':
-            changeTab('stay')
+          case "hotel":
+            changeTab("stay")
             break
-          case 'stay':
-            changeTab('camping')
+          case "stay":
+            changeTab("camping")
             break
-          case 'camping':
-            changeTab('hotel')
+          case "camping":
+            changeTab("hotel")
             break
           default:
             break
