@@ -38,6 +38,7 @@
 import { ref, computed, watch, onMounted, defineProps } from 'vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+import store from '@/scripts/store';
 import {useRouter} from 'vue-router'
 
 const props = defineProps({
@@ -107,6 +108,15 @@ onMounted(() => {
 })
 
 function reserve() {
+  const token = store.state.account.token;
+  if(roomPrice.value === 0){
+    alert("객실을 선택해 주세요.")
+    return;
+  }    
+  if(!token){
+        alert("로그인 후 이용해 주세요.")
+        window.location.href = router.resolve({ name: 'LoginPage' }).href;
+      }
   const startDate = date.value[0];
   const endDate = date.value[1];
   console.log(roomPictureList.value);

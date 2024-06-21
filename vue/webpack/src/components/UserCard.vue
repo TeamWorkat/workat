@@ -25,6 +25,8 @@
 <script>
 import axios from '@/axios';
 import PictureSlide from './myPage/PictureSlide.vue';
+import store from '@/scripts/store';
+
 export default {
   name: 'UserCard',
   props: {
@@ -44,6 +46,11 @@ export default {
       this.$router.push({ name: 'PlaceDetail', params: { placeId } })
     },
     async toggleFavorite() {
+      const token = store.state.account.token;
+      if(!token){
+        alert("로그인 후 이용해 주세요.")
+        window.location.href = this.$router.resolve({ name: 'LoginPage' }).href;
+      }
       this.isFavorite = !this.isFavorite
       const newFavoriteStatus = this.isFavorite
       const statusToSend = newFavoriteStatus ? 'Y' : 'N'
