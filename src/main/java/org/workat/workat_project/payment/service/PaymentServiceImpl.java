@@ -94,9 +94,12 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public boolean cancelPayment(String paymentKey, String cancelReason) {
         PaymentVO paymentVO = paymentMapper.findPaymentByPaymentKey(paymentKey);
+        ReservationVO reservationVO = reservationMapper.selectReservationById(paymentVO.getRes_id());
         if (paymentVO == null) {
             throw new RuntimeException("존재하지 않는 결제입니다.");
         }
+        reservationVO.setRes_yn("Y");
+        reservationMapper.updateReservationStatus(reservationVO);
         paymentVO.setCancelReason(cancelReason);
         paymentVO.setCancelYN("Y");
         paymentMapper.updatePaymentCancel(paymentVO);

@@ -17,4 +17,6 @@ public interface ReservationMapper {
     List<ReservationListDTO> findReservationByUserId(int userId);
 
     List<ReservationVO> getReservationVOList(int roomId);
+
+    void updateReservationStatus(ReservationVO reservationVO);
 }

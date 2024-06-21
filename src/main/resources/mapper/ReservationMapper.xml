@@ -49,6 +49,7 @@
                  r.res_id = p.res_id
         where p.payment_id = #{orderId}
     </select>
+
     <select id="findReservationByUserId" resultType="ReservationListDTO">
         SELECT r.res_id,
                p.place_nm,
@@ -75,7 +76,8 @@
                from payment
                where
                    paymentKey is not null)
-
+        ORDER BY
+            py.createdAt DESC
     </select>
     <select id="getReservationVOList" resultType="org.workat.workat_project.reservation.entity.ReservationVO">
         select
@@ -87,5 +89,14 @@
         and
             room_id = #{roomId}
     </select>
+
+    <update id="updateReservationStatus" parameterType="ReservationVO">
+        update
+        reservation
+        set
+            res_cancel_yn = #{res_yn}
+        where
+            res_id = #{res_id}
+    </update>
 
 </mapper>

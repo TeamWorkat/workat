@@ -37,7 +37,7 @@
     <label for="request">요청사항:</label>
     <textarea id="request" v-model="reservationVO.res_message" rows="4" readonly></textarea>
   </div>
-    <button class="btn btn-primary" @click="showModal = true">예약취소</button>
+    <button class="btn btn-primary" v-if="reservationVO.res_cancel_yn === 'Y'" @click="showModal = true">예약취소</button>
     <button class="btn btn-primary" v-if="canWriteReview" @click="writeReview" style="margin-left: 10px;">후기작성</button>
   </div>
 </div>
