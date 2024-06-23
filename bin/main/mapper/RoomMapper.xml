@@ -69,5 +69,12 @@
         )
     </select>
 
+    <select id="getRowPrice" resultType="String">
+        SELECT MIN(room_price)
+        FROM room
+        WHERE
+        place_id = #{placeId}
+    </select>
+
 
 </mapper>

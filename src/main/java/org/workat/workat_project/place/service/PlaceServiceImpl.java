@@ -56,6 +56,13 @@ public class PlaceServiceImpl implements PlaceService {
         List<PlaceListDTO> dtos = placeMapper.getSearchPlaceList(request);
         for (PlaceListDTO dto : dtos) {
             dto.setPicture_sources(dto.getPicString().split(","));
+            String rowPrice = roomMapper.getRowPrice(dto.getPlace_id());
+            if(rowPrice != null){
+                double doubleValue = Double.parseDouble(rowPrice);
+                dto.setRowPrice((int) doubleValue);
+            }else{
+                dto.setRowPrice(0);
+            }
         }
         return dtos;
     }
