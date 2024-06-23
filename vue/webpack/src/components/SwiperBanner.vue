@@ -48,17 +48,24 @@ export default {
   methods: {
     prevSlide() {
       this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+      this.resetSlideShow();
     },
     nextSlide() {
       this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+      this.resetSlideShow();
     },
     startSlideShow() {
       this.intervalId = setInterval(() => {
         this.nextSlide();
       }, 5000);
     },
+    resetSlideShow() {
+      clearInterval(this.intervalId);
+      this.startSlideShow();
+    },
     goToSlide(index) {
       this.currentIndex = index;
+      this.resetSlideShow();
     },
   },
 };
@@ -93,8 +100,6 @@ export default {
   object-fit:cover; /* 이미지를 배너에 맞게 조정 */
   border-radius: 10px;
 }
-
-
 
 .pagination {
   position: absolute;

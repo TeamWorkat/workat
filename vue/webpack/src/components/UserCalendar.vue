@@ -116,5 +116,6 @@ export default {
 
 .custom-input{
   border: none;
+  width: 110%;
 }
 </style>

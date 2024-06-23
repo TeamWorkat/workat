@@ -4,16 +4,22 @@
       <PictureSlide :pictureList="item.picture_sources" @click.stop />
     </span>
     <div class="card-body">
-      <div class = "card-title">
-      
+      <div class="card-title">
         <strong>{{ item.place_nm }} </strong>
         <div v-if="item.starScore && item.reviewCount">
-  <img src="/img/별점.png" alt="Empty Star" style="width: 5%; height: 5%;">
-  {{ item.starScore }} ({{ item.reviewCount }})
-</div>
+          <img
+            src="/img/별점.png"
+            alt="Empty Star"
+            style="width: 5%; height: 5%"
+          />
+          {{ item.starScore }} ({{ item.reviewCount }})
+        </div>
       </div>
       <div class="d-flex justify-content-between align-items-center">
-        <h5 class="text-muted"><span class="small-text">최저가</span><strong>{{ formatNumber(item.rowPrice) }}&#92;~</strong></h5>
+        <h5 class="text-muted">
+          <span class="small-text">최저가</span
+          ><strong>₩{{ formatNumber(item.rowPrice) }}~</strong>
+        </h5>
         <button
           @click.stop="toggleFavorite"
           class="btn btn-sm btn-outline-secondary border-0"
@@ -25,9 +31,9 @@
   </div>
 </template>
 <script>
-import axios from '@/axios';
-import PictureSlide from './myPage/PictureSlide.vue';
-import store from '@/scripts/store';
+import axios from '@/axios'
+import PictureSlide from './myPage/PictureSlide.vue'
+import store from '@/scripts/store'
 
 export default {
   name: 'UserCard',
@@ -39,19 +45,19 @@ export default {
   },
   data() {
     return {
-      isFavorite: this.item.liked === "Y" || false,
-      content: this.item.place_content || null
-    };
+      isFavorite: this.item.liked === 'Y' || false,
+      content: this.item.place_content || null,
+    }
   },
   methods: {
     goDetailPage(placeId) {
       this.$router.push({ name: 'PlaceDetail', params: { placeId } })
     },
     async toggleFavorite() {
-      const token = store.state.account.token;
-      if(!token){
-        alert("로그인 후 이용해 주세요.")
-        window.location.href = this.$router.resolve({ name: 'LoginPage' }).href;
+      const token = store.state.account.token
+      if (!token) {
+        alert('로그인 후 이용해 주세요.')
+        window.location.href = this.$router.resolve({ name: 'LoginPage' }).href
       }
       this.isFavorite = !this.isFavorite
       const newFavoriteStatus = this.isFavorite
@@ -70,12 +76,12 @@ export default {
       }
     },
     formatNumber(price) {
-    // price가 숫자인지 확인하고, 숫자라면 쉼표로 포맷
-    if (typeof price === 'number') {
-      return price.toLocaleString();
-    }
-    return price; // 숫자가 아니면 그대로 반환
-  }
+      // price가 숫자인지 확인하고, 숫자라면 쉼표로 포맷
+      if (typeof price === 'number') {
+        return price.toLocaleString()
+      }
+      return price // 숫자가 아니면 그대로 반환
+    },
   },
 }
 </script>
@@ -106,8 +112,8 @@ export default {
 }
 
 .small-text {
-    font-size: 0.75rem; /* 글씨 크기 조정 */
-    color: gray; /* 글씨 색상 */
-    display: block; /* 블록으로 설정하여 줄 바꿈 */
-  }
+  font-size: 0.75rem; /* 글씨 크기 조정 */
+  color: gray; /* 글씨 색상 */
+  display: block; /* 블록으로 설정하여 줄 바꿈 */
+}
 </style>

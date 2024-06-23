@@ -93,6 +93,7 @@ export default {
       '전라도',
       '충청도',
       '제주도',
+      '전체',
     ]
 
     const pushModal = () => {
